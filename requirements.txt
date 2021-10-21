@@ -1,0 +1,6 @@
+flask
+flask-sqlalchemy
+flask-restful
+python-decouple
+flask-jwt-extended
+flask-migrate
