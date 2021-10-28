@@ -16,7 +16,7 @@ interface UserIdentity {
     id: number;
     fullName: string;
     avatar: string;
-  }
+}
 
 export const authProvider: AuthProvider =  {
     login: async ({ username, password }) => {

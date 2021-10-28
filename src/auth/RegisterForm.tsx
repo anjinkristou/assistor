@@ -7,21 +7,25 @@ import {
     CircularProgress,
     TextField,
     Grid,
-    FormControlLabel,
-    Checkbox,
     CardContent,
     Container,
 } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTranslate, useNotify, useLogin, useSafeSetState, useRedirect } from 'ra-core';
+import { 
+    useTranslate, 
+    useNotify, 
+    useLogin, 
+    useSafeSetState, 
+    useRedirect,
+} from 'ra-core';
 import axios from 'axios';
 
 
 const baseURL = "/auth";
 
 
-const useStyles = makeStyles(
-    (theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
         form: {
             padding: '0 1em 1em 1em',
         },
@@ -42,6 +46,9 @@ const Input = ({
     meta: { touched, error }, // eslint-disable-line react/prop-types
     input: inputProps, // eslint-disable-line react/prop-types
     ...props
+}: {
+    meta: any;
+    input: any;
 }) => (
     <TextField
         error={!!(touched && error)}
@@ -52,7 +59,8 @@ const Input = ({
     />
 );
 
-const RegisterForm = ({ redirectTo }) => {
+const RegisterForm = ({ redirectTo }:
+    {redirectTo?: string | undefined;}) => {
     const [loading, setLoading] = useSafeSetState(false);
     const translate = useTranslate();
     const login = useLogin();
@@ -67,6 +75,14 @@ const RegisterForm = ({ redirectTo }) => {
         username, 
         password, 
         confirm 
+    }: {
+        firstname: string;
+        lastname: string;
+        email: string;
+        username: string;
+        password: string;
+        confirm: string;
+
     }) => {
         const errors = { 
             firstname: !firstname ? translate('ra.validation.required') : undefined, 
@@ -79,37 +95,47 @@ const RegisterForm = ({ redirectTo }) => {
         return errors;
     };
 
-    const submit = ({ 
+    interface ResponseType {
+        message: string;
+    }
+
+    const submit = async ({ 
         firstname,
         lastname,
         email,
         username, 
         password, 
         confirm 
+    }: { 
+        firstname: string;
+        lastname: string;
+        email: string;
+        username: string;
+        password: string;
+        confirm?: string;
     }) => {
         setLoading(true);
-        axios.post(`${baseURL}/register`, { 
+        try{
+        const response = await axios.post<ResponseType>(`${baseURL}/register`, { 
                 firstname,
                 lastname,
                 email,
                 username, 
                 password
             })
-            .then(response => {
-                setLoading(false);
-                const { message } = response.data;
-                
-                login({ username, password }, redirectTo)
-            })
-            .catch(error => {
-                setLoading(false);
-                const response = error.response;
-                if (response.status == 401) {
-                    const { message } = response.data;
-                    notify('Changes saved`', 'warning');
-                }
-                throw new Error(error);
-            });
+        
+        setLoading(false)
+        login({ username, password }, redirectTo)
+        } catch (error: any) {
+            setLoading(false);
+            const response = error.response;
+            if (response.status == 401) {
+                const { message } = error.response.data;
+                notify(`Error:${message}`, 'warning');
+                return Promise.reject(message);
+            }
+            return Promise.reject(error);
+        }
     };
 
     return (
