@@ -69,15 +69,15 @@ const RegisterForm = ({ redirectTo }:
     const classes = useStyles();
 
     const validate = ({ 
-        firstname,
-        lastname,
+        first_name,
+        last_name,
         email,
         username, 
         password, 
         confirm 
     }: {
-        firstname: string;
-        lastname: string;
+        first_name: string;
+        last_name: string;
         email: string;
         username: string;
         password: string;
@@ -85,8 +85,8 @@ const RegisterForm = ({ redirectTo }:
 
     }) => {
         const errors = { 
-            firstname: !firstname ? translate('ra.validation.required') : undefined, 
-            lastname: !lastname ? translate('ra.validation.required') : undefined, 
+            first_name: !first_name ? translate('ra.validation.required') : undefined, 
+            last_name: !last_name ? translate('ra.validation.required') : undefined, 
             email: !email ? translate('ra.validation.required') : undefined, 
             username: !username ? translate('ra.validation.required') : undefined, 
             password: !password ? translate('ra.validation.required') : undefined, 
@@ -100,15 +100,15 @@ const RegisterForm = ({ redirectTo }:
     }
 
     const submit = async ({ 
-        firstname,
-        lastname,
+        first_name,
+        last_name,
         email,
         username, 
         password, 
         confirm 
     }: { 
-        firstname: string;
-        lastname: string;
+        first_name: string;
+        last_name: string;
         email: string;
         username: string;
         password: string;
@@ -117,8 +117,8 @@ const RegisterForm = ({ redirectTo }:
         setLoading(true);
         try{
         const response = await axios.post<ResponseType>(`${baseURL}/register`, { 
-                firstname,
-                lastname,
+                first_name,
+                last_name,
                 email,
                 username, 
                 password
@@ -151,10 +151,10 @@ const RegisterForm = ({ redirectTo }:
                                 <div className={classes.input}>
                                     <Field
                                         autoFocus
-                                        id="firstname"
-                                        name="firstname"
+                                        id="first_name"
+                                        name="first_name"
                                         component={Input}
-                                        label="Firstname"
+                                        label="first_name"
                                         disabled={loading}
                                         required
                                     />
@@ -164,10 +164,10 @@ const RegisterForm = ({ redirectTo }:
                                 <div className={classes.input}>
                                     <Field
                                         autoFocus
-                                        id="lastname"
-                                        name="lastname"
+                                        id="last_name"
+                                        name="last_name"
                                         component={Input}
-                                        label="Lastname"
+                                        label="last_name"
                                         disabled={loading}
                                         required
                                     />

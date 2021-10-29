@@ -3,24 +3,27 @@ from flask import request
 from werkzeug.security import generate_password_hash, check_password_hash
 from hashlib import md5
 
-from api import db, jwt
+from api import db, jwt, ma
+from .mixins import CRUDMixin
 
-class User(db.Model):
+class User(db.Model, CRUDMixin):
 
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
     email = db.Column(db.String, unique=True)
-    firstname = db.Column(db.String)
-    lastname = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     password_hash = db.Column(db.String)
+    
+    # Relationships
     
     def __repr__(self):
         return str(self.username)
     
     def fullname(self):
-        return f"{self.firstname} {self.lastname}"
+        return f"{self.first_name} {self.last_name}"
 
     def hash_password(self, password):
         self.password_hash = generate_password_hash(
@@ -52,3 +55,16 @@ def user_identity_lookup(user):
 def user_lookup_callback(_jwt_header, jwt_data):
     identity = jwt_data["sub"]
     return User.query.filter_by(id=identity).one_or_none()
+
+
+class UserSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = User
+        
+    id = ma.auto_field()
+    first_name = ma.auto_field()
+    last_name = ma.auto_field()
+    email = ma.auto_field()
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)

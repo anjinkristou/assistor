@@ -2,17 +2,17 @@ from flask import request, abort, jsonify, url_for
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
-from . import auth_bp
+from . import blueprint
 from api.models import User
 from api import db
 
-@auth_bp.route('/register', methods = ['POST'])
+@blueprint.route('/register', methods = ['POST'])
 def register():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
     email = request.json.get('email', None)
-    firstname = request.json.get('firstname', None)
-    lastname = request.json.get('lastname', None)
+    first_name = request.json.get('first_name', None)
+    last_name = request.json.get('last_name', None)
     
     if username is None or password is None:
         jsonify({"message": "No user name or password"}), 400
@@ -22,8 +22,8 @@ def register():
     user = User(
         username = username,
         email = email,
-        firstname = firstname,
-        lastname = lastname
+        first_name = first_name,
+        last_name = last_name
     )
     user.hash_password(password)
     db.session.add(user)
@@ -31,7 +31,7 @@ def register():
     return jsonify({"message": "User registred successfuly"}), 201
 
 
-@auth_bp.route("/login", methods=["POST"])
+@blueprint.route("/login", methods=["POST"])
 def login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
@@ -44,7 +44,7 @@ def login():
     access_token = create_access_token(identity=user)
     return jsonify(token=access_token)
 
-@auth_bp.route("/user", methods=["GET"])
+@blueprint.route("/user", methods=["GET"])
 @jwt_required()
 def user():
     # We can now access our sqlalchemy User object via `current_user`.

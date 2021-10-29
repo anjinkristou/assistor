@@ -18,24 +18,26 @@ interface UserIdentity {
     avatar: string;
 }
 
-export const authProvider: AuthProvider =  {
-    login: async ({ username, password }) => {
-        try{
-            const response = await axios.post<Token>(`${baseURL}/login`, { username, password })
-            const { token } : { token: any;} = response.data;
-            const decodedToken = decodeJwt<Permission>(token);
-            localStorage.setItem('token', token);
-            localStorage.setItem('permissions', decodedToken.permissions);
-            return Promise.resolve();
-        } catch (error: any) {
-            const response = error.response;
-            if (response.status == 401) {
-                const { msg } = error.response.data;
-                return Promise.reject(msg);
-            }
-            return Promise.reject(error);
+const login = async ({ username, password }: {username: string; password:string;}) => {
+    try{
+        const response = await axios.post<Token>(`${baseURL}/login`, { username, password })
+        const { token } : { token: any;} = response.data;
+        const decodedToken = decodeJwt<Permission>(token);
+        localStorage.setItem('token', token);
+        localStorage.setItem('permissions', decodedToken.permissions);
+        return Promise.resolve();
+    } catch (error: any) {
+        const response = error.response;
+        if (response.status == 401) {
+            const { msg } = error.response.data;
+            return Promise.reject(msg);
         }
-    },
+        return Promise.reject(error);
+    }
+}
+
+export const authProvider: AuthProvider =  {
+    login: login,
     checkError: () => Promise.resolve(),
     checkAuth: () => {
         return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
@@ -53,7 +55,6 @@ export const authProvider: AuthProvider =  {
             };
             let response = await axios.get<UserIdentity>(`${baseURL}/user`, config)
             const { id, fullName, avatar } = response.data;
-            console.log(response.data)
             
             return Promise.resolve({ id, fullName, avatar });
         } catch (error: any) {
