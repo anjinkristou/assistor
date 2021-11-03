@@ -71,14 +71,13 @@ export const NewNote = ({
             {
                 last_seen: date,
                 status,
-                nb_notes: record.nb_notes + 1,
             },
             record
         );
         create(resource, data, {
             onSuccess: () => {
                 setText('');
-                notify('Note added successfully');
+                notify('Note added successfully', { type: 'success' });
                 refresh();
             },
         });
@@ -115,11 +114,7 @@ export const NewNote = ({
                                     variant="filled"
                                     size="small"
                                     value={date}
-                                    onChange={(
-                                        event: React.ChangeEvent<
-                                            HTMLInputElement
-                                        >
-                                    ) => {
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                         setDate(event.target.value);
                                     }}
                                     className={classes.small}
@@ -144,7 +139,7 @@ export const NewNote = ({
 const getCurrentDate = () => {
     const now = new Date();
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    return now.toISOString().slice(0, -1);
+    return now.toISOString().slice(0, -8);
 };
 
 const foreignKeyMapping = {

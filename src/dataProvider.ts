@@ -14,6 +14,7 @@ import {
 
 const getList = async (resource: string, params: any): Promise<GetListResult<any>> => {
     try{
+        console.log(`getList ${resource}`)
         const response = await axios.get<GetListResult<any>>(`/${resource}/list`, { params })
         return Promise.resolve(response.data);
     } catch (error: any) {
@@ -28,6 +29,7 @@ const getList = async (resource: string, params: any): Promise<GetListResult<any
 
 const getOne = async (resource: string, params: any): Promise<GetOneResult<any>> => {
     try{
+        console.log(`getOne ${resource}`)
         const response = await axios.get<GetOneResult<any>>(`/${resource}/item`, { params })
         return Promise.resolve(response.data);
     } catch (error: any) {
@@ -42,6 +44,7 @@ const getOne = async (resource: string, params: any): Promise<GetOneResult<any>>
 
 const getMany = async (resource: string, params: any): Promise<GetManyResult<any>> => {
     try{
+        console.log(`getMany ${resource}`)
         const response = await axios.get<GetManyResult<any>>(`/${resource}/items`, { params })
         return Promise.resolve(response.data);
     } catch (error: any) {
@@ -56,6 +59,7 @@ const getMany = async (resource: string, params: any): Promise<GetManyResult<any
 
 const getManyReference = async (resource: string, params: any): Promise<GetManyReferenceResult<any>>  => {
     try{
+        console.log(`getManyReference ${resource}`)
         const response = await axios.get<GetManyReferenceResult<any>>(`/${resource}/refs`, { params })
         return Promise.resolve(response.data);
     } catch (error: any) {

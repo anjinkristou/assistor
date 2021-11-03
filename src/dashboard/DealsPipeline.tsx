@@ -20,8 +20,8 @@ export const DealsPipeline = () => {
     const { data, ids: unorderedIds, total, loaded } = useGetList<Deal>(
         'deals',
         { page: 1, perPage: 10 },
-        { field: 'last_seen', order: 'DESC' },
-        { stage_neq: 'lost', sales_id: identity?.id },
+        { field: 'stage', order: 'DESC' },
+        { stage: 'lost', sales_id: identity?.id },
         { enabled: Number.isInteger(identity?.id) }
     );
     const [ids, setIds] = useState(unorderedIds);

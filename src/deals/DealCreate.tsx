@@ -99,6 +99,19 @@ export const DealCreate = ({ open }: { open: boolean }) => {
                         fullWidth
                     />
                     <NumberInput source="amount" fullWidth defaultValue={0} />
+                    <ReferenceInput
+                        source="sales_id"
+                        reference="sales"
+                        label="Account manager"
+                        helperText={false}
+                        fullWidth
+                    >
+                        <SelectInput
+                            optionText={(sales: any) =>
+                                `${sales.first_name} ${sales.last_name}`
+                            }
+                        />
+                    </ReferenceInput>
                 </SimpleForm>
             </Create>
         </Dialog>

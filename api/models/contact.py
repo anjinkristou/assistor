@@ -2,6 +2,8 @@ from api import db, ma
 from .mixins import CRUDMixin
 from .company import Company
 from .user import User
+from .tag import Tag
+from .contact_tag import contact_tags_table
 
 class Contact(db.Model, CRUDMixin):
 
@@ -30,6 +32,7 @@ class Contact(db.Model, CRUDMixin):
     # Relationships
     company = db.relationship('Company', backref="contacts")
     sales = db.relationship('User', backref="contacts")
+    tags = db.relationship('Tag', secondary=contact_tags_table, backref='contacts')
     
 
 class ContactSchema(ma.SQLAlchemySchema):
@@ -55,14 +58,8 @@ class ContactSchema(ma.SQLAlchemySchema):
     company_id = ma.auto_field()
     sales_id = ma.auto_field()
         
-    tags = ma.Method("gen_tags")
-    nb_notes = ma.Method("gen_nb_notes")
-    
-    def gen_tags(self, obj):
-        return [] #[tag.id for tag in obj.tags]
-    
-    def gen_nb_notes(self, obj):
-        return len(obj.notes)
+    tags = ma.Function(lambda obj: [tag.id for tag in obj.tags])
+    nb_notes = ma.Function(lambda obj: len(obj.notes))
 
 
 contact_schema = ContactSchema()

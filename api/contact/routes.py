@@ -18,54 +18,77 @@ def contact_list():
                    total=records.total)
     
 
-@blueprint.route('/item', methods = ['POST', 'GET', 'PUT', 'DELETE'])
-def contact_item():
-    if request.method == 'POST':
-        params = request.json['params']
-        data = params['data']
-        tags = data.pop('tags')
-        print(data)
-        print(tags)
+@blueprint.get('/item')
+def get_contact():
+    id = request.args['id']
         
-        contact = Contact.create(**data)
-        
-        result = contact_schema.dump(contact)
+    contact = Contact.query.get(id)
     
-    if request.method == 'PUT':
-        params = request.json['params']
-        data = params['data']
-        id = params['id']
-        
-        contact = Contact.query.get(id)
-        contact.update(**data)
-        
-        result = contact_schema.dump(contact)
-        
-    if request.method == 'GET':
-        id = request.args['id']
-        
-        contact = Contact.query.get(id)
-        
-        result = contact_schema.dump(contact)
-        
-    if request.method == 'DELETE':
-        id = request.args['id']
-        
-        contact = Contact.query.get(id)
-        result = contact_schema.dump(contact)
-        
-        contact.delete()
+    result = contact_schema.dump(contact)
         
     return jsonify(data=result)
 
 
-@blueprint.route('/items', methods = ['GET'])
-def contact_items():
+@blueprint.put('/item')
+def update_contact():
+    params = request.json['params']
+    data = params['data']
+    id = params['id']
+    print(data)
+    print(params)
+    
+    contact = Contact.query.get(id)
+    contact.update(**data)
+    
+    result = contact_schema.dump(contact)
+    
+    return jsonify(data=result)
+
+
+@blueprint.post('/item')
+def add_contact():
+    params = request.json['params']
+    data = params['data']
+    
+    contact = Contact.create(**data)
+    
+    result = contact_schema.dump(contact)
+    
+    return jsonify(data=result)
+
+
+@blueprint.delete('/item')
+def delete_contact():
+    id = request.args['id']
+    
+    contact = Contact.query.get(id)
+    result = contact_schema.dump(contact)
+    
+    contact.delete()
+        
+    return jsonify(data=result)
+
+
+@blueprint.get('/items')
+def get_contacts():
     ids = request.args.getlist('ids[]')
-    contact = Contact.query.filter(Contact.id.in_(ids))
+    contacts = Contact.query.filter(Contact.id.in_(ids))
 
-    result = contacts_schema.dump(contact)
+    result = contacts_schema.dump(contacts)
     return jsonify(data=result)
+
+
+@blueprint.delete('/items')
+def delete_contacts():
+    ids = request.args.getlist('ids[]')
+    contacts = Contact.query.filter(Contact.id.in_(ids))
+
+    result = contacts_schema.dump(contacts)
+    
+    [contact.delete() for contact in contacts]
+    
+    return jsonify(data=result)
+
 
 @blueprint.route('/refs', methods = ['GET'])
 def contact_refs():

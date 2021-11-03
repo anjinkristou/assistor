@@ -18,42 +18,51 @@ def user_list():
                    total=records.total)
     
 
-@blueprint.route('/item', methods = ['POST', 'GET', 'PUT', 'DELETE'])
-def user_item():
-    if request.method == 'POST':
-        print(request.json)
-        params = request.json['params']
-        data = params['data']
-        print(params['data'])
+@blueprint.get('/item')
+def get_user():
+    id = request.args['id']
         
-        user = User.create(**data)
-        
-        result = user_schema.dump(user)
+    user = User.query.get(id)
     
-    if request.method == 'PUT':
-        params = request.json['params']
-        data = params['data']
-        id = params['id']
+    result = user_schema.dump(user)
         
-        user = User.query.get(id)
-        user.update(**data)
-        
-        result = user_schema.dump(user)
-        
-    if request.method == 'GET':
-        id = request.args['id']
-        
-        user = User.query.get(id)
-        
-        result = user_schema.dump(user)
-        
-    if request.method == 'DELETE':
-        id = request.args['id']
-        
-        user = User.query.get(id)
-        result = user_schema.dump(user)
-        
-        user.delete()
+    return jsonify(data=result)
+
+
+@blueprint.put('/item')
+def update_user():
+    params = request.json['params']
+    data = params['data']
+    id = params['id']
+    
+    user = User.query.get(id)
+    user.update(**data)
+    
+    result = user_schema.dump(user)
+    
+    return jsonify(data=result)
+
+
+@blueprint.post('/item')
+def add_user():
+    params = request.json['params']
+    data = params['data']
+    
+    user = User.create(**data)
+    
+    result = user_schema.dump(user)
+    
+    return jsonify(data=result)
+
+
+@blueprint.delete('/item')
+def delete_user():
+    id = request.args['id']
+    
+    user = User.query.get(id)
+    result = user_schema.dump(user)
+    
+    user.delete()
         
     return jsonify(data=result)
 

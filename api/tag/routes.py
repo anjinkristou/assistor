@@ -18,51 +18,71 @@ def tag_list():
                    total=records.total)
     
 
-@blueprint.route('/item', methods = ['POST', 'GET', 'PUT', 'DELETE'])
-def tag_item():
-    if request.method == 'POST':
-        params = request.json['params']
-        data = params['data']
-        tags = data.pop('tags')
-        print(data)
-        print(tags)
+@blueprint.get('/item')
+def get_tag():
+    id = request.args['id']
         
-        tag = Tag.create(**data)
-        
-        result = tag_schema.dump(tag)
+    tag = Tag.query.get(id)
     
-    if request.method == 'PUT':
-        params = request.json['params']
-        data = params['data']
-        id = params['id']
-        
-        tag = Tag.query.get(id)
-        tag.update(**data)
-        
-        result = tag_schema.dump(tag)
-        
-    if request.method == 'GET':
-        id = request.args['id']
-        
-        tag = Tag.query.get(id)
-        
-        result = tag_schema.dump(tag)
-        
-    if request.method == 'DELETE':
-        id = request.args['id']
-        
-        tag = Tag.query.get(id)
-        result = tag_schema.dump(tag)
-        
-        tag.delete()
+    result = tag_schema.dump(tag)
         
     return jsonify(data=result)
 
 
-@blueprint.route('/items', methods = ['GET'])
-def tag_itemss():
-    ids = request.args.getlist('ids[]')
-    users = Tag.query.filter(Tag.id.in_(ids))
+@blueprint.put('/item')
+def update_tag():
+    params = request.json['params']
+    data = params['data']
+    id = params['id']
+    
+    tag = Tag.query.get(id)
+    tag.update(**data)
+    
+    result = tag_schema.dump(tag)
+    
+    return jsonify(data=result)
 
-    result = tags_schema.dump(users)
+
+@blueprint.post('/item')
+def add_tag():
+    params = request.json['params']
+    data = params['data']
+    
+    tag = Tag.create(**data)
+    
+    result = tag_schema.dump(tag)
+    
+    return jsonify(data=result)
+
+
+@blueprint.delete('/item')
+def delete_tag():
+    id = request.args['id']
+    
+    tag = Tag.query.get(id)
+    result = tag_schema.dump(tag)
+    
+    tag.delete()
+        
+    return jsonify(data=result)
+
+
+@blueprint.get('/items')
+def get_tags():
+    ids = request.args.getlist('ids[]')
+    tags = Tag.query.filter(Tag.id.in_(ids))
+
+    result = tags_schema.dump(tags)
+    return jsonify(data=result)
+
+
+@blueprint.delete('/items')
+def delete_tags():
+    ids = request.args.getlist('ids[]')
+    tags = Tag.query.filter(Tag.id.in_(ids))
+
+    result = tags_schema.dump(tags)
+    
+    [tag.delete() for tag in tags]
+    
     return jsonify(data=result)

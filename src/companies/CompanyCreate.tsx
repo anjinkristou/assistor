@@ -78,7 +78,8 @@ export const CompanyCreate = (props: CreateProps) => {
     );
 };
 
-const CustomLayout = (props: any) => (
+const CustomLayout = ({ children }: 
+    {children: any;}) => (
     <CardContent>
         <Box display="flex">
             <Box paddingTop={1}>
@@ -87,7 +88,7 @@ const CustomLayout = (props: any) => (
                 </Avatar>
             </Box>
             <Box ml={2} flex="1" maxWidth={796}>
-                {props.children}
+                {children}
             </Box>
         </Box>
     </CardContent>

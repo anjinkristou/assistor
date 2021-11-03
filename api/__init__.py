@@ -32,7 +32,7 @@ def create_app(config):
 
     with app.app_context():
         # Include our Routes
-        for module_name in ('auth', 'company', 'user', 'contact', 'tag', 'contact_note'):
+        for module_name in ('auth', 'company', 'user', 'contact', 'tag', 'contact_note', 'task', 'deal', 'deal_note'):
             module = import_module(f'api.{module_name}.routes')
             app.register_blueprint(module.blueprint)
         

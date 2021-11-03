@@ -48,10 +48,7 @@ class CompanySchema(ma.SQLAlchemySchema):
     
     sales_id  = ma.auto_field()
         
-    nb_contacts = ma.Method("gen_nb_contacts")
-    
-    def gen_nb_contacts(self, obj):
-        return len(obj.contacts)
+    nb_contacts = ma.Function(lambda obj: len(obj.contacts))
 
 company_schema = CompanySchema()
 companies_schema = CompanySchema(many=True)

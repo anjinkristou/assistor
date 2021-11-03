@@ -16,51 +16,71 @@ def companylist():
 
     return jsonify(data=companies_schema.dump(records.items),
                    total=records.total)
-    
 
-@blueprint.route('/item', methods = ['POST', 'GET', 'PUT', 'DELETE'])
-def company_item():
-    if request.method == 'POST':
-        print(request.json)
-        params = request.json['params']
-        data = params['data']
-        print(params['data'])
+@blueprint.get('/item')
+def get_company():
+    id = request.args['id']
         
-        company = Company.create(**data)
-        
-        result = company_schema.dump(company)
+    company = Company.query.get(id)
     
-    if request.method == 'PUT':
-        params = request.json['params']
-        data = params['data']
-        id = params['id']
-        
-        company = Company.query.get(id)
-        company.update(**data)
-        
-        result = company_schema.dump(company)
-        
-    if request.method == 'GET':
-        id = request.args['id']
-        
-        company = Company.query.get(id)
-        
-        result = company_schema.dump(company)
-        
-    if request.method == 'DELETE':
-        id = request.args['id']
-        
-        company = Company.query.get(id)
-        result = company_schema.dump(company)
-        
-        company.delete()
+    result = company_schema.dump(company)
         
     return jsonify(data=result)
 
-@blueprint.route('/items', methods = ['GET'])
-def company_items():
-    ids = request.args.getlist('ids[]')
-    companies = Company.query.filter(Company.id.in_(ids))
 
-    result = companies_schema.dump(companies)
+@blueprint.put('/item')
+def update_company():
+    params = request.json['params']
+    data = params['data']
+    id = params['id']
+    
+    company = Company.query.get(id)
+    company.update(**data)
+    
+    result = company_schema.dump(company)
+    
+    return jsonify(data=result)
+
+
+@blueprint.post('/item')
+def add_company():
+    params = request.json['params']
+    data = params['data']
+    
+    company = Company.create(**data)
+    
+    result = company_schema.dump(company)
+    
+    return jsonify(data=result)
+
+
+@blueprint.delete('/item')
+def delete_company():
+    id = request.args['id']
+    
+    company = Company.query.get(id)
+    result = company_schema.dump(company)
+    
+    company.delete()
+        
+    return jsonify(data=result)
+        
+@blueprint.get('/items')
+def get_companys():
+    ids = request.args.getlist('ids[]')
+    companys = Company.query.filter(Company.id.in_(ids))
+
+    result = companies_schema.dump(companys)
+    return jsonify(data=result)
+
+
+@blueprint.delete('/items')
+def delete_companys():
+    ids = request.args.getlist('ids[]')
+    companys = Company.query.filter(Company.id.in_(ids))
+
+    result = companies_schema.dump(companys)
+    
+    [company.delete() for company in companys]
+    
     return jsonify(data=result)

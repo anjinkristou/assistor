@@ -11,6 +11,7 @@ import {
     useListContext,
 } from 'react-admin';
 import {
+    Avatar as MuiAvatar,
     Box,
     Button,
     Card,
@@ -28,6 +29,7 @@ import {
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link as RouterLink } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
+import BusinessIcon from '@material-ui/icons/Business';
 
 import { Avatar } from '../contacts/Avatar';
 import { Status } from '../misc/Status';
