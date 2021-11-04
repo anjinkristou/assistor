@@ -6,6 +6,7 @@ from flask_marshmallow import Marshmallow
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
+from flask_msearch import Search
 
 # Globally accessible libraries
 db = SQLAlchemy()
@@ -13,6 +14,7 @@ ma = Marshmallow()
 migrate = Migrate(render_as_batch=True)
 api = Api()
 jwt = JWTManager()
+search = Search()
 
 def init_plugins(app):
     db.init_app(app)
@@ -20,6 +22,7 @@ def init_plugins(app):
     migrate.init_app(app, db)
     api.init_app(app)
     jwt.init_app(app)
+    search.init_app(app)
     
 
 def create_app(config):

@@ -12,12 +12,25 @@ def contact_list():
     
     query = Contact.query
     
+    tags = None
+
     if 'tags' in filter:
         tags = filter['tags']
         del filter['tags']
-        query = query.filter_by(**filter).join(Contact.tags).filter(Tag.id.in_(tags))
-    else:
-        query = query.filter_by(**filter)
+    
+    keyword = None
+    if 'q' in filter:
+        keyword = filter['q']
+        del filter['q']
+        query = query.msearch(keyword)
+    
+    if keyword:
+        query = query.msearch(keyword)
+        
+    query = query.filter_by(**filter)
+    
+    if tags:
+        query = query.join(Contact.tags).filter(Tag.id.in_(tags))
     
     
     order =  getattr(Contact, sort['field']).asc() if sort['order'] == 'ASC' else getattr(Contact, sort['field']).desc()

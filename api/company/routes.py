@@ -10,9 +10,19 @@ def companylist():
     sort = json.loads(request.args['sort'])
     filter = json.loads(request.args['filter'])
     
-    order =  getattr(Company, sort['field']).asc() if sort['order'] == 'ASC' else getattr(Company, sort['field']).desc()
+    query = Company.query
     
-    records = Company.query.filter_by(**filter).order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
+    if 'q' in filter:
+        keyword = filter['q']
+        del filter['q']
+        query = query.msearch(keyword)
+    
+    query = query.filter_by(**filter)
+    
+    order =  getattr(Company, sort['field']).asc() if sort['order'] == 'ASC' else getattr(Company, sort['field']).desc()
+    query = query.order_by(order)
+    
+    records = query.paginate(page=pagination['page'], per_page=pagination['perPage'])
 
     return jsonify(data=companies_schema.dump(records.items),
                    total=records.total)

@@ -5,6 +5,7 @@ from .user import User
 class Company(db.Model, CRUDMixin):
 
     __tablename__ = 'companies'
+    __searchable__ = ['name']
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)

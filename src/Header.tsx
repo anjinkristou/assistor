@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab, Toolbar, AppBar, Box, Typography } from '@material-ui/core';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { UserMenu, Logout, LoadingIndicator } from 'react-admin';
+import ContactSupport from '@material-ui/icons/ContactSupport';
+
 
 const useStyles = makeStyles({
     root: {
@@ -25,15 +27,9 @@ const Header = () => {
                 <Toolbar variant="dense">
                     <Box flex={1} display="flex" justifyContent="space-between">
                         <Box display="flex" alignItems="center">
-                            <img
-                                className={classes.logo}
-                                src={
-                                    'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
-                                }
-                                alt="Bosch Logo"
-                            />
+                            <ContactSupport />
                             <Typography component="span" variant="h5">
-                                Atomic CRM
+                                Kristou Assistor
                             </Typography>
                         </Box>
                         <Box>

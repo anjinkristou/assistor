@@ -33,6 +33,8 @@ const useStyles = makeStyles({
 export const ContactCreate = (props: CreateProps) => {
     const classes = useStyles();
     const { identity } = useGetIdentity();
+    
+    if (!identity) return null;
 
     const contactDefaultValue = () => ({ sales_id: identity && identity?.id });
     const transform = (data: Contact) => ({
@@ -40,6 +42,7 @@ export const ContactCreate = (props: CreateProps) => {
         last_seen: new Date(),
         tags: [],
     });
+    
     return (
         <Create {...props} actions={false}>
             <SimpleForm 

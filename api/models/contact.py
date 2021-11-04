@@ -8,6 +8,7 @@ from .contact_tag import contact_tags_table
 class Contact(db.Model, CRUDMixin):
 
     __tablename__ = 'contacts'
+    __searchable__ = ['first_name', 'last_name']
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
