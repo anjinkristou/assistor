@@ -2,7 +2,7 @@ from flask import request, jsonify
 import json
 from . import blueprint
 from api import db
-from api.models import Contact, contact_schema, contacts_schema
+from api.models import Contact, contact_schema, contacts_schema, Tag
 
 @blueprint.route('/list', methods = ['GET'])
 def contact_list():
@@ -10,9 +10,18 @@ def contact_list():
     sort = json.loads(request.args['sort'])
     filter = json.loads(request.args['filter'])
     
-    order =  getattr(Contact, sort['field']).asc() if sort['order'] == 'ASC' else getattr(Contact, sort['field']).desc()
+    query = Contact.query
     
-    records = Contact.query.filter_by(**filter).order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
+    if 'tags' in filter:
+        tags = filter['tags']
+        del filter['tags']
+        query = query.filter_by(**filter).join(Contact.tags).filter(Tag.id.in_(tags))
+    else:
+        query = query.filter_by(**filter)
+    
+    
+    order =  getattr(Contact, sort['field']).asc() if sort['order'] == 'ASC' else getattr(Contact, sort['field']).desc()
+    records = query.order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
 
     return jsonify(data=contacts_schema.dump(records.items),
                    total=records.total)
@@ -34,8 +43,10 @@ def update_contact():
     params = request.json['params']
     data = params['data']
     id = params['id']
-    print(data)
-    print(params)
+    
+    if 'tags' in data:
+        tags = data['tags']
+        data['tags'] = Tag.query.filter(Tag.id.in_(tags)).all()
     
     contact = Contact.query.get(id)
     contact.update(**data)

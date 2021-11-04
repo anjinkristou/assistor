@@ -110,7 +110,7 @@ export const TagsListEdit = ({ record }: { record: Contact }) => {
         );
     };
 
-    if (!loaded || !tags) return null;
+    // if (!loaded || !tags) return null;
     return (
         <>
             {tags.map(tag => (
