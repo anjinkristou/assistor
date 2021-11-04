@@ -178,18 +178,21 @@ const ContactsIterator = () => {
                                 }
                             />
                             <ListItemSecondaryAction>
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                    component="span"
-                                >
-                                    last activity{' '}
-                                    {formatDistance(
-                                        new Date(contact.last_seen),
-                                        now
-                                    )}{' '}
-                                    ago <Status status={contact.status} />
-                                </Typography>
+                                <Box display="flex" alignItems="center" gridGap={3}>
+                                    <Typography
+                                        variant="body2"
+                                        color="textSecondary"
+                                        component="span"
+                                    >
+                                        last activity{' '}
+                                        {formatDistance(
+                                            new Date(contact.last_seen),
+                                            now
+                                        )}{' '}
+                                        ago 
+                                    </Typography>
+                                    <Status status={contact.status} />
+                                </Box>
                             </ListItemSecondaryAction>
                         </ListItem>
                     );

@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     gridList: {
         display: 'flex',
         flexWrap: 'wrap',
-        width: 1008,
+        width:  '100%',
         gap: '10px',
     },
     paper: {

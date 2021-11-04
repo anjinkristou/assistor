@@ -36,6 +36,7 @@ const useActionStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(2),
     },
 }));
+
 const CompanyListActions = (props: any) => {
     const classes = useActionStyles();
     return (

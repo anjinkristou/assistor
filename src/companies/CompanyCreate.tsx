@@ -7,6 +7,7 @@ import {
     TextInput,
     SelectInput,
     required,
+    useGetIdentity,
 } from 'react-admin';
 import { Box, CardContent, Divider, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,9 +29,19 @@ const useStyles = makeStyles({
 
 export const CompanyCreate = (props: CreateProps) => {
     const classes = useStyles();
+    const { identity } = useGetIdentity();
+
+    if (!identity) return null;
+
+    const companyDefaultValue = () => ({ sales_id: identity && identity?.id });
+
     return (
         <Create {...props} actions={false}>
-            <SimpleForm component={CustomLayout} redirect="show">
+            <SimpleForm 
+                component={CustomLayout} 
+                initialValues={companyDefaultValue}
+                redirect="show"
+            >
                 <TextInput source="name" validate={required()} fullWidth />
                 <SelectInput
                     source="sector"

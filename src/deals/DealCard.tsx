@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ReferenceField, useRedirect } from 'react-admin';
-import { Card, Typography } from '@material-ui/core';
+import { Card, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -47,7 +47,7 @@ export const DealCard = ({ deal, index }: { deal: Deal; index: number }) => {
                         }}
                         elevation={snapshot.isDragging ? 3 : 1}
                     >
-                        <div className={classes.cardContent}>
+                        <Box p={1} display="flex">
                             <ReferenceField
                                 source="company_id"
                                 record={deal}
@@ -57,7 +57,7 @@ export const DealCard = ({ deal, index }: { deal: Deal; index: number }) => {
                             >
                                 <LogoField size="small" />
                             </ReferenceField>
-                            <div className={classes.cardText}>
+                            <Box ml={1}>
                                 <Typography variant="body2" gutterBottom>
                                     {deal.name}
                                 </Typography>
@@ -74,8 +74,8 @@ export const DealCard = ({ deal, index }: { deal: Deal; index: number }) => {
                                     })}
                                     , {deal.type}
                                 </Typography>
-                            </div>
-                        </div>
+                            </Box>
+                        </Box>
                     </Card>
                 </div>
             )}
