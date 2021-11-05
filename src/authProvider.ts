@@ -36,13 +36,26 @@ const login = async ({ username, password }: {username: string; password:string;
         return Promise.resolve();
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
-}
+};
+
+const getIdentity = async () => { 
+    try{
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        let response = await axios.get<UserIdentity>(`${baseURL}/user`, config)
+        const { id, fullName, avatar } = response.data;
+        
+        return Promise.resolve({ id, fullName, avatar });
+    } catch (error: any) {
+        const response = error.response;
+        return Promise.reject({message: response.data, status: response.status});
+    }
+ }
 
 export const authProvider: AuthProvider =  {
     login: login,
@@ -53,34 +66,12 @@ export const authProvider: AuthProvider =  {
         }
         return Promise.resolve();
     },
-    checkAuth: () => {
-        return isAuthenticated() ? Promise.resolve() : Promise.reject();
-    },
+    checkAuth: () => (isAuthenticated() ? Promise.resolve() : Promise.reject()),
     logout: () => {
         removeCredentials();
         return Promise.resolve();
     },
-    getIdentity: async () => { 
-        try{
-            const credentials = getCredentials();
-            const token = credentials?.token;
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
-            let response = await axios.get<UserIdentity>(`${baseURL}/user`, config)
-            const { id, fullName, avatar } = response.data;
-            
-            return Promise.resolve({ id, fullName, avatar });
-        } catch (error: any) {
-            const response = error.response;
-            if (response.status == 401) {
-                removeCredentials();
-                const { msg } = response.data;
-                return Promise.reject(msg);
-            }
-            return Promise.reject(error);
-        }
-     },
+    getIdentity: getIdentity,
     getPermissions: () => {
         const credentials = getCredentials();
         const permissions = credentials?.permissions;

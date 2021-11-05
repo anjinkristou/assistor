@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
 import json
 
 from flask import Blueprint
@@ -7,6 +8,7 @@ blueprint = Blueprint('contacts', __name__, url_prefix='/contacts')
 from .models import Contact, contact_schema, contacts_schema, Tag
 
 @blueprint.route('/list', methods = ['GET'])
+@jwt_required()
 def contact_list():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])
@@ -43,6 +45,7 @@ def contact_list():
     
 
 @blueprint.get('/item')
+@jwt_required()
 def get_contact():
     id = request.args['id']
         
@@ -54,6 +57,7 @@ def get_contact():
 
 
 @blueprint.put('/item')
+@jwt_required()
 def update_contact():
     params = request.json['params']
     data = params['data']
@@ -72,6 +76,7 @@ def update_contact():
 
 
 @blueprint.post('/item')
+@jwt_required()
 def add_contact():
     params = request.json['params']
     data = params['data']
@@ -84,6 +89,7 @@ def add_contact():
 
 
 @blueprint.delete('/item')
+@jwt_required()
 def delete_contact():
     id = request.args['id']
     
@@ -96,6 +102,7 @@ def delete_contact():
 
 
 @blueprint.get('/items')
+@jwt_required()
 def get_contacts():
     ids = request.args.getlist('ids[]')
     contacts = Contact.query.filter(Contact.id.in_(ids))
@@ -105,6 +112,7 @@ def get_contacts():
 
 
 @blueprint.delete('/items')
+@jwt_required()
 def delete_contacts():
     ids = request.args.getlist('ids[]')
     contacts = Contact.query.filter(Contact.id.in_(ids))
@@ -117,6 +125,7 @@ def delete_contacts():
 
 
 @blueprint.route('/refs', methods = ['GET'])
+@jwt_required()
 def contact_refs():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])

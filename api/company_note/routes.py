@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
 import json
 
 from flask import Blueprint
@@ -7,6 +8,7 @@ blueprint = Blueprint('companyNotes', __name__, url_prefix='/companyNotes')
 from .models import CompanyNote, company_note_schema, company_notes_schema
 
 @blueprint.route('/list', methods = ['GET'])
+@jwt_required()
 def company_note_list():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])
@@ -21,6 +23,7 @@ def company_note_list():
     
 
 @blueprint.get('/item')
+@jwt_required()
 def get_company_note():
     id = request.args['id']
         
@@ -32,6 +35,7 @@ def get_company_note():
 
 
 @blueprint.put('/item')
+@jwt_required()
 def update_company_note():
     params = request.json['params']
     data = params['data']
@@ -46,6 +50,7 @@ def update_company_note():
 
 
 @blueprint.post('/item')
+@jwt_required()
 def add_company_note():
     params = request.json['params']
     data = params['data']
@@ -58,6 +63,7 @@ def add_company_note():
 
 
 @blueprint.delete('/item')
+@jwt_required()
 def delete_company_note():
     id = request.args['id']
     
@@ -70,6 +76,7 @@ def delete_company_note():
 
 
 @blueprint.get('/items')
+@jwt_required()
 def get_company_notes():
     ids = request.args.getlist('ids[]')
     company_notes = CompanyNote.query.filter(CompanyNote.id.in_(ids))
@@ -79,6 +86,7 @@ def get_company_notes():
 
 
 @blueprint.delete('/items')
+@jwt_required()
 def delete_company_notes():
     ids = request.args.getlist('ids[]')
     company_notes = CompanyNote.query.filter(CompanyNote.id.in_(ids))
@@ -90,6 +98,7 @@ def delete_company_notes():
     return jsonify(data=result)
 
 @blueprint.route('/refs', methods = ['GET'])
+@jwt_required()
 def company_note_refs():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])

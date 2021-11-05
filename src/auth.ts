@@ -1,5 +1,3 @@
-import { EventEmitter } from "events";
-
 export type Credentials = {
   token: string;
   permissions: string;

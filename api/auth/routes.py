@@ -2,6 +2,8 @@ from flask import request, abort, jsonify, url_for
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
+from flask_jwt_extended import set_access_cookies
+from flask_jwt_extended import unset_jwt_cookies
 from http import HTTPStatus
 
 from flask import Blueprint
@@ -46,8 +48,16 @@ def login():
 
     # Notice that we are passing in the actual sqlalchemy user object here
     access_token = create_access_token(identity=user)
-    return jsonify(token=access_token), HTTPStatus.OK
+    response = jsonify({"msg": "login successful",
+                        "token": access_token})
+    set_access_cookies(response, access_token)
+    return response
 
+@blueprint.route("/logout", methods=["POST"])
+def logout():
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response
 
 @blueprint.route("/user", methods=["GET"])
 @jwt_required()

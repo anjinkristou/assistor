@@ -11,134 +11,152 @@ import {
     DeleteManyResult,
 }  from 'react-admin'
 
+import {
+    getCredentials,
+} from "./auth"
+
 
 const getList = async (resource: string, params: any): Promise<GetListResult<any>> => {
     try{
-        console.log(`getList ${resource}`)
-        const response = await axios.get<GetListResult<any>>(`/${resource}/list`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.get<GetListResult<any>>(`/${resource}/list`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const getOne = async (resource: string, params: any): Promise<GetOneResult<any>> => {
     try{
-        console.log(`getOne ${resource}`)
-        const response = await axios.get<GetOneResult<any>>(`/${resource}/item`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.get<GetOneResult<any>>(`/${resource}/item`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const getMany = async (resource: string, params: any): Promise<GetManyResult<any>> => {
     try{
-        console.log(`getMany ${resource}`)
-        const response = await axios.get<GetManyResult<any>>(`/${resource}/items`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.get<GetManyResult<any>>(`/${resource}/items`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const getManyReference = async (resource: string, params: any): Promise<GetManyReferenceResult<any>>  => {
     try{
-        console.log(`getManyReference ${resource}`)
-        const response = await axios.get<GetManyReferenceResult<any>>(`/${resource}/refs`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.get<GetManyReferenceResult<any>>(`/${resource}/refs`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const create = async (resource: string, params: any): Promise<CreateResult<any>> => {
     try{
-        const response = await axios.post<CreateResult<any>>(`/${resource}/item`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.post<CreateResult<any>>(`/${resource}/item`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const update = async (resource: string, params: any): Promise<UpdateResult<any>> => {
     try{
-        const response = await axios.put<UpdateResult<any>>(`/${resource}/item`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.put<UpdateResult<any>>(`/${resource}/item`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const updateMany = async (resource: string, params: any): Promise<UpdateManyResult> => {
     try{
-        const response = await axios.put<UpdateManyResult>(`/${resource}/items`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.put<UpdateManyResult>(`/${resource}/items`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const deleteOne = async (resource: string, params: any): Promise<DeleteResult<any>> => {
     try{
-        const response = await axios.delete<DeleteResult<any>>(`/${resource}/item`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.delete<DeleteResult<any>>(`/${resource}/item`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 
 const deleteMany = async (resource: string, params: any): Promise<DeleteManyResult> => {
     try{
-        const response = await axios.delete<DeleteManyResult>(`/${resource}/items`, { params })
+        const credentials = getCredentials();
+        const token = credentials?.token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params,
+        };
+        const response = await axios.delete<DeleteManyResult>(`/${resource}/items`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
-        if (response.status == 401) {
-            const { msg } = error.response.data;
-            return Promise.reject(msg);
-        }
-        return Promise.reject(error);
+        return Promise.reject({message: response.data, status: response.status});
     }
 };
 

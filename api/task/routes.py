@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
 import json
 
 from flask import Blueprint
@@ -7,6 +8,7 @@ blueprint = Blueprint('tasks', __name__, url_prefix='/tasks')
 from .models import Task, task_schema, tasks_schema
 
 @blueprint.route('/list', methods = ['GET'])
+@jwt_required()
 def task_list():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])
@@ -21,6 +23,7 @@ def task_list():
     
 
 @blueprint.get('/item')
+@jwt_required()
 def get_task():
     id = request.args['id']
         
@@ -32,6 +35,7 @@ def get_task():
 
 
 @blueprint.put('/item')
+@jwt_required()
 def update_task():
     params = request.json['params']
     data = params['data']
@@ -46,6 +50,7 @@ def update_task():
 
 
 @blueprint.post('/item')
+@jwt_required()
 def add_task():
     params = request.json['params']
     data = params['data']
@@ -58,6 +63,7 @@ def add_task():
 
 
 @blueprint.delete('/item')
+@jwt_required()
 def delete_task():
     id = request.args['id']
     
@@ -70,6 +76,7 @@ def delete_task():
 
 
 @blueprint.get('/items')
+@jwt_required()
 def get_tasks():
     ids = request.args.getlist('ids[]')
     tasks = Task.query.filter(Task.id.in_(ids))
@@ -79,6 +86,7 @@ def get_tasks():
 
 
 @blueprint.delete('/items')
+@jwt_required()
 def delete_tasks():
     ids = request.args.getlist('ids[]')
     tasks = Task.query.filter(Task.id.in_(ids))
@@ -91,6 +99,7 @@ def delete_tasks():
 
 
 @blueprint.route('/refs', methods = ['GET'])
+@jwt_required()
 def task_refs():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])

@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
 import json
 from http import HTTPStatus
 
@@ -8,6 +9,7 @@ blueprint = Blueprint('companies', __name__, url_prefix='/companies')
 from .models import Company, company_schema, companies_schema
 
 @blueprint.route('/list', methods = ['GET'])
+@jwt_required()
 def companylist():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])
@@ -30,7 +32,9 @@ def companylist():
     return jsonify(data=companies_schema.dump(records.items),
                    total=records.total), HTTPStatus.OK
 
+
 @blueprint.get('/item')
+@jwt_required()
 def get_company():
     id = request.args['id']
         
@@ -42,6 +46,7 @@ def get_company():
 
 
 @blueprint.put('/item')
+@jwt_required()
 def update_company():
     params = request.json['params']
     data = params['data']
@@ -59,6 +64,7 @@ def update_company():
 
 
 @blueprint.post('/item')
+@jwt_required()
 def add_company():
     params = request.json['params']
     data = params['data']
@@ -71,6 +77,7 @@ def add_company():
 
 
 @blueprint.delete('/item')
+@jwt_required()
 def delete_company():
     id = request.args['id']
     
@@ -86,6 +93,7 @@ def delete_company():
 
         
 @blueprint.get('/items')
+@jwt_required()
 def get_companies():
     ids = request.args.getlist('ids[]')
     companies = Company.query.filter(Company.id.in_(ids))
@@ -95,6 +103,7 @@ def get_companies():
 
 
 @blueprint.delete('/items')
+@jwt_required()
 def delete_companies():
     ids = request.args.getlist('ids[]')
     companies = Company.query.filter(Company.id.in_(ids))

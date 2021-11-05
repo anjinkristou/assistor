@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
 import json
 
 from flask import Blueprint
@@ -7,6 +8,7 @@ blueprint = Blueprint('deals', __name__, url_prefix='/deals')
 from .models import Deal, deal_schema, deals_schema
 
 @blueprint.route('/list', methods = ['GET'])
+@jwt_required()
 def deal_list():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])
@@ -21,6 +23,7 @@ def deal_list():
     
 
 @blueprint.get('/item')
+@jwt_required()
 def get_deal():
     id = request.args['id']
         
@@ -32,6 +35,7 @@ def get_deal():
 
 
 @blueprint.put('/item')
+@jwt_required()
 def update_deal():
     params = request.json['params']
     data = params['data']
@@ -46,6 +50,7 @@ def update_deal():
 
 
 @blueprint.post('/item')
+@jwt_required()
 def add_deal():
     params = request.json['params']
     data = params['data']
@@ -58,6 +63,7 @@ def add_deal():
 
 
 @blueprint.delete('/item')
+@jwt_required()
 def delete_deal():
     id = request.args['id']
     
@@ -70,6 +76,7 @@ def delete_deal():
 
 
 @blueprint.get('/items')
+@jwt_required()
 def get_deals():
     ids = request.args.getlist('ids[]')
     deals = Deal.query.filter(Deal.id.in_(ids))
@@ -79,6 +86,7 @@ def get_deals():
 
 
 @blueprint.delete('/items')
+@jwt_required()
 def delete_deals():
     ids = request.args.getlist('ids[]')
     deals = Deal.query.filter(Deal.id.in_(ids))
@@ -91,6 +99,7 @@ def delete_deals():
 
 
 @blueprint.route('/refs', methods = ['GET'])
+@jwt_required()
 def deal_refs():
     pagination = json.loads(request.args['pagination'])
     sort = json.loads(request.args['sort'])
