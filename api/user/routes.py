@@ -33,9 +33,8 @@ def get_user():
 
 @blueprint.put('/item')
 def update_user():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     user = User.query.get(id)
     user.update(**data)
@@ -47,8 +46,7 @@ def update_user():
 
 @blueprint.post('/item')
 def add_user():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     user = User.create(**data)
     

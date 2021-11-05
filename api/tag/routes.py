@@ -37,9 +37,8 @@ def get_tag():
 @blueprint.put('/item')
 @jwt_required()
 def update_tag():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     tag = Tag.query.get(id)
     tag.update(**data)
@@ -52,8 +51,7 @@ def update_tag():
 @blueprint.post('/item')
 @jwt_required()
 def add_tag():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     tag = Tag.create(**data)
     

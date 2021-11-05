@@ -37,9 +37,8 @@ def get_task():
 @blueprint.put('/item')
 @jwt_required()
 def update_task():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     task = Task.query.get(id)
     task.update(**data)
@@ -52,8 +51,7 @@ def update_task():
 @blueprint.post('/item')
 @jwt_required()
 def add_task():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     task = Task.create(**data)
     

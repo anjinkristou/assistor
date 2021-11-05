@@ -37,9 +37,8 @@ def get_company_note():
 @blueprint.put('/item')
 @jwt_required()
 def update_company_note():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     company_note = CompanyNote.query.get(id)
     company_note.update(**data)
@@ -52,8 +51,7 @@ def update_company_note():
 @blueprint.post('/item')
 @jwt_required()
 def add_company_note():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     company_note = CompanyNote.create(**data)
     

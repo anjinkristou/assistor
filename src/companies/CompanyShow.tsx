@@ -184,7 +184,9 @@ const ContactsIterator = () => {
                                 <Avatar record={contact} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={`${contact.first_name} ${contact.last_name}`}
+                                primary={
+                                    `${contact.first_name} ${contact.last_name} (Notes: ${contact.nb_notes})`
+                                }
                                 secondary={
                                     <>
                                         {contact.title}{' '}

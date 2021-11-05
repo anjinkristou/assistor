@@ -37,9 +37,8 @@ def get_deal_note():
 @blueprint.put('/item')
 @jwt_required()
 def update_deal_note():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     deal_note = DealNote.query.get(id)
     deal_note.update(**data)
@@ -52,8 +51,7 @@ def update_deal_note():
 @blueprint.post('/item')
 @jwt_required()
 def add_deal_note():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     deal_note = DealNote.create(**data)
     

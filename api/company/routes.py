@@ -48,9 +48,8 @@ def get_company():
 @blueprint.put('/item')
 @jwt_required()
 def update_company():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     company = Company.query.get(id)
     if company is None:
@@ -66,8 +65,7 @@ def update_company():
 @blueprint.post('/item')
 @jwt_required()
 def add_company():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     company = Company.create(**data)
     

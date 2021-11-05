@@ -59,9 +59,8 @@ def get_contact():
 @blueprint.put('/item')
 @jwt_required()
 def update_contact():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     if 'tags' in data:
         tags = data['tags']
@@ -78,8 +77,7 @@ def update_contact():
 @blueprint.post('/item')
 @jwt_required()
 def add_contact():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     contact = Contact.create(**data)
     

@@ -37,9 +37,8 @@ def get_deal():
 @blueprint.put('/item')
 @jwt_required()
 def update_deal():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     deal = Deal.query.get(id)
     deal.update(**data)
@@ -52,8 +51,7 @@ def update_deal():
 @blueprint.post('/item')
 @jwt_required()
 def add_deal():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     deal = Deal.create(**data)
     

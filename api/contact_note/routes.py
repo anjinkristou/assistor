@@ -37,9 +37,8 @@ def get_contact_note():
 @blueprint.put('/item')
 @jwt_required()
 def update_contact_note():
-    params = request.json['params']
-    data = params['data']
-    id = params['id']
+    data = request.json['data']
+    id = request.json['id']
     
     contact_note = ContactNote.query.get(id)
     contact_note.update(**data)
@@ -52,8 +51,7 @@ def update_contact_note():
 @blueprint.post('/item')
 @jwt_required()
 def add_contact_note():
-    params = request.json['params']
-    data = params['data']
+    data = request.json['data']
     
     contact_note = ContactNote.create(**data)
     

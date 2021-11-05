@@ -86,9 +86,8 @@ const create = async (resource: string, params: any): Promise<CreateResult<any>>
         const token = credentials?.token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
-            params,
         };
-        const response = await axios.post<CreateResult<any>>(`/${resource}/item`, config)
+        const response = await axios.post<CreateResult<any>>(`/${resource}/item`, params, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
@@ -102,9 +101,8 @@ const update = async (resource: string, params: any): Promise<UpdateResult<any>>
         const token = credentials?.token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
-            params,
         };
-        const response = await axios.put<UpdateResult<any>>(`/${resource}/item`, config)
+        const response = await axios.put<UpdateResult<any>>(`/${resource}/item`, params, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
@@ -118,9 +116,8 @@ const updateMany = async (resource: string, params: any): Promise<UpdateManyResu
         const token = credentials?.token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
-            params,
         };
-        const response = await axios.put<UpdateManyResult>(`/${resource}/items`, config)
+        const response = await axios.put<UpdateManyResult>(`/${resource}/items`, params, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;

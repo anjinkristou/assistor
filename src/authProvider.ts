@@ -53,6 +53,7 @@ const getIdentity = async () => {
         return Promise.resolve({ id, fullName, avatar });
     } catch (error: any) {
         const response = error.response;
+        removeCredentials();
         return Promise.reject({message: response.data, status: response.status});
     }
  }
@@ -60,7 +61,7 @@ const getIdentity = async () => {
 export const authProvider: AuthProvider =  {
     login: login,
     checkError: ({ status }: any) => {
-        if (status === 401 || status === 403) {
+        if (status === 401 || status === 403 || status === 422) {
             removeCredentials();
             return Promise.reject();
         }
