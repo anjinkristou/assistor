@@ -24,6 +24,14 @@ export interface Company extends Record {
     created_at: string;
 }
 
+export interface CompanyNote extends Record {
+    contact_id: Identifier;
+    type: string;
+    text: string;
+    date: string;
+    sales_id: Identifier;
+}
+
 export interface Contact extends Record {
     first_name: string;
     last_name: string;

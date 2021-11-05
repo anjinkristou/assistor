@@ -98,19 +98,6 @@ export const LatestNotes = () => {
         )
         .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf())
         .slice(0, 5);
-    
-    const NoteSource = ({ note }: any) => {
-        if (note.type === 'dealNote'){
-            return <Deal note={note} />;
-        }
-        else if (note.type === 'contactNote') {
-            return <Contact note={note} />;
-        }
-        else if (note.type === 'companyNote') {
-            return <Company note={note} />;
-        }
-        return null;
-    };
 
     return (
         <>
@@ -153,6 +140,19 @@ export const LatestNotes = () => {
             </Card>
         </>
     );
+};
+
+const NoteSource = ({ note }: any) => {
+    if (note.type === 'dealNote'){
+        return <Deal note={note} />;
+    }
+    else if (note.type === 'contactNote') {
+        return <Contact note={note} />;
+    }
+    else if (note.type === 'companyNote') {
+        return <Company note={note} />;
+    }
+    return null;
 };
 
 const Deal = ({ note }: any) => (
