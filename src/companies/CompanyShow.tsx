@@ -87,15 +87,13 @@ const CompanyShowContent = () => {
                                         : `${record.nb_notes} Notes`
                                 }
                             />
-                            {record.nb_contacts && (
-                                <Tab
-                                    label={
-                                        record.nb_contacts === 1
-                                            ? '1 Contact'
-                                            : `${record.nb_contacts} Contacts`
-                                    }
-                                />
-                            )}
+                            <Tab
+                                label={
+                                    record.nb_contacts === 1
+                                        ? '1 Contact'
+                                        : `${record.nb_contacts} Contacts`
+                                }
+                            />
                             {record.nb_deals && (
                                 <Tab
                                     label={

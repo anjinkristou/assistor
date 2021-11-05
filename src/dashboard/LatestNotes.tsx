@@ -55,7 +55,18 @@ export const LatestNotes = () => {
         { sales_id: identity?.id },
         { enabled: Number.isInteger(identity?.id) }
     );
-    if (!contactNotesLoaded || !dealNotesLoaded) {
+    const {
+        data: companyNotesData,
+        ids: companyNotesIds,
+        loaded: companyNotesLoaded,
+    } = useGetList(
+        'companyNotes',
+        { page: 1, perPage: 5 },
+        { field: 'date', order: 'DESC' },
+        { sales_id: identity?.id },
+        { enabled: Number.isInteger(identity?.id) }
+    );
+    if (!contactNotesLoaded || !dealNotesLoaded || !companyNotesLoaded) {
         return null;
     }
     // TypeScript guards
@@ -63,7 +74,9 @@ export const LatestNotes = () => {
         !contactNotesIds ||
         !contactNotesData ||
         !dealNotesIds ||
-        !dealNotesData
+        !dealNotesData ||
+        !companyNotesIds ||
+        !companyNotesData
     ) {
         return null;
     }
@@ -74,10 +87,30 @@ export const LatestNotes = () => {
                 ...contactNotesData[id],
                 type: 'contactNote',
             })),
-            dealNotesIds.map(id => ({ ...dealNotesData[id], type: 'dealNote' }))
+            dealNotesIds.map(id => ({
+                ...dealNotesData[id], 
+                type: 'dealNote' 
+            })),
+            companyNotesIds.map(id => ({
+                ...companyNotesData[id], 
+                type: 'companyNote' 
+            })),
         )
         .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf())
         .slice(0, 5);
+    
+    const NoteSource = ({ note }: any) => {
+        if (note.type === 'dealNote'){
+            return <Deal note={note} />;
+        }
+        else if (note.type === 'contactNote') {
+            return <Contact note={note} />;
+        }
+        else if (note.type === 'companyNote') {
+            return <Company note={note} />;
+        }
+        return null;
+    };
 
     return (
         <>
@@ -99,11 +132,7 @@ export const LatestNotes = () => {
                         >
                             <Typography color="textSecondary" gutterBottom>
                                 on{' '}
-                                {note.type === 'dealNote' ? (
-                                    <Deal note={note} />
-                                ) : (
-                                    <Contact note={note} />
-                                )}
+                                <NoteSource note={note} />
                                 , added{' '}
                                 {formatDistance(
                                     new Date(note.date),
@@ -157,6 +186,21 @@ const Contact = ({ note }: any) => (
                     contact ? `${contact.first_name} ${contact.last_name}` : ''
                 }
             />
+        </ReferenceField>
+    </>
+);
+
+const Company = ({ note }: any) => (
+    <>
+        Company{' '}
+        <ReferenceField
+            record={note}
+            source="company_id"
+            reference="companies"
+            basePath="/companies"
+            link="show"
+        >
+            <TextField source="name" variant="body1" />
         </ReferenceField>
     </>
 );
