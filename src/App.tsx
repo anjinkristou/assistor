@@ -33,6 +33,7 @@ const App = () => (
         <Resource name="contacts" {...contacts} />
         <Resource name="companies" {...companies} />
         <Resource name="contactNotes" />
+        <Resource name="companyNotes" />
         <Resource name="dealNotes" />
         <Resource name="tasks" list={ListGuesser} />
         <Resource name="sales" list={ListGuesser} />

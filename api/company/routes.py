@@ -2,7 +2,9 @@ from flask import request, jsonify
 import json
 from http import HTTPStatus
 
-from . import blueprint
+from flask import Blueprint
+
+blueprint = Blueprint('companies', __name__, url_prefix='/companies')
 from .models import Company, company_schema, companies_schema
 
 @blueprint.route('/list', methods = ['GET'])

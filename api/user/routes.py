@@ -1,6 +1,8 @@
 from flask import request, jsonify
 import json
-from . import blueprint
+from flask import Blueprint
+
+blueprint = Blueprint('sales', __name__, url_prefix='/sales')
 
 from .models import User, user_schema, users_schema
 

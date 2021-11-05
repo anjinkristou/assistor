@@ -38,7 +38,7 @@ export const NewNote = ({
     reference,
 }: {
     showStatus?: boolean;
-    reference: 'contacts' | 'deals';
+    reference: 'companies' | 'contacts' | 'deals';
 }) => {
     const classes = useStyles();
     const record = useRecordContext();
@@ -145,4 +145,5 @@ const getCurrentDate = () => {
 const foreignKeyMapping = {
     contacts: 'contact_id',
     deals: 'deal_id',
+    companies: 'company_id',
 };

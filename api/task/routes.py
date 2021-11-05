@@ -1,7 +1,9 @@
 from flask import request, jsonify
 import json
 
-from . import blueprint
+from flask import Blueprint
+
+blueprint = Blueprint('tasks', __name__, url_prefix='/tasks')
 from .models import Task, task_schema, tasks_schema
 
 @blueprint.route('/list', methods = ['GET'])

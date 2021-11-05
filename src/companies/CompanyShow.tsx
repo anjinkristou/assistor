@@ -39,6 +39,7 @@ import { LogoField } from './LogoField';
 import { CompanyAside } from './CompanyAside';
 import { Company, Deal, Contact } from '../types';
 import { stageNames } from '../deals/stages';
+import { NotesIterator } from '../notes';
 
 export const CompanyShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -79,6 +80,13 @@ const CompanyShowContent = () => {
                             textColor="primary"
                             onChange={handleChange}
                         >
+                            <Tab
+                                label={
+                                    record.nb_notes === 1
+                                        ? '1 Note'
+                                        : `${record.nb_notes} Notes`
+                                }
+                            />
                             {record.nb_contacts && (
                                 <Tab
                                     label={
@@ -101,6 +109,15 @@ const CompanyShowContent = () => {
                         <Divider />
                         <TabPanel value={value} index={0}>
                             <ReferenceManyField
+                                reference="companyNotes"
+                                target="company_id"
+                                sort={{ field: 'date', order: 'DESC' }}
+                            >
+                                 <NotesIterator reference="companies" />
+                            </ReferenceManyField>
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <ReferenceManyField
                                 reference="contacts"
                                 target="company_id"
                                 sort={{ field: 'last_name', order: 'ASC' }}
@@ -108,7 +125,7 @@ const CompanyShowContent = () => {
                                 <ContactsIterator />
                             </ReferenceManyField>
                         </TabPanel>
-                        <TabPanel value={value} index={1}>
+                        <TabPanel value={value} index={2}>
                             <ReferenceManyField
                                 reference="deals"
                                 target="company_id"

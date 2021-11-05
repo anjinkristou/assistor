@@ -4,7 +4,9 @@ from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
 from http import HTTPStatus
 
-from . import blueprint
+from flask import Blueprint
+
+blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 from api.user.models import User
 from api import db
 

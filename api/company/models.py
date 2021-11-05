@@ -51,6 +51,7 @@ class CompanySchema(ma.SQLAlchemySchema):
         
     nb_contacts = ma.Function(lambda obj: len(obj.contacts))
     nb_deals = ma.Function(lambda obj: len(obj.deals))
+    nb_notes = ma.Function(lambda obj: len(obj.notes))
 
 company_schema = CompanySchema()
 companies_schema = CompanySchema(many=True)
