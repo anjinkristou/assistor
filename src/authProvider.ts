@@ -62,7 +62,8 @@ export const authProvider: AuthProvider =  {
     },
     getIdentity: async () => { 
         try{
-            const { token }:any = getCredentials()
+            const credentials = getCredentials();
+            const token = credentials?.token;
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
             };
@@ -81,7 +82,8 @@ export const authProvider: AuthProvider =  {
         }
      },
     getPermissions: () => {
-        const { permissions }: any = getCredentials();
+        const credentials = getCredentials();
+        const permissions = credentials?.permissions;
         return permissions ? Promise.resolve(permissions) : Promise.reject();
     }
 };

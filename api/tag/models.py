@@ -1,5 +1,5 @@
 from api import db, ma
-from .mixins import CRUDMixin
+from api.mixins import CRUDMixin
 
 class Tag(db.Model, CRUDMixin):
 

@@ -1,8 +1,8 @@
 from flask import request, jsonify
 import json
+
 from . import blueprint
-from api import db
-from api.models import Tag, tag_schema, tags_schema
+from .models import Tag, tag_schema, tags_schema
 
 @blueprint.route('/list', methods = ['GET'])
 def tag_list():

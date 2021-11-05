@@ -1,8 +1,8 @@
 from flask import request, jsonify
 import json
+
 from . import blueprint
-from api import db
-from api.models import Deal, deal_schema, deals_schema
+from .models import Deal, deal_schema, deals_schema
 
 @blueprint.route('/list', methods = ['GET'])
 def deal_list():

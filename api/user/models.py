@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from hashlib import md5
 
 from api import db, jwt, ma
-from .mixins import CRUDMixin
+from api.mixins import CRUDMixin
 
 class User(db.Model, CRUDMixin):
 

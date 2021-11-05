@@ -1,8 +1,9 @@
 from flask import request, jsonify
 import json
+from http import HTTPStatus
+
 from . import blueprint
-from api import db
-from api.models import Company, company_schema, companies_schema
+from .models import Company, company_schema, companies_schema
 
 @blueprint.route('/list', methods = ['GET'])
 def companylist():
@@ -25,7 +26,7 @@ def companylist():
     records = query.paginate(page=pagination['page'], per_page=pagination['perPage'])
 
     return jsonify(data=companies_schema.dump(records.items),
-                   total=records.total)
+                   total=records.total), HTTPStatus.OK
 
 @blueprint.get('/item')
 def get_company():
@@ -35,7 +36,7 @@ def get_company():
     
     result = company_schema.dump(company)
         
-    return jsonify(data=result)
+    return jsonify(data=result), HTTPStatus.OK
 
 
 @blueprint.put('/item')
@@ -45,11 +46,14 @@ def update_company():
     id = params['id']
     
     company = Company.query.get(id)
+    if company is None:
+        return jsonify(message='No record'), HTTPStatus.NO_CONTENT
+    
     company.update(**data)
     
     result = company_schema.dump(company)
     
-    return jsonify(data=result)
+    return jsonify(data=result), HTTPStatus.OK
 
 
 @blueprint.post('/item')
@@ -61,7 +65,7 @@ def add_company():
     
     result = company_schema.dump(company)
     
-    return jsonify(data=result)
+    return jsonify(data=result), HTTPStatus.CREATED
 
 
 @blueprint.delete('/item')
@@ -69,28 +73,34 @@ def delete_company():
     id = request.args['id']
     
     company = Company.query.get(id)
+    if company is None:
+        return jsonify(message='No record'), HTTPStatus.NO_CONTENT
+        
     result = company_schema.dump(company)
     
     company.delete()
         
-    return jsonify(data=result)
+    return jsonify(data=result), HTTPStatus.OK
+
         
 @blueprint.get('/items')
-def get_companys():
+def get_companies():
     ids = request.args.getlist('ids[]')
-    companys = Company.query.filter(Company.id.in_(ids))
+    companies = Company.query.filter(Company.id.in_(ids))
 
-    result = companies_schema.dump(companys)
-    return jsonify(data=result)
+    result = companies_schema.dump(companies)
+    return jsonify(data=result), HTTPStatus.OK
 
 
 @blueprint.delete('/items')
-def delete_companys():
+def delete_companies():
     ids = request.args.getlist('ids[]')
-    companys = Company.query.filter(Company.id.in_(ids))
+    companies = Company.query.filter(Company.id.in_(ids))
+    if len(companies) == 0:
+        return jsonify(message='No records'), HTTPStatus.NO_CONTENT
 
-    result = companies_schema.dump(companys)
+    result = companies_schema.dump(companies)
     
-    [company.delete() for company in companys]
+    [company.delete() for company in companies]
     
-    return jsonify(data=result)
+    return jsonify(data=result), HTTPStatus.OK

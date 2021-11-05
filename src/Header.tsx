@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Tabs, Tab, Toolbar, AppBar, Box, Typography } from '@material-ui/core';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { UserMenu, Logout, LoadingIndicator } from 'react-admin';
-import ContactSupport from '@material-ui/icons/ContactSupport';
+import LiveHelp from '@material-ui/icons/LiveHelp';
 
 
 const useStyles = makeStyles({
@@ -26,10 +26,10 @@ const Header = () => {
             <AppBar position="static" color="primary">
                 <Toolbar variant="dense">
                     <Box flex={1} display="flex" justifyContent="space-between">
-                        <Box display="flex" alignItems="center">
-                            <ContactSupport />
+                        <Box display="flex" alignItems="center" gridGap={2}>
+                            <LiveHelp />
                             <Typography component="span" variant="h5">
-                                Kristou Assistor
+                                Assistor
                             </Typography>
                         </Box>
                         <Box>

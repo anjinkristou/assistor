@@ -154,7 +154,7 @@ const RegisterForm = ({ redirectTo }:
                                         id="first_name"
                                         name="first_name"
                                         component={Input}
-                                        label="first_name"
+                                        label="First Name"
                                         disabled={loading}
                                         required
                                     />
@@ -167,7 +167,7 @@ const RegisterForm = ({ redirectTo }:
                                         id="last_name"
                                         name="last_name"
                                         component={Input}
-                                        label="last_name"
+                                        label="Last Name"
                                         disabled={loading}
                                         required
                                     />

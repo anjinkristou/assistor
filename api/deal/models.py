@@ -1,9 +1,13 @@
 from api import db, ma
-from .mixins import CRUDMixin
-from .contact import Contact
-from .company import Company
-from .user import User
-from .deal_contact import deal_contacts_table
+from api.mixins import CRUDMixin
+from api.contact.models import Contact
+from api.company.models import Company
+from api.user.models import User
+
+deal_contacts_table = db.Table('deal_contacts',
+    db.Column('deal_id', db.ForeignKey('deals.id'), primary_key=True),
+    db.Column('contact_id', db.ForeignKey('contacts.id'), primary_key=True)
+)
 
 class Deal(db.Model, CRUDMixin):
 

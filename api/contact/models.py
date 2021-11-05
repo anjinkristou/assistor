@@ -1,9 +1,13 @@
 from api import db, ma
-from .mixins import CRUDMixin
-from .company import Company
-from .user import User
-from .tag import Tag
-from .contact_tag import contact_tags_table
+from api.mixins import CRUDMixin
+from api.company.models import Company
+from api.user.models import User
+from api.tag.models import Tag
+
+contact_tags_table = db.Table('contact_tags',
+    db.Column('contact_id', db.ForeignKey('contacts.id'), primary_key=True),
+    db.Column('tag_id', db.ForeignKey('tags.id'), primary_key=True)
+)
 
 class Contact(db.Model, CRUDMixin):
 

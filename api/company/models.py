@@ -1,6 +1,6 @@
 from api import db, ma
-from .mixins import CRUDMixin
-from .user import User
+from api.mixins import CRUDMixin
+from api.user.models import User
 
 class Company(db.Model, CRUDMixin):
 

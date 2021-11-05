@@ -2,8 +2,10 @@ from flask import request, abort, jsonify, url_for
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
+from http import HTTPStatus
+
 from . import blueprint
-from api.models import User
+from api.user.models import User
 from api import db
 
 @blueprint.route('/register', methods = ['POST'])
@@ -28,7 +30,7 @@ def register():
     user.hash_password(password)
     db.session.add(user)
     db.session.commit()
-    return jsonify({"message": "User registred successfuly"}), 201
+    return jsonify({"message": "User registred successfuly"}), HTTPStatus.CREATED
 
 
 @blueprint.route("/login", methods=["POST"])
@@ -42,7 +44,8 @@ def login():
 
     # Notice that we are passing in the actual sqlalchemy user object here
     access_token = create_access_token(identity=user)
-    return jsonify(token=access_token)
+    return jsonify(token=access_token), HTTPStatus.OK
+
 
 @blueprint.route("/user", methods=["GET"])
 @jwt_required()
@@ -52,4 +55,4 @@ def user():
         id=current_user.id,
         fullName=current_user.fullname(),
         avatar=current_user.gravatar(),
-    )
+    ), HTTPStatus.OK

@@ -1,7 +1,7 @@
 from api import db, ma
-from .mixins import CRUDMixin
-from .contact import Contact
-from .user import User
+from api.mixins import CRUDMixin
+from api.contact.models import Contact
+from api.user.models import User
 
 class Task(db.Model, CRUDMixin):
 

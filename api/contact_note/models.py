@@ -1,7 +1,7 @@
 from api import db, ma
-from .mixins import CRUDMixin
-from .contact import Contact
-from .user import User
+from api.mixins import CRUDMixin
+from api.contact.models import Contact
+from api.user.models import User
 
 class ContactNote(db.Model, CRUDMixin):
 
@@ -18,7 +18,7 @@ class ContactNote(db.Model, CRUDMixin):
     sales_id = db.Column(db.Integer, db.ForeignKey(User.id))
     
     # Relationships
-    contact = db.relationship('Contact', backref="notes")
+    contact = db.relationship('Contact', backref=db.backref("notes", cascade="all, delete-orphan"))
     sales = db.relationship('User', backref="contact_notes")
     
     
