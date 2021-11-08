@@ -7,7 +7,7 @@ import {
 
 import { dataProvider } from './dataProvider';
 import { authProvider } from './authProvider';
-import Layout from './Layout';
+import Layout from './layout/Layout';
 import contacts from './contacts';
 import companies from './companies';
 import deals from './deals';
