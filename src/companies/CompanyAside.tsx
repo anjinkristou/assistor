@@ -48,9 +48,9 @@ export const CompanyAside = ({
             <Divider />
 
             <Box mt={2}>
-                Website: <Link href={record.website}>{record.website}</Link>
+                Website: <Link href={record.website} target="_blank" rel="noreferrer">{record.website}</Link>
                 <br />
-                LinkedIn: <Link href={record.linkedIn}>LinkedIn</Link>
+                LinkedIn: <Link href={record.linkedIn} target="_blank" rel="noreferrer">LinkedIn</Link>
             </Box>
 
             <Box mt={1}>

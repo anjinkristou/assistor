@@ -19,7 +19,7 @@ import {
 const getList = async (resource: string, params: any): Promise<GetListResult<any>> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
             params,
@@ -35,7 +35,7 @@ const getList = async (resource: string, params: any): Promise<GetListResult<any
 const getOne = async (resource: string, params: any): Promise<GetOneResult<any>> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
             params,
@@ -51,7 +51,7 @@ const getOne = async (resource: string, params: any): Promise<GetOneResult<any>>
 const getMany = async (resource: string, params: any): Promise<GetManyResult<any>> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
             params,
@@ -67,7 +67,7 @@ const getMany = async (resource: string, params: any): Promise<GetManyResult<any
 const getManyReference = async (resource: string, params: any): Promise<GetManyReferenceResult<any>>  => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
             params,
@@ -83,7 +83,7 @@ const getManyReference = async (resource: string, params: any): Promise<GetManyR
 const create = async (resource: string, params: any): Promise<CreateResult<any>> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
         };
@@ -98,7 +98,7 @@ const create = async (resource: string, params: any): Promise<CreateResult<any>>
 const update = async (resource: string, params: any): Promise<UpdateResult<any>> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
         };
@@ -113,7 +113,7 @@ const update = async (resource: string, params: any): Promise<UpdateResult<any>>
 const updateMany = async (resource: string, params: any): Promise<UpdateManyResult> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
         };
@@ -128,7 +128,7 @@ const updateMany = async (resource: string, params: any): Promise<UpdateManyResu
 const deleteOne = async (resource: string, params: any): Promise<DeleteResult<any>> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
             params,
@@ -144,7 +144,7 @@ const deleteOne = async (resource: string, params: any): Promise<DeleteResult<an
 const deleteMany = async (resource: string, params: any): Promise<DeleteManyResult> => {
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` },
             params,

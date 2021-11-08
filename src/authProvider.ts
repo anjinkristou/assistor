@@ -14,8 +14,13 @@ interface Permission {
     permissions: string;
 }
 
-interface Token {
-    token: string;
+interface LoginToken {
+    access_token: string;
+    refresh_token: string;
+}
+
+interface RefreshToken {
+    access_token: string;
 }
 
 interface UserIdentity {
@@ -26,11 +31,12 @@ interface UserIdentity {
 
 const login = async ({ username, password }: {username: string; password:string;}) => {
     try{
-        const response = await axios.post<Token>(`${baseURL}/login`, { username, password })
-        const { token } : { token: any;} = response.data;
-        const decodedToken = decodeJwt<Permission>(token);
+        const response = await axios.post<LoginToken>(`${baseURL}/login`, { username, password })
+        const { access_token, refresh_token } = response.data;
+        const decodedToken = decodeJwt<Permission>(access_token);
         setCredentials({
-            token: token,
+            access_token,
+            refresh_token,
             permissions: decodedToken.permissions,
         });
         return Promise.resolve();
@@ -43,7 +49,7 @@ const login = async ({ username, password }: {username: string; password:string;
 const getIdentity = async () => { 
     try{
         const credentials = getCredentials();
-        const token = credentials?.token;
+        const token = credentials?.access_token;
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
@@ -56,19 +62,37 @@ const getIdentity = async () => {
         removeCredentials();
         return Promise.reject({message: response.data, status: response.status});
     }
- }
+ };
+
+ const checkError = async ({ status }: any) => {
+    if (status === 401 || status === 403 || status === 422) {
+        const credentials = getCredentials();
+        if(!credentials) return Promise.reject();
+
+        const token = credentials?.refresh_token;
+        try{
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+            let response = await axios.post<RefreshToken>(`${baseURL}/refresh`, undefined, config)
+            const { access_token } = response.data;
+            setCredentials({
+                ...credentials,
+                access_token: access_token,
+            });
+        } catch (error: any) {
+            return Promise.reject();
+        }
+    }
+    return Promise.resolve();
+};
 
 export const authProvider: AuthProvider =  {
     login: login,
-    checkError: ({ status }: any) => {
-        if (status === 401 || status === 403 || status === 422) {
-            removeCredentials();
-            return Promise.reject();
-        }
-        return Promise.resolve();
-    },
+    checkError: checkError,
     checkAuth: () => (isAuthenticated() ? Promise.resolve() : Promise.reject()),
-    logout: () => {
+    logout: async () => {
+        await axios.get(`${baseURL}/logout`)
         removeCredentials();
         return Promise.resolve();
     },

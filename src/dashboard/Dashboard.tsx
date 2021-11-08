@@ -10,14 +10,14 @@ import { DealsPipeline } from './DealsPipeline';
 export const Dashboard = () => {
     return (
         <>
-            <Box display="flex" mt="2em">
+            {/* <Box display="flex" mt="2em">
                 <Box flex="3" mr="1em">
                     <DealsChart />
                 </Box>
                 <Box flex="1">
                     <Welcome />
                 </Box>
-            </Box>
+            </Box> */}
             <Box display="flex" mt="2em">
                 <Box flex="1" mr="1em">
                     <LatestNotes />
@@ -29,12 +29,12 @@ export const Dashboard = () => {
                     <Box flex="1">
                         <DealsPipeline />
                         {/*<Card>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                Upcoming tasks
-              </Typography>
-            </CardContent>
-          </Card>*/}
+                            <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                Upcoming tasks
+                            </Typography>
+                            </CardContent>
+                        </Card>*/}
                     </Box>
                 </Box>
             </Box>

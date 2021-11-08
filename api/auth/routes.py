@@ -1,9 +1,11 @@
 from flask import request, abort, jsonify, url_for
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_refresh_token
 from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import set_access_cookies
 from flask_jwt_extended import unset_jwt_cookies
+from flask_jwt_extended import get_jwt_identity
 from http import HTTPStatus
 
 from flask import Blueprint
@@ -47,13 +49,22 @@ def login():
         return jsonify(message="Wrong username or password"), 401
 
     # Notice that we are passing in the actual sqlalchemy user object here
-    access_token = create_access_token(identity=user)
-    response = jsonify({"msg": "login successful",
-                        "token": access_token})
+    access_token = create_access_token(identity=user, fresh=True)
+    refresh_token = create_refresh_token(identity=user)
+    response = jsonify({"access_token": access_token,
+                        "refresh_token": refresh_token})
     set_access_cookies(response, access_token)
     return response
 
-@blueprint.route("/logout", methods=["POST"])
+
+@blueprint.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def refresh():
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity, fresh=False)
+    return jsonify(access_token=access_token)
+
+@blueprint.route("/logout", methods=["GET"])
 def logout():
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)

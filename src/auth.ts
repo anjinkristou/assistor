@@ -1,5 +1,6 @@
 export type Credentials = {
-  token: string;
+  access_token: string;
+  refresh_token: string;
   permissions: string;
 };
 
