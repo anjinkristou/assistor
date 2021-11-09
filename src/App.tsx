@@ -13,6 +13,7 @@ import companies from './companies';
 import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
+import Login from './Login'
 
 // FIXME MUI bug https://github.com/mui-org/material-ui/issues/13394
 const theme =
@@ -25,6 +26,7 @@ const App = () => (
         customRoutes={customRoutes}
         dataProvider={dataProvider}
         authProvider={authProvider}
+        // loginPage={Login}
         layout={Layout}
         dashboard={Dashboard}
         theme={theme}
