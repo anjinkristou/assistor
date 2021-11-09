@@ -40,6 +40,7 @@ const App = () => (
         <Resource name="tasks" list={ListGuesser} />
         <Resource name="sales" list={ListGuesser} />
         <Resource name="tags" list={ListGuesser} />
+        <Resource name="countries" list={ListGuesser} />
     </Admin>
 );
 

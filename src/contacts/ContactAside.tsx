@@ -106,13 +106,17 @@ export const ContactAside = ({ record, link = 'edit' }: any) => (
             <TagsListEdit record={record} />
         </Box>
 
-        <ReferenceManyField
-            resource="contacts"
-            target="contact_id"
-            reference="tasks"
-        >
-            <TasksIterator />
-        </ReferenceManyField>
+        <Box>
+            <Typography variant="subtitle2">Tasks</Typography>
+            <Divider />
+            <ReferenceManyField
+                resource="contacts"
+                target="contact_id"
+                reference="tasks"
+            >
+                <TasksIterator />
+            </ReferenceManyField>
+        </Box>
     </Box>
 );
 
@@ -120,9 +124,7 @@ const TasksIterator = () => {
     const { data, ids, loading } = useListContext();
     if (loading || ids.length === 0) return null;
     return (
-        <Box>
-            <Typography variant="subtitle2">Tasks</Typography>
-            <Divider />
+
 
             <List>
                 {ids.map(id => {
@@ -148,6 +150,5 @@ const TasksIterator = () => {
                     );
                 })}
             </List>
-        </Box>
     );
 };

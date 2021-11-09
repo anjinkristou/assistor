@@ -45,7 +45,8 @@ def create_app(config):
                 'contact_note', 
                 'task', 
                 'deal', 
-                'deal_note'
+                'deal_note',
+                'country'
             ):
             module = import_module(f'api.{module_name}.routes')
             app.register_blueprint(module.blueprint)

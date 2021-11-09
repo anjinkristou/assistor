@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Paper, Typography, Link as MuiLink } from '@material-ui/core';
+import { Paper, Typography, Link as MuiLink, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ContactsIcon from '@material-ui/icons/AccountCircle';
 import DealIcon from '@material-ui/icons/MonetizationOn';
-import { linkToRecord, SelectField } from 'react-admin';
+import { linkToRecord, SelectField, ReferenceField, ImageField } from 'react-admin';
 import { Link } from 'react-router-dom';
 
 import { sectors } from './sectors';
 import { CompanyAvatar } from './CompanyAvatar';
 import { Company } from '../types';
+import { CountryField } from './CountryField';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -58,9 +59,19 @@ export const CompanyCard = ({ record }: { record: Company }) => {
                 <div className={classes.identity}>
                     <CompanyAvatar record={record} />
                     <div className={classes.name}>
+                        <Box display="flex" alignItems="center">
                         <Typography variant="subtitle2">
                             {record.name}
                         </Typography>
+                        <ReferenceField
+                            record={record}
+                            source="country_id"
+                            reference="countries"
+                            link={false}
+                        >
+                            <CountryField size='small' />
+                        </ReferenceField>
+                        </Box>
                         <SelectField
                             color="textSecondary"
                             source="sector"

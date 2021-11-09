@@ -7,6 +7,7 @@ import {
     TextInput,
     SelectInput,
     useRecordContext,
+    AutocompleteInput,
     required,
 } from 'react-admin';
 import { Box, CardContent, Divider } from '@material-ui/core';
@@ -52,6 +53,12 @@ export const CompanyEdit = (props: EditProps) => {
                 />
                 <TextInput source="zipcode" formClassName={classes.inline} />
                 <TextInput source="stateAbbr" formClassName={classes.inline} />
+                <ReferenceInput
+                    source="country_id"
+                    reference="countries"
+                >
+                    <AutocompleteInput optionText="nicename" />
+                </ReferenceInput>
                 <CustomDivider />
                 <TextInput source="website" fullWidth helperText={false} />
                 <TextInput source="linkedIn" fullWidth helperText={false} />

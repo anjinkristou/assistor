@@ -6,6 +6,8 @@ import {
     TextField,
     ReferenceManyField,
     SelectField,
+    ReferenceField,
+    ImageField,
     useShowContext,
     useRecordContext,
     useListContext,
@@ -40,6 +42,7 @@ import { CompanyAside } from './CompanyAside';
 import { Company, Deal, Contact } from '../types';
 import { stageNames } from '../deals/stages';
 import { NotesIterator } from '../notes';
+import { CountryField } from './CountryField';
 
 export const CompanyShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -72,6 +75,15 @@ const CompanyShowContent = () => {
                                         choices={sizes}
                                     />
                                 </Typography>
+                            </Box>
+                            <Box>
+                                <ReferenceField
+                                    source="country_id"
+                                    reference="countries"
+                                    link={false}
+                                >
+                                    <CountryField />
+                                </ReferenceField>
                             </Box>
                         </Box>
                         <Tabs

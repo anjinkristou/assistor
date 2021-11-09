@@ -1,6 +1,7 @@
 from api import db, ma
 from api.mixins import CRUDMixin
 from api.user.models import User
+from api.country.models import Country
 
 class Company(db.Model, CRUDMixin):
 
@@ -23,9 +24,11 @@ class Company(db.Model, CRUDMixin):
     
     # Foreign keys
     sales_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    country_id = db.Column(db.Integer, db.ForeignKey(Country.id))
     
     # Relationships
     sales = db.relationship('User', backref="companies")
+    country = db.relationship('Country', backref="companies")
     
     
 
@@ -48,6 +51,7 @@ class CompanySchema(ma.SQLAlchemySchema):
     created_at = ma.auto_field()
     
     sales_id  = ma.auto_field()
+    country_id  = ma.auto_field()
         
     nb_contacts = ma.Function(lambda obj: len(obj.contacts))
     nb_deals = ma.Function(lambda obj: len(obj.deals))
