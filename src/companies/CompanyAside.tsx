@@ -52,17 +52,16 @@ export const CompanyAside = ({
                 <br />
                 LinkedIn: <Link href={record.linkedIn} target="_blank" rel="noreferrer">LinkedIn</Link>
             </Box>
-
             <Box mt={1}>
-                <TextField source="phone_number" record={record} />{' '}
-                <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="span"
-                >
-                    Main
-                </Typography>
+                Relation: <TextField source="relation" record={record} />
             </Box>
+
+            {record.phone_number && (
+                    <Box mt={1}>
+                        <TextField source="phone_number" record={record} />{' '}
+                        <Typography variant="body2" color="textSecondary" component="span">Main</Typography>
+                    </Box>
+            )}
 
             <Box mt={1} mb={3}>
                 <TextField source="address" />

@@ -18,6 +18,7 @@ import { CompanyAside } from './CompanyAside';
 import { LogoField } from './LogoField';
 import { sectors } from './sectors';
 import { sizes } from './sizes';
+import { relations } from './relations';
 
 const useStyles = makeStyles({
     inline: {
@@ -43,6 +44,11 @@ export const CompanyEdit = (props: EditProps) => {
                 <SelectInput
                     source="size"
                     choices={sizes}
+                    formClassName={classes.inline}
+                />
+                <SelectInput
+                    source="relation"
+                    choices={relations}
                     formClassName={classes.inline}
                 />
                 <CustomDivider />

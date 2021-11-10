@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Paper, Typography, Link as MuiLink, Box } from '@material-ui/core';
+import { Paper, Typography, Link as MuiLink, Box, Chip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ContactsIcon from '@material-ui/icons/AccountCircle';
 import DealIcon from '@material-ui/icons/MonetizationOn';
@@ -72,6 +72,13 @@ export const CompanyCard = ({ record }: { record: Company }) => {
                             <CountryField size='small' />
                         </ReferenceField>
                         </Box>
+                        {record.relation && (
+                            <Chip 
+                                label={record.relation} 
+                                variant="outlined" 
+                                size="small"
+                            />
+                        )}
                         <SelectField
                             color="textSecondary"
                             source="sector"

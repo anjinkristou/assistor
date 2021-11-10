@@ -7,6 +7,7 @@ import {
     TextInput,
     SelectInput,
     required,
+    AutocompleteInput,
     useGetIdentity,
 } from 'react-admin';
 import { Box, CardContent, Divider, Avatar } from '@material-ui/core';
@@ -16,6 +17,7 @@ import clsx from 'clsx';
 
 import { sectors } from './sectors';
 import { sizes } from './sizes';
+import { relations } from './relations';
 
 const useStyles = makeStyles({
     inline: {
@@ -53,6 +55,11 @@ export const CompanyCreate = (props: CreateProps) => {
                     choices={sizes}
                     formClassName={classes.inline}
                 />
+                <SelectInput
+                    source="relation"
+                    choices={relations}
+                    formClassName={classes.inline}
+                />
                 <CustomDivider />
                 <TextInput source="address" fullWidth helperText={false} />
                 <TextInput
@@ -61,6 +68,12 @@ export const CompanyCreate = (props: CreateProps) => {
                 />
                 <TextInput source="zipcode" formClassName={classes.inline} />
                 <TextInput source="stateAbbr" formClassName={classes.inline} />
+                <ReferenceInput
+                    source="country_id"
+                    reference="countries"
+                >
+                    <AutocompleteInput optionText="nicename" />
+                </ReferenceInput>
                 <CustomDivider />
                 <TextInput source="website" fullWidth helperText={false} />
                 <TextInput source="linkedIn" fullWidth helperText={false} />

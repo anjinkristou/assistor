@@ -13,6 +13,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 import { sizes } from './sizes';
 import { sectors } from './sectors';
+import { relations } from './relations';
 
 export const CompanyListFilter = () => {
     const { identity } = useGetIdentity();
@@ -20,12 +21,12 @@ export const CompanyListFilter = () => {
         <Box width="15em" order="-1" marginRight="1em" mb={1}>
             <FilterLiveSearch />
 
-            <FilterList label="Size" icon={<BusinessIcon />}>
-                {sizes.map(size => (
+            <FilterList label="Relation" icon={<BusinessIcon />}>
+                {relations.map(relation => (
                     <FilterListItem
-                        key={size.id}
-                        label={size.name}
-                        value={{ size: size.id }}
+                        key={relation.id}
+                        label={relation.name}
+                        value={{ relation: relation.id }}
                     />
                 ))}
             </FilterList>

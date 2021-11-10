@@ -26,6 +26,7 @@ import {
     ListItemSecondaryAction,
     Tabs,
     Tab,
+    Chip,
     Divider,
 } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -65,16 +66,25 @@ const CompanyShowContent = () => {
                         <Box display="flex" mb={1}>
                             <LogoField record={record as any} />
                             <Box ml={2} flex="1">
-                                <Typography variant="h5">
-                                    {record.name}
-                                </Typography>
-                                <Typography variant="body2">
-                                    <TextField source="sector" />,{' '}
-                                    <SelectField
-                                        source="size"
-                                        choices={sizes}
-                                    />
-                                </Typography>
+                                <Box display="flex" gridGap={4}>
+                                    <Typography variant="h5">{record.name}</Typography>
+                                    {record.relation && (
+                                        <Chip 
+                                            label={record.relation} 
+                                            variant="outlined" 
+                                            size="small"
+                                        />
+                                    )}
+                                </Box>
+                                {record.sector && (
+                                        <Typography variant="body2">
+                                            <TextField source="sector" />,{' '}
+                                            <SelectField
+                                                source="size"
+                                                choices={sizes}
+                                            />
+                                        </Typography>
+                                )}
                             </Box>
                             <Box>
                                 <ReferenceField
