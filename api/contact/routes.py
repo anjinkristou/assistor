@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 import json
+from http import HTTPStatus
 
 from flask import Blueprint
 
@@ -67,6 +68,9 @@ def update_contact():
         data['tags'] = Tag.query.filter(Tag.id.in_(tags)).all()
     
     contact = Contact.query.get(id)
+    if contact is None:
+        return jsonify(message='No record'), HTTPStatus.NO_CONTENT
+    
     contact.update(**data)
     
     result = contact_schema.dump(contact)

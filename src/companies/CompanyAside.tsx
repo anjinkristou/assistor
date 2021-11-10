@@ -11,6 +11,7 @@ import {
 import { Box, Typography, Divider, Link } from '@material-ui/core';
 
 import { Company, Sale } from '../types';
+import { TagsListEdit } from '../tags/TagsListEdit';
 
 export const CompanyAside = ({
     record,
@@ -119,6 +120,12 @@ export const CompanyAside = ({
                         }
                     />
                 </ReferenceField>
+            </Box>
+
+            <Box mb={3}>
+                <Typography variant="subtitle2">Tags</Typography>
+                <Divider />
+                <TagsListEdit record={record} reference="companies" />
             </Box>
         </Box>
     ) : null;

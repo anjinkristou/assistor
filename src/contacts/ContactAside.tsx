@@ -11,7 +11,7 @@ import {
     FunctionField,
 } from 'react-admin';
 import { Box, Typography, Divider, List, ListItem } from '@material-ui/core';
-import { TagsListEdit } from './TagsListEdit';
+import { TagsListEdit } from '../tags/TagsListEdit';
 
 import { Sale } from '../types';
 
@@ -103,7 +103,7 @@ export const ContactAside = ({ record, link = 'edit' }: any) => (
         <Box mb={3}>
             <Typography variant="subtitle2">Tags</Typography>
             <Divider />
-            <TagsListEdit record={record} />
+            <TagsListEdit record={record} reference="contacts" />
         </Box>
 
         <Box>

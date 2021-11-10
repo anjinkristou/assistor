@@ -23,10 +23,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { colors } from '../tags/colors';
-import { Contact } from '../types';
+import { colors } from './colors';
+import { Contact, Company } from '../types';
 
-export const TagsListEdit = ({ record }: { record: Contact }) => {
+export const TagsListEdit = ({ 
+    record,
+    reference, 
+}: { 
+    record: Contact | Company;
+    reference: 'companies' | 'contacts';
+}) => {
     const [open, setOpen] = useState(false);
     const [newTagName, setNewTagName] = useState('');
     const [newTagColor, setNewTagColor] = useState(colors[0]);
@@ -61,12 +67,12 @@ export const TagsListEdit = ({ record }: { record: Contact }) => {
         const tags: Identifier[] = record.tags.filter(
             (tagId: Identifier) => tagId !== id
         );
-        update('contacts', record.id, { tags }, record);
+        update(reference, record.id, { tags }, record);
     };
 
     const handleAddTag = (id: Identifier) => {
         const tags: Identifier[] = [...record.tags, id];
-        update('contacts', record.id, { tags }, record);
+        update(reference, record.id, { tags }, record);
         setAnchorEl(null);
     };
 
@@ -91,7 +97,7 @@ export const TagsListEdit = ({ record }: { record: Contact }) => {
             {
                 onSuccess: ({ data }) => {
                     update(
-                        'contacts',
+                        reference,
                         record.id,
                         { tags: [...record.tags, data.id] },
                         record,

@@ -71,3 +71,8 @@ export interface Deal extends Record {
     index: number;
     nb_notes: number;
 }
+
+export interface Tag extends Record {
+    name: string;
+    color: string;
+}

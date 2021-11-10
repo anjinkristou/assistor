@@ -2,6 +2,12 @@ from api import db, ma
 from api.mixins import CRUDMixin
 from api.user.models import User
 from api.country.models import Country
+from api.tag.models import Tag
+
+company_tags_table = db.Table('company_tags',
+    db.Column('company_id', db.ForeignKey('companies.id'), primary_key=True),
+    db.Column('tag_id', db.ForeignKey('tags.id'), primary_key=True)
+)
 
 class Company(db.Model, CRUDMixin):
 
@@ -32,6 +38,7 @@ class Company(db.Model, CRUDMixin):
     sales = db.relationship('User', backref="companies")
     country = db.relationship('Country', backref="companies")
     distributor = db.relationship('Company', backref="customers", remote_side=[id])
+    tags = db.relationship('Tag', secondary=company_tags_table, backref='comapnies')
     
 
 class CompanySchema(ma.SQLAlchemySchema):
@@ -62,6 +69,7 @@ class CompanySchema(ma.SQLAlchemySchema):
     nb_notes = ma.Function(lambda obj: len(obj.notes))
     nb_customers = ma.Function(lambda obj: len(obj.customers))
     country_iso = ma.Function(lambda obj: obj.country.iso if obj.country else None)
+    tags = ma.Function(lambda obj: [tag.id for tag in obj.tags])
 
 company_schema = CompanySchema()
 companies_schema = CompanySchema(many=True)

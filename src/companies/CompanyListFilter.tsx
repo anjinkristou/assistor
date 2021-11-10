@@ -5,18 +5,27 @@ import {
     FilterLiveSearch,
     FilterListItem,
     useGetIdentity,
+    useGetList,
 } from 'react-admin';
-import { Box } from '@material-ui/core';
+import { Box, Chip } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 import { sizes } from './sizes';
 import { sectors } from './sectors';
 import { relations } from './relations';
+import { TagChip } from '../tags/TagChip';
+import { Tag } from '../types';
 
 export const CompanyListFilter = () => {
     const { identity } = useGetIdentity();
+    const { data, ids } = useGetList(
+        'tags',
+        { page: 1, perPage: 10 },
+        { field: 'name', order: 'ASC' }
+    );
     return (
         <Box width="15em" order="-1" marginRight="1em" mb={1}>
             <FilterLiveSearch />
@@ -29,6 +38,18 @@ export const CompanyListFilter = () => {
                         value={{ relation: relation.id }}
                     />
                 ))}
+            </FilterList>
+
+            <FilterList label="Tags" icon={<LocalOfferIcon />}>
+                {ids &&
+                    data &&
+                    ids.map(id => (
+                        <FilterListItem
+                            key={id}
+                            label={<TagChip record={data[id] as Tag}/>}
+                            value={{ tags: [id] }}
+                        />
+                    ))}
             </FilterList>
 
             <FilterList label="Sector" icon={<LocalShippingIcon />}>

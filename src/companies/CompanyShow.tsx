@@ -36,7 +36,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 
 import { Avatar } from '../contacts/Avatar';
 import { Status } from '../misc/Status';
-import { TagsList } from '../contacts/TagsList';
+import { TagsList } from '../tags/TagsList';
 import { sizes } from './sizes';
 import { LogoField } from './LogoField';
 import { CompanyAside } from './CompanyAside';

@@ -30,7 +30,7 @@ import { formatDistance } from 'date-fns';
 
 import { Avatar } from './Avatar';
 import { Status } from '../misc/Status';
-import { TagsList } from './TagsList';
+import { TagsList } from '../tags/TagsList';
 import { ContactListFilter } from './ContactListFilter';
 import { Contact } from '../types';
 

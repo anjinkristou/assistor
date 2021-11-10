@@ -15,6 +15,8 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { endOfYesterday, startOfWeek, startOfMonth, subMonths } from 'date-fns';
 
 import { Status } from '../misc/Status';
+import { TagChip } from '../tags/TagChip';
+import { Tag } from '../types';
 
 export const ContactListFilter = () => {
     const { identity } = useGetIdentity();
@@ -114,17 +116,7 @@ export const ContactListFilter = () => {
                     ids.map(id => (
                         <FilterListItem
                             key={id}
-                            label={
-                                <Chip
-                                    label={data[id]?.name}
-                                    size="small"
-                                    style={{
-                                        backgroundColor: data[id]?.color,
-                                        border: 0,
-                                        cursor: 'pointer',
-                                    }}
-                                />
-                            }
+                            label={<TagChip record={data[id] as Tag}/>}
                             value={{ tags: [id] }}
                         />
                     ))}
