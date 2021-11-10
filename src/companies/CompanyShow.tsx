@@ -206,32 +206,25 @@ const ContactsIterator = () => {
                                 <Avatar record={contact} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={
-                                    `${contact.first_name} ${contact.last_name} (Notes: ${contact.nb_notes})`
-                                }
+                                primary={`${contact.first_name} ${contact.last_name}`}
                                 secondary={
                                     <>
                                         {contact.title}{' '}
+                                        {contact.nb_notes &&
+                                        `- ${contact.nb_notes} notes `}
                                         <TagsList record={contact} />
                                     </>
                                 }
                             />
                             <ListItemSecondaryAction>
-                                <Box display="flex" alignItems="center" gridGap={3}>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="span"
-                                    >
-                                        last activity{' '}
-                                        {formatDistance(
-                                            new Date(contact.last_seen),
-                                            now
-                                        )}{' '}
-                                        ago 
-                                    </Typography>
-                                    <Status status={contact.status} />
-                                </Box>
+                                <Typography variant="body2" color="textSecondary">
+                                    last activity{' '}
+                                    {formatDistance(
+                                        new Date(contact.last_seen),
+                                        now
+                                    )}{' '}
+                                    ago <Status status={contact.status} />
+                                </Typography>
                             </ListItemSecondaryAction>
                         </ListItem>
                     );

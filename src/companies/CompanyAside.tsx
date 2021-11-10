@@ -55,12 +55,23 @@ export const CompanyAside = ({
             <Box mt={1}>
                 Relation: <TextField source="relation" record={record} />
             </Box>
+            {record.distributor_id && (
+                <Box mt={1}>
+                    Distributor: <ReferenceField
+                            record={record}
+                            source="distributor_id"
+                            reference="companies"
+                        >
+                            <TextField source="name" record={record} />
+                        </ReferenceField>
+                </Box>
+            )}
 
             {record.phone_number && (
-                    <Box mt={1}>
-                        <TextField source="phone_number" record={record} />{' '}
-                        <Typography variant="body2" color="textSecondary" component="span">Main</Typography>
-                    </Box>
+                <Box mt={1}>
+                    <TextField source="phone_number" record={record} />{' '}
+                    <Typography variant="body2" color="textSecondary" component="span">Main</Typography>
+                </Box>
             )}
 
             <Box mt={1} mb={3}>

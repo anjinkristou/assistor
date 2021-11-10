@@ -26,11 +26,12 @@ class Company(db.Model, CRUDMixin):
     # Foreign keys
     sales_id = db.Column(db.Integer, db.ForeignKey(User.id))
     country_id = db.Column(db.Integer, db.ForeignKey(Country.id))
+    distributor_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
     
     # Relationships
     sales = db.relationship('User', backref="companies")
     country = db.relationship('Country', backref="companies")
-    
+    distributor = db.relationship('Company', backref="customers", remote_side=[id])
     
 
 class CompanySchema(ma.SQLAlchemySchema):
@@ -54,10 +55,13 @@ class CompanySchema(ma.SQLAlchemySchema):
     
     sales_id  = ma.auto_field()
     country_id  = ma.auto_field()
+    distributor_id  = ma.auto_field()
         
     nb_contacts = ma.Function(lambda obj: len(obj.contacts))
     nb_deals = ma.Function(lambda obj: len(obj.deals))
     nb_notes = ma.Function(lambda obj: len(obj.notes))
+    nb_customers = ma.Function(lambda obj: len(obj.customers))
+    country_iso = ma.Function(lambda obj: obj.country.iso if obj.country else None)
 
 company_schema = CompanySchema()
 companies_schema = CompanySchema(many=True)

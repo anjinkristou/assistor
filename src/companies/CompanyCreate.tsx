@@ -18,6 +18,7 @@ import clsx from 'clsx';
 import { sectors } from './sectors';
 import { sizes } from './sizes';
 import { relations } from './relations';
+import DistributorInput from './DistributorInput';
 
 const useStyles = makeStyles({
     inline: {
@@ -60,6 +61,12 @@ export const CompanyCreate = (props: CreateProps) => {
                     choices={relations}
                     formClassName={classes.inline}
                 />
+                <ReferenceInput
+                    source="distributor_id"
+                    reference="companies"
+                >
+                    <DistributorInput />
+                </ReferenceInput>
                 <CustomDivider />
                 <TextInput source="address" fullWidth helperText={false} />
                 <TextInput

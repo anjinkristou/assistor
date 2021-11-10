@@ -1,3 +1,4 @@
+import json
 from flask import request, abort, jsonify, url_for
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import create_refresh_token
@@ -60,8 +61,9 @@ def login():
 @blueprint.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def refresh():
-    identity = get_jwt_identity()
-    access_token = create_access_token(identity=identity, fresh=False)
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    access_token = create_access_token(identity=user)
     return jsonify(access_token=access_token)
 
 @blueprint.route("/logout", methods=["GET"])

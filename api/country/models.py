@@ -32,6 +32,7 @@ class Countrieschema(ma.SQLAlchemySchema):
     phonecode = ma.auto_field()
     
     url = ma.Function(lambda obj: f"https://flagcdn.com/48x36/{obj.iso.lower()}.png")
+    nb_companies = ma.Function(lambda obj: len(obj.companies))
 
 country_schema = Countrieschema()
 countries_schema = Countrieschema(many=True)

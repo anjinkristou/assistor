@@ -19,6 +19,7 @@ import { LogoField } from './LogoField';
 import { sectors } from './sectors';
 import { sizes } from './sizes';
 import { relations } from './relations';
+import DistributorInput from './DistributorInput';
 
 const useStyles = makeStyles({
     inline: {
@@ -29,6 +30,10 @@ const useStyles = makeStyles({
         },
     },
 });
+
+const renderDistributor = (choice: any) => {
+
+}
 
 export const CompanyEdit = (props: EditProps) => {
     const classes = useStyles();
@@ -51,6 +56,12 @@ export const CompanyEdit = (props: EditProps) => {
                     choices={relations}
                     formClassName={classes.inline}
                 />
+                <ReferenceInput
+                    source="distributor_id"
+                    reference="companies"
+                >
+                    <DistributorInput />
+                </ReferenceInput>
                 <CustomDivider />
                 <TextInput source="address" fullWidth helperText={false} />
                 <TextInput
