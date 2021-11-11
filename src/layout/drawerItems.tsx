@@ -2,6 +2,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import BusinessIcon from '@material-ui/icons/Business';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 export const mainListItems = [
     {
@@ -18,6 +19,11 @@ export const mainListItems = [
         text: "Companies",
         link: "/companies",
         icon: (<BusinessIcon />)
+    },
+    {
+        text: "Products",
+        link: "/products",
+        icon: (<ShoppingCartIcon />)
     },
     {
         text: "Deals",

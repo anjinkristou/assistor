@@ -8,8 +8,8 @@ class FamilyCategory(db.Model, CRUDMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)
-    website_url = db.Column(db.String)
-    image_url = db.Column(db.String)
+    website = db.Column(db.String)
+    image = db.Column(db.String)
     description = db.Column(db.Unicode)
 
     # Foreign keys
@@ -24,8 +24,8 @@ class ProductFamily(db.Model, CRUDMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)
-    website_url = db.Column(db.String)
-    image_url = db.Column(db.String)
+    website = db.Column(db.String)
+    image = db.Column(db.String)
     description = db.Column(db.Unicode)
 
     # Foreign keys
@@ -43,12 +43,12 @@ class Product(db.Model, CRUDMixin):
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String)
     code = db.Column(db.String)
-    website_url = db.Column(db.String)
-    image_url = db.Column(db.String)
+    website = db.Column(db.String)
+    image = db.Column(db.String)
     description = db.Column(db.Unicode)
 
     # Foreign keys
-    company_id = db.Column(db.Integer, db.ForeignKey(Company.Id))
+    company_id = db.Column(db.Integer, db.ForeignKey(Company.id))
     family_id = db.Column(db.Integer, db.ForeignKey(ProductFamily.id))
 
     # Relationships
@@ -62,8 +62,8 @@ class FamilyCategorySchema(ma.SQLAlchemySchema):
     
     id = ma.auto_field()
     name = ma.auto_field()
-    website_url = ma.auto_field()
-    image_url = ma.auto_field()
+    website = ma.auto_field()
+    image = ma.auto_field()
     description = ma.auto_field()
     
     nb_families = ma.Function(lambda obj: len(obj.families))
@@ -79,8 +79,8 @@ class ProductFamilySchema(ma.SQLAlchemySchema):
     
     id = ma.auto_field()
     name = ma.auto_field()
-    website_url = ma.auto_field()
-    image_url = ma.auto_field()
+    website = ma.auto_field()
+    image = ma.auto_field()
     description = ma.auto_field()
     
     category_id = ma.auto_field()
@@ -99,8 +99,8 @@ class ProductSchema(ma.SQLAlchemySchema):
     id = ma.auto_field()
     model = ma.auto_field()
     code = ma.auto_field()
-    website_url = ma.auto_field()
-    image_url = ma.auto_field()
+    website = ma.auto_field()
+    image = ma.auto_field()
     description = ma.auto_field()
     
     company_id = ma.auto_field()

@@ -1,6 +1,5 @@
 from flask import request, jsonify
 import json
-from flask import Blueprint
 
 from .models import User, user_schema, users_schema
 from api.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs

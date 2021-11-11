@@ -24,15 +24,15 @@ import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { colors } from './colors';
-import { Contact, Company } from '../types';
+import { Contact, Company, Product } from '../types';
 import { Tag } from '../types';
 
 export const TagsListEdit = ({ 
     record,
     reference, 
 }: { 
-    record: Contact | Company;
-    reference: 'companies' | 'contacts';
+    record: Contact | Company | Product;
+    reference: 'companies' | 'contacts' | 'products';
 }) => {
     const [open, setOpen] = useState(false);
     const [newTagName, setNewTagName] = useState('');

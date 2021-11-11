@@ -2,9 +2,6 @@ from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 import json
 
-from flask import Blueprint
-
-blueprint = Blueprint('dealNotes', __name__, url_prefix='/dealNotes')
 from .models import DealNote, deal_note_schema, deal_notes_schema
 from api.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
 

@@ -2,9 +2,6 @@ from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 import json
 
-from flask import Blueprint
-
-blueprint = Blueprint('tags', __name__, url_prefix='/tags')
 from .models import Tag, tag_schema, tags_schema
 from api.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
 

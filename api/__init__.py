@@ -33,6 +33,9 @@ def init_plugins(app):
             'task', 
             'deal', 
             'deal_note',
+            'product',
+            'product_note',
+            'product_property',
             'country'
         ):
         module = import_module(f'api.{module_name}.routes')

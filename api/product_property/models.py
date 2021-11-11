@@ -29,7 +29,7 @@ class PropertyType(db.Model, CRUDMixin):
     category_id = db.Column(db.Integer, db.ForeignKey(PropertyCategory.id))
 
     # Relationships
-    category = db.relationship('PropertyCategory', backRef='types')
+    category = db.relationship('PropertyCategory', backref='types')
 
 
 class ProductProperty(db.Model, CRUDMixin):
@@ -45,7 +45,7 @@ class ProductProperty(db.Model, CRUDMixin):
 
     # Relationships
     product = db.relationship('Product', backref=db.backref("properties", cascade="all, delete-orphan"))
-    type = db.relationship('PropertyType', backRef='properties')
+    type = db.relationship('PropertyType', backref='properties')
     
 
 

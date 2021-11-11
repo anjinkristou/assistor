@@ -10,6 +10,7 @@ import { authProvider } from './authProvider';
 import Layout from './layout/Layout';
 import contacts from './contacts';
 import companies from './companies';
+import products from './products';
 import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
@@ -34,6 +35,7 @@ const App = () => (
         <Resource name="deals" {...deals} />
         <Resource name="contacts" {...contacts} />
         <Resource name="companies" {...companies} />
+        <Resource name="products" {...products} />
         <Resource name="contactNotes" />
         <Resource name="companyNotes" />
         <Resource name="dealNotes" />

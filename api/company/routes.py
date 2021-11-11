@@ -2,8 +2,6 @@ from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 import json
 
-from flask import Blueprint
-
 from .models import Company, company_schema, companies_schema, Tag
 from api.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
 
