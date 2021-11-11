@@ -6,109 +6,34 @@ from flask import Blueprint
 
 blueprint = Blueprint('dealNotes', __name__, url_prefix='/dealNotes')
 from .models import DealNote, deal_note_schema, deal_notes_schema
+from api.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
 
-@blueprint.route('/list', methods = ['GET'])
-@jwt_required()
-def deal_note_list():
-    pagination = json.loads(request.args['pagination'])
-    sort = json.loads(request.args['sort'])
-    filter = json.loads(request.args['filter'])
+class DealNoteList(ResourceList):
+    model_cls = DealNote
+    model_schema = deal_note_schema
+    models_schema = deal_notes_schema
+
+
+class DealNoteItem(ResourceItem):
+    model_cls = DealNote
+    model_schema = deal_note_schema
+    models_schema = deal_notes_schema
+
+
+class DealNoteItems(ResourceItems):
+    model_cls = DealNote
+    model_schema = deal_note_schema
+    models_schema = deal_notes_schema
     
-    order =  getattr(DealNote, sort['field']).asc() if sort['order'] == 'ASC' else getattr(DealNote, sort['field']).desc()
+
+class DealNoteRefs(ResourceRefs):
+    model_cls = DealNote
+    model_schema = deal_note_schema
+    models_schema = deal_notes_schema
     
-    records = DealNote.query.filter_by(**filter).order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
 
-    return jsonify(data=deal_notes_schema.dump(records.items),
-                   total=records.total)
-    
-
-@blueprint.get('/item')
-@jwt_required()
-def get_deal_note():
-    id = request.args['id']
-        
-    deal_note = DealNote.query.get(id)
-    
-    result = deal_note_schema.dump(deal_note)
-        
-    return jsonify(data=result)
-
-
-@blueprint.put('/item')
-@jwt_required()
-def update_deal_note():
-    data = request.json['data']
-    id = request.json['id']
-    
-    deal_note = DealNote.query.get(id)
-    deal_note.update(**data)
-    
-    result = deal_note_schema.dump(deal_note)
-    
-    return jsonify(data=result)
-
-
-@blueprint.post('/item')
-@jwt_required()
-def add_deal_note():
-    data = request.json['data']
-    
-    deal_note = DealNote.create(**data)
-    
-    result = deal_note_schema.dump(deal_note)
-    
-    return jsonify(data=result)
-
-
-@blueprint.delete('/item')
-@jwt_required()
-def delete_deal_note():
-    id = request.args['id']
-    
-    deal_note = DealNote.query.get(id)
-    result = deal_note_schema.dump(deal_note)
-    
-    deal_note.delete()
-        
-    return jsonify(data=result)
-
-
-@blueprint.get('/items')
-@jwt_required()
-def get_deal_notes():
-    ids = request.args.getlist('ids[]')
-    deal_notes = DealNote.query.filter(DealNote.id.in_(ids))
-
-    result = deal_notes_schema.dump(deal_notes)
-    return jsonify(data=result)
-
-
-@blueprint.delete('/items')
-@jwt_required()
-def delete_deal_notes():
-    ids = request.args.getlist('ids[]')
-    deal_notes = DealNote.query.filter(DealNote.id.in_(ids))
-
-    result = deal_notes_schema.dump(deal_notes)
-    
-    [deal_note.delete() for deal_note in deal_notes]
-    
-    return jsonify(data=result)
-
-
-@blueprint.route('/refs', methods = ['GET'])
-@jwt_required()
-def deal_note_refs():
-    pagination = json.loads(request.args['pagination'])
-    sort = json.loads(request.args['sort'])
-    filter = json.loads(request.args['filter'])
-    target = request.args['target']
-    id = request.args['id']
-    filter[target] = id
-    
-    order =  getattr(DealNote, sort['field']).asc() if sort['order'] == 'ASC' else getattr(DealNote, sort['field']).desc()
-    
-    records = DealNote.query.filter_by(**filter).order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
-
-    return jsonify(data=deal_notes_schema.dump(records.items),
-                   total=records.total)
+def register_api(api, prefix="/"):
+    api.add_resource(DealNoteList, f'{prefix}dealNotes/list', endpoint = 'dealNotes')
+    api.add_resource(DealNoteItem, f'{prefix}dealNotes/item', endpoint = 'dealNote')
+    api.add_resource(DealNoteItems, f'{prefix}dealNotes/items')
+    api.add_resource(DealNoteRefs, f'{prefix}dealNotes/refs')

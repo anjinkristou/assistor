@@ -38,7 +38,7 @@ class Company(db.Model, CRUDMixin):
     sales = db.relationship('User', backref="companies")
     country = db.relationship('Country', backref="companies")
     distributor = db.relationship('Company', backref="customers", remote_side=[id])
-    tags = db.relationship('Tag', secondary=company_tags_table, backref='comapnies')
+    tags = db.relationship('Tag', secondary=company_tags_table, backref='companies')
     
 
 class CompanySchema(ma.SQLAlchemySchema):
@@ -70,6 +70,7 @@ class CompanySchema(ma.SQLAlchemySchema):
     nb_customers = ma.Function(lambda obj: len(obj.customers))
     country_iso = ma.Function(lambda obj: obj.country.iso if obj.country else None)
     tags = ma.Function(lambda obj: [tag.id for tag in obj.tags])
+
 
 company_schema = CompanySchema()
 companies_schema = CompanySchema(many=True)

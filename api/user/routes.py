@@ -2,75 +2,35 @@ from flask import request, jsonify
 import json
 from flask import Blueprint
 
-blueprint = Blueprint('sales', __name__, url_prefix='/sales')
-
 from .models import User, user_schema, users_schema
+from api.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
 
-@blueprint.route('/list', methods = ['GET'])
-def user_list():
-    pagination = json.loads(request.args['pagination'])
-    sort = json.loads(request.args['sort'])
-    filter = json.loads(request.args['filter'])
-    
-    order =  getattr(User, sort['field']).asc() if sort['order'] == 'ASC' else getattr(User, sort['field']).desc()
-    
-    records = User.query.filter_by(**filter).order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
-
-    return jsonify(data=users_schema.dump(records.items),
-                   total=records.total)
-    
-
-@blueprint.get('/item')
-def get_user():
-    id = request.args['id']
-        
-    user = User.query.get(id)
-    
-    result = user_schema.dump(user)
-        
-    return jsonify(data=result)
+class UserList(ResourceList):
+    model_cls = User
+    model_schema = user_schema
+    models_schema = users_schema
 
 
-@blueprint.put('/item')
-def update_user():
-    data = request.json['data']
-    id = request.json['id']
-    
-    user = User.query.get(id)
-    user.update(**data)
-    
-    result = user_schema.dump(user)
-    
-    return jsonify(data=result)
+class UserItem(ResourceItem):
+    model_cls = User
+    model_schema = user_schema
+    models_schema = users_schema
 
 
-@blueprint.post('/item')
-def add_user():
-    data = request.json['data']
+class UserItems(ResourceItems):
+    model_cls = User
+    model_schema = user_schema
+    models_schema = users_schema
     
-    user = User.create(**data)
+
+class UserRefs(ResourceRefs):
+    model_cls = User
+    model_schema = user_schema
+    models_schema = users_schema
     
-    result = user_schema.dump(user)
-    
-    return jsonify(data=result)
 
-
-@blueprint.delete('/item')
-def delete_user():
-    id = request.args['id']
-    
-    user = User.query.get(id)
-    result = user_schema.dump(user)
-    
-    user.delete()
-        
-    return jsonify(data=result)
-
-
-@blueprint.route('/items', methods = ['GET'])
-def user_items():
-    ids = request.args.getlist('ids[]')
-    users = User.query.filter(User.id.in_(ids))
-
-    result = users_schema.dump(users)
-    return jsonify(data=result)
+def register_api(api, prefix="/"):
+    api.add_resource(UserList, f'{prefix}sales/list', endpoint = 'users')
+    api.add_resource(UserItem, f'{prefix}sales/item', endpoint = 'user')
+    api.add_resource(UserItems, f'{prefix}sales/items')
+    api.add_resource(UserRefs, f'{prefix}sales/refs')

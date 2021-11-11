@@ -2,113 +2,35 @@ from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 import json
 
-from flask import Blueprint
-
-blueprint = Blueprint('tasks', __name__, url_prefix='/tasks')
 from .models import Task, task_schema, tasks_schema
+from api.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
 
-@blueprint.route('/list', methods = ['GET'])
-@jwt_required()
-def task_list():
-    pagination = json.loads(request.args['pagination'])
-    sort = json.loads(request.args['sort'])
-    filter = json.loads(request.args['filter'])
+class TaskList(ResourceList):
+    model_cls = Task
+    model_schema = task_schema
+    models_schema = tasks_schema
+
+
+class TaskItem(ResourceItem):
+    model_cls = Task
+    model_schema = task_schema
+    models_schema = tasks_schema
+
+
+class TaskItems(ResourceItems):
+    model_cls = Task
+    model_schema = task_schema
+    models_schema = tasks_schema
     
-    order =  getattr(Task, sort['field']).asc() if sort['order'] == 'ASC' else getattr(Task, sort['field']).desc()
+
+class TaskRefs(ResourceRefs):
+    model_cls = Task
+    model_schema = task_schema
+    models_schema = tasks_schema
     
-    records = Task.query.filter_by(**filter).order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
 
-    return jsonify(data=tasks_schema.dump(records.items),
-                   total=records.total)
-    
-
-@blueprint.get('/item')
-@jwt_required()
-def get_task():
-    id = request.args['id']
-        
-    task = Task.query.get(id)
-    
-    result = task_schema.dump(task)
-        
-    return jsonify(data=result)
-
-
-@blueprint.put('/item')
-@jwt_required()
-def update_task():
-    data = request.json['data']
-    id = request.json['id']
-    
-    task = Task.query.get(id)
-    task.update(**data)
-    
-    result = task_schema.dump(task)
-    
-    return jsonify(data=result)
-
-
-@blueprint.post('/item')
-@jwt_required()
-def add_task():
-    data = request.json['data']
-    
-    task = Task.create(**data)
-    
-    result = task_schema.dump(task)
-    
-    return jsonify(data=result)
-
-
-@blueprint.delete('/item')
-@jwt_required()
-def delete_task():
-    id = request.args['id']
-    
-    task = Task.query.get(id)
-    result = task_schema.dump(task)
-    
-    task.delete()
-        
-    return jsonify(data=result)
-
-
-@blueprint.get('/items')
-@jwt_required()
-def get_tasks():
-    ids = request.args.getlist('ids[]')
-    tasks = Task.query.filter(Task.id.in_(ids))
-
-    result = tasks_schema.dump(tasks)
-    return jsonify(data=result)
-
-
-@blueprint.delete('/items')
-@jwt_required()
-def delete_tasks():
-    ids = request.args.getlist('ids[]')
-    tasks = Task.query.filter(Task.id.in_(ids))
-
-    result = tasks_schema.dump(tasks)
-    
-    [task.delete() for task in tasks]
-    
-    return jsonify(data=result)
-
-
-@blueprint.route('/refs', methods = ['GET'])
-@jwt_required()
-def task_refs():
-    pagination = json.loads(request.args['pagination'])
-    sort = json.loads(request.args['sort'])
-    filter = json.loads(request.args['filter'])
-    target = request.args['target']
-    id = request.args['id']
-    filter[target] = id
-    
-    order =  getattr(Task, sort['field']).asc() if sort['order'] == 'ASC' else getattr(Task, sort['field']).desc()
-    
-    records = Task.query.filter_by(**filter).order_by(order).paginate(page=pagination['page'], per_page=pagination['perPage'])
-
-    return jsonify(data=tasks_schema.dump(records.items),
-                   total=records.total)
+def register_api(api, prefix="/"):
+    api.add_resource(TaskList, f'{prefix}tasks/list', endpoint = 'tasks')
+    api.add_resource(TaskItem, f'{prefix}tasks/item', endpoint = 'task')
+    api.add_resource(TaskItems, f'{prefix}tasks/items')
+    api.add_resource(TaskRefs, f'{prefix}tasks/refs')
