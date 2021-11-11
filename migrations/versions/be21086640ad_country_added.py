@@ -217,7 +217,7 @@ INSERT INTO `countries` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `ph
 (173, 'PR', 'PUERTO RICO', 'Puerto Rico', 'PRI', 630, 1787),
 (174, 'QA', 'QATAR', 'Qatar', 'QAT', 634, 974),
 (175, 'RE', 'REUNION', 'Reunion', 'REU', 638, 262),
-(176, 'RO', 'ROMANIA', 'Romania', 'ROM', 642, 40),
+(176, 'RO', 'ROMANIA', 'Romania', 'ROU', 642, 40),
 (177, 'RU', 'RUSSIAN FEDERATION', 'Russian Federation', 'RUS', 643, 70),
 (178, 'RW', 'RWANDA', 'Rwanda', 'RWA', 646, 250),
 (179, 'SH', 'SAINT HELENA', 'Saint Helena', 'SHN', 654, 290),
@@ -280,7 +280,9 @@ INSERT INTO `countries` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `ph
 (236, 'EH', 'WESTERN SAHARA', 'Western Sahara', 'ESH', 732, 212),
 (237, 'YE', 'YEMEN', 'Yemen', 'YEM', 887, 967),
 (238, 'ZM', 'ZAMBIA', 'Zambia', 'ZMB', 894, 260),
-(239, 'ZW', 'ZIMBABWE', 'Zimbabwe', 'ZWE', 716, 263);
+(239, 'ZW', 'ZIMBABWE', 'Zimbabwe', 'ZWE', 716, 263),
+(240, 'RS', 'SERBIA', 'Serbia', 'SRB', NULL, 381),
+(241, 'ME', 'MONTENEGRO', 'Montenegro', 'MNE', NULL, 382);
                """)
 
 def downgrade():

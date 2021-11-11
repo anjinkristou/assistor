@@ -18,10 +18,14 @@ export interface Company extends Record {
     zipcode: string;
     city: string;
     stateAbbr: string;
-    nb_contacts: number;
-    nb_deals: number;
     sales_id: Identifier;
     created_at: string;
+    nb_contacts: number;
+    nb_deals: number;
+    nb_notes: number;
+    nb_customers: number;
+    country_iso: string;
+    tags: Identifier[];
 }
 
 export interface CompanyNote extends Record {
@@ -75,4 +79,15 @@ export interface Deal extends Record {
 export interface Tag extends Record {
     name: string;
     color: string;
+}
+
+export interface Country extends Record {
+    iso: string;
+    name: string;
+    nicename: string;
+    iso3: string;
+    numcode: number;
+    phonecode: number;
+    url: string;
+    nb_companies: number;
 }

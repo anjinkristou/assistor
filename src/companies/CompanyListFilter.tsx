@@ -21,7 +21,7 @@ import { Tag } from '../types';
 
 export const CompanyListFilter = () => {
     const { identity } = useGetIdentity();
-    const { data, ids } = useGetList(
+    const { data, ids } = useGetList<Tag>(
         'tags',
         { page: 1, perPage: 10 },
         { field: 'name', order: 'ASC' }
@@ -46,7 +46,7 @@ export const CompanyListFilter = () => {
                     ids.map(id => (
                         <FilterListItem
                             key={id}
-                            label={<TagChip record={data[id] as Tag}/>}
+                            label={<TagChip record={data[id]}/>}
                             value={{ tags: [id] }}
                         />
                     ))}

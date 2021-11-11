@@ -25,6 +25,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import { colors } from './colors';
 import { Contact, Company } from '../types';
+import { Tag } from '../types';
 
 export const TagsListEdit = ({ 
     record,
@@ -40,7 +41,7 @@ export const TagsListEdit = ({
     const [version, setVersion] = useState(0); // used to force the refresh of useGetList without refreshing the whole page
     const [disabled, setDisabled] = useState(false);
 
-    const { data: allTags, ids } = useGetList(
+    const { data: allTags, ids } = useGetList<Tag>(
         'tags',
         { page: 1, perPage: 10 },
         { field: 'name', order: 'ASC' },

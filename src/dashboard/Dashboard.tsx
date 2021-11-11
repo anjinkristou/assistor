@@ -6,6 +6,7 @@ import { DealsChart } from './DealsChart';
 import { HotContacts } from './HotContacts';
 import { LatestNotes } from './LatestNotes';
 import { DealsPipeline } from './DealsPipeline';
+import { CompaniesMap } from './CompaniesMap';
 
 export const Dashboard = () => {
     return (
@@ -18,6 +19,16 @@ export const Dashboard = () => {
                     <Welcome />
                 </Box>
             </Box> */}
+
+            <Box display="flex" mt="2em">
+                <Box flex="3" mr="1em">
+                    <CompaniesMap />
+                </Box>
+                <Box flex="1" mr="1em">
+                    <HotContacts />
+                </Box>
+            </Box>
+
             <Box display="flex" mt="2em">
                 <Box flex="1" mr="1em">
                     <LatestNotes />
