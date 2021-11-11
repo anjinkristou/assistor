@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, memo } from "react";
 import { 
     ComposableMap, 
     Geographies, 
@@ -17,14 +17,14 @@ import {
     useGetIdentity,
     useGetList,
 } from 'react-admin';
+import ReactTooltip from "react-tooltip";
 
 import { Country } from '../types';
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-
-export const CompaniesMap = () => {
+const Map = memo(({setTooltipContent}: any) => {
     const { data, ids, loaded } = useGetList<Country>(
         'countries',
         { perPage: 1000, page: 1 }
@@ -47,34 +47,45 @@ export const CompaniesMap = () => {
 
     return (
         <ComposableMap
+            data-tip=""
             projection="geoAzimuthalEqualArea"
             projectionConfig={{
                 rotate: [-25.0, -50.0, 0],
                 scale: 750
             }}
         >
-             <ZoomableGroup
+            <ZoomableGroup
                 center={[0, 0]}
                 zoom={1}
-             >
+            >
                 <Geographies geography={geoUrl}>
                     {({ geographies }) => (
                         <>
                             {geographies
                             .map(geo => {
-                                const cur = ids.find(id => data[id].iso3 === geo.properties.ISO_A3);
+                                const { ISO_A3 } = geo.properties;
+                                const cur = ids.find(id => data[id].iso3 === ISO_A3);
                                 return (
                                     <Geography 
                                             key={geo.rsmKey} 
                                             geography={geo} 
                                             fill={cur ? colorScale(data[cur].nb_companies) : "#D6D6DA"}
                                             stroke="#EAEAEC"
+                                            onMouseEnter={() => {
+                                                const { NAME, POP_EST } = geo.properties;
+                                                const nb_companies = cur ? data[cur].nb_companies : 0;
+                                                setTooltipContent(`${NAME} - ${nb_companies}`);
+                                            }}
+                                            onMouseLeave={() => {
+                                                setTooltipContent("");
+                                            }}
                                         />
                                 );
                             })}
-                            {geographies.map(geo => {
+                            {/* {geographies.map(geo => {
                                 const centroid = geoCentroid(geo);
-                                const cur = ids.find(id => data[id].iso3 === geo.properties.ISO_A3);
+                                const { ISO_A3 } = geo.properties;
+                                const cur = ids.find(id => data[id].iso3 === ISO_A3);
                                 return (
                                     <g key={geo.rsmKey + "-name"}>
                                         {cur &&
@@ -86,11 +97,22 @@ export const CompaniesMap = () => {
                                         }
                                     </g>
                                 );
-                            })}
+                            })} */}
                         </>
                     )}
                 </Geographies>
             </ZoomableGroup>
         </ComposableMap>
+    );
+});
+
+export const CompaniesMap = () => {
+    const [content, setContent] = useState("");
+
+    return (
+        <div>
+            <Map setTooltipContent={setContent} />
+            <ReactTooltip>{content}</ReactTooltip>
+        </div>
     );
 }
