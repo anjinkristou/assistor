@@ -3,7 +3,7 @@ from app.mixins import CRUDMixin
 from app.api.product.models import Product
 
 class PropertyCategory(db.Model, CRUDMixin):
-    __tablename__ = 'property_category'
+    __tablename__ = 'property_categories'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)
@@ -17,7 +17,7 @@ class PropertyCategory(db.Model, CRUDMixin):
 
 
 class PropertyType(db.Model, CRUDMixin):
-    __tablename__ = 'property_type'
+    __tablename__ = 'property_types'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)
@@ -33,7 +33,7 @@ class PropertyType(db.Model, CRUDMixin):
 
 
 class ProductProperty(db.Model, CRUDMixin):
-    __tablename__ = 'product_property'
+    __tablename__ = 'product_properties'
 
     id = db.Column(db.Integer, primary_key=True)
     property_value = db.Column(db.Unicode)

@@ -4,7 +4,7 @@ from app.api.company.models import Company
 from app.api.product_family.models import ProductFamily
 
 class Product(db.Model, CRUDMixin):
-    __tablename__ = 'product'
+    __tablename__ = 'products'
     __searchable__ = ['model']
 
     id = db.Column(db.Integer, primary_key=True)

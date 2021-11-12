@@ -4,7 +4,7 @@ from app.api.family_category.models import FamilyCategory
 
 
 class ProductFamily(db.Model, CRUDMixin):
-    __tablename__ = 'product_family'
+    __tablename__ = 'product_families'
     __searchable__ = ['name']
 
     id = db.Column(db.Integer, primary_key=True)
