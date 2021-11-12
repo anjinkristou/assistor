@@ -22,6 +22,7 @@
     "prop-types": "^15.7.2",
     "ra-data-fakerest": "^3.19.0",
     "ra-data-json-server": "^3.19.0",
+    "ra-input-rich-text": "^3.19.0",
     "react": "^17.0.2",
     "react-admin": "^3.19.0",
     "react-beautiful-dnd": "^13.1.0",
@@ -35,7 +36,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api": "FLASK_ENV=development flask run",
+    "api": "flask run",
     "dev": "concurrently \"yarn api\" \"yarn start\""
   },
   "eslintConfig": {

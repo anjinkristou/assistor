@@ -43,12 +43,7 @@ export const ProductListFilter = () => {
                 label="Account manager"
                 icon={<SupervisorAccountIcon />}
             >
-                <FilterListItem
-                    label="Me"
-                    value={{
-                        sales_id: identity && identity.id,
-                    }}
-                />
+
             </FilterList>
         </Box>
     );

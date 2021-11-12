@@ -10,9 +10,11 @@ import {
     AutocompleteInput,
     useGetIdentity,
 } from 'react-admin';
+import RichTextInput from 'ra-input-rich-text';
 import { Box, CardContent, Divider, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BusinessIcon from '@material-ui/icons/Business';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import clsx from 'clsx';
 
 
@@ -41,7 +43,16 @@ export const ProductCreate = (props: CreateProps) => {
                 initialValues={companyDefaultValue}
                 redirect="show"
             >
-                <TextInput source="name" validate={required()} fullWidth />
+                <ReferenceInput 
+                    label="Product Family" 
+                    source="family_id" 
+                    reference="productFamilies">
+                    <AutocompleteInput optionText="name" />
+                </ReferenceInput>
+                <TextInput source="model" validate={required()} fullWidth />
+                <TextInput source="code" fullWidth />
+                <TextInput source="website" fullWidth />
+                <RichTextInput source="description" fullWidth />
                 
             </SimpleForm>
         </Create>
@@ -54,10 +65,10 @@ const CustomLayout = ({ children }:
         <Box display="flex">
             <Box paddingTop={1}>
                 <Avatar>
-                    <BusinessIcon />
+                    <ShoppingCartIcon />
                 </Avatar>
             </Box>
-            <Box ml={2} flex="1" maxWidth={796}>
+            <Box ml={2} flex="1" maxWidth="80%">
                 {children}
             </Box>
         </Box>

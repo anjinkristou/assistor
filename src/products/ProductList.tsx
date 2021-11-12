@@ -20,10 +20,10 @@ export const ProductList = (props: ListProps) => {
             {...props}
             actions={<ProductListActions />}
             aside={<ProductListFilter />}
-            filterDefaultValues={{ sales_id: identity?.id }}
+            filterDefaultValues={{ }}
             pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
             perPage={25}
-            sort={{ field: 'name', order: 'ASC' }}
+            sort={{ field: 'model', order: 'ASC' }}
             component="div"
         >
             <GridList />

@@ -13,6 +13,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 
 import { mainListItems, secondaryListItems } from './drawerItems'
+import { BarItem } from '@nivo/bar';
 
 const drawerWidth = 240;
 
@@ -70,7 +71,11 @@ const useStyles = makeStyles((theme) => ({
 
 const LeftDrawer = ({open, setOpen}: any) => {
     const classes = useStyles();
-    const match = useRouteMatch(['/contacts', '/companies', '/deals']);
+    const match = useRouteMatch( ([] as any[])
+      .concat(mainListItems, secondaryListItems)
+      .filter(item => item.link !== '/')
+      .map(item => item.link)
+    );
     const currentPath = match?.path ?? '/';
 
     return (
