@@ -1,4 +1,10 @@
-import { Record, Identifier } from 'react-admin';
+import { ReduxState, Record, Identifier } from 'react-admin';
+
+export type ThemeName = 'light' | 'dark';
+
+export interface AppState extends ReduxState {
+    theme: ThemeName;
+}
 
 export interface Sale extends Record {
     first_name: string;

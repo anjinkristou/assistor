@@ -7,7 +7,7 @@ import {
 
 import { dataProvider } from './dataProvider';
 import { authProvider } from './authProvider';
-import Layout from './layout/Layout';
+import { Login, Layout } from './layout';
 import contacts from './contacts';
 import companies from './companies';
 import products from './products';
@@ -15,7 +15,7 @@ import productfamiliess from './productFamilies';
 import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
-import Login from './Login'
+// import Login from './Login'
 import productFamilies from './productFamilies';
 
 // FIXME MUI bug https://github.com/mui-org/material-ui/issues/13394
@@ -29,7 +29,7 @@ const App = () => (
         customRoutes={customRoutes}
         dataProvider={dataProvider}
         authProvider={authProvider}
-        // loginPage={Login}
+        loginPage={Login}
         layout={Layout}
         dashboard={Dashboard}
         theme={theme}
