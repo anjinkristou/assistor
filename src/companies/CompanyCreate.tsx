@@ -9,6 +9,7 @@ import {
     required,
     AutocompleteInput,
     useGetIdentity,
+    FormDataConsumer,
 } from 'react-admin';
 import { Box, CardContent, Divider, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -61,12 +62,18 @@ export const CompanyCreate = (props: CreateProps) => {
                     choices={relations}
                     formClassName={classes.inline}
                 />
-                <ReferenceInput
-                    source="distributor_id"
-                    reference="companies"
-                >
-                    <DistributorInput />
-                </ReferenceInput>
+                <FormDataConsumer>
+                    {({ formData, ...rest }) => formData.relation != 'Distributor' &&
+                        <ReferenceInput
+                            source="distributor_id"
+                            reference="companies"
+                        >
+                            <DistributorInput />
+                        </ReferenceInput>
+                    }
+                </FormDataConsumer>
+
+
                 <CustomDivider />
                 <TextInput source="address" fullWidth helperText={false} />
                 <TextInput
