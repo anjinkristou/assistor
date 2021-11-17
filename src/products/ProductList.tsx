@@ -43,7 +43,7 @@ const ProductListActions = (props: any) => {
         <TopToolbar>
             <ExportButton />
             <CreateButton
-                basePath="/companies"
+                basePath="/products"
                 variant="contained"
                 label="New Product"
                 className={classes.createButton}
