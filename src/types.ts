@@ -102,3 +102,20 @@ export interface Product extends Record {
     description: string;
     nb_properties: number;
 }
+
+export interface ProductFamily extends Record {
+    category_id: Identifier;
+    name: string;
+    website: string;
+    image: string;
+    description: string;
+    nb_products: number;
+}
+
+export interface FamilyCategory extends Record {
+    name: string;
+    website: string;
+    image: string;
+    description: string;
+    nb_families: number;
+}

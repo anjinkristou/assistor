@@ -11,10 +11,12 @@ import Layout from './layout/Layout';
 import contacts from './contacts';
 import companies from './companies';
 import products from './products';
+import productfamiliess from './productFamilies';
 import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
 import Login from './Login'
+import productFamilies from './productFamilies';
 
 // FIXME MUI bug https://github.com/mui-org/material-ui/issues/13394
 const theme =
@@ -39,7 +41,7 @@ const App = () => (
         <Resource name="contactNotes" />
         <Resource name="companyNotes" />
         <Resource name="dealNotes" />
-        <Resource name="productFamilies" list={ListGuesser} />
+        <Resource name="productFamilies" {...productFamilies} />
         <Resource name="familyCategories" list={ListGuesser} />
         <Resource name="tasks" list={ListGuesser} />
         <Resource name="sales" list={ListGuesser} />

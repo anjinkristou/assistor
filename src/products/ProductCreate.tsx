@@ -32,21 +32,21 @@ export const ProductCreate = (props: CreateProps) => {
     const classes = useStyles();
     const { identity } = useGetIdentity();
 
-    if (!identity) return null;
-
-    const companyDefaultValue = () => ({ sales_id: identity && identity?.id });
+    const defaultValue = () => ({ });
 
     return (
         <Create {...props} actions={false}>
             <SimpleForm 
                 component={CustomLayout} 
-                initialValues={companyDefaultValue}
+                initialValues={defaultValue}
                 redirect="show"
             >
                 <ReferenceInput 
                     label="Product Family" 
                     source="family_id" 
-                    reference="productFamilies">
+                    reference="productFamilies"
+                    fullWidth
+                >
                     <AutocompleteInput optionText="name" />
                 </ReferenceInput>
                 <TextInput source="model" validate={required()} fullWidth />

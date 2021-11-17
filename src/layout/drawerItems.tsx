@@ -3,6 +3,7 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 import BusinessIcon from '@material-ui/icons/Business';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import CategoryIcon from '@material-ui/icons/Category';
 
 export const mainListItems = [
     {
@@ -32,4 +33,10 @@ export const mainListItems = [
     },
 ]
 
-export const secondaryListItems = []
+export const secondaryListItems = [
+    {
+        text: "Product Families",
+        link: "/productFamilies",
+        icon: (<CategoryIcon />)
+    },
+]
