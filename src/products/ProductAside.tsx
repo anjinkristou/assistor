@@ -11,7 +11,6 @@ import {
 import { Box, Typography, Divider, Link } from '@material-ui/core';
 
 import { Product, Sale } from '../types';
-import { TagsListEdit } from '../tags/TagsListEdit';
 
 export const ProductAside = ({
     record,
@@ -48,10 +47,5 @@ export const ProductAside = ({
             <Typography variant="subtitle2">Product info</Typography>
             <Divider />
 
-            <Box mb={3}>
-                <Typography variant="subtitle2">Tags</Typography>
-                <Divider />
-                <TagsListEdit record={record} reference="products" />
-            </Box>
         </Box>
     ) : null;

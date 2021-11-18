@@ -27,7 +27,7 @@ export const CompanyListFilter = () => {
         { field: 'name', order: 'ASC' }
     );
     return (
-        <Box width="15em" order="-1" marginRight="1em" mb={1}>
+        <Box width="20em" order="-1" marginRight="1em" mb={1}>
             <FilterLiveSearch />
 
             <FilterList label="Relation" icon={<BusinessIcon />}>

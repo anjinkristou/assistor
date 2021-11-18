@@ -39,6 +39,7 @@ class ProductSchema(ma.SQLAlchemySchema):
     family_id = ma.auto_field()
     
     nb_properties = ma.Function(lambda obj: len(obj.properties))
+    nb_notes = ma.Function(lambda obj: len(obj.notes))
         
         
 product_schema = ProductSchema()

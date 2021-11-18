@@ -3,9 +3,9 @@ import {
     Create,
     CreateProps,
     ReferenceInput,
-    SimpleForm,
+    TabbedForm,
     TextInput,
-    SelectInput,
+    FormTab,
     required,
     AutocompleteInput,
     useGetIdentity,
@@ -36,25 +36,28 @@ export const ProductCreate = (props: CreateProps) => {
 
     return (
         <Create {...props} actions={false}>
-            <SimpleForm 
-                component={CustomLayout} 
-                initialValues={defaultValue}
-                redirect="show"
-            >
-                <ReferenceInput 
-                    label="Product Family" 
-                    source="family_id" 
-                    reference="productFamilies"
-                    fullWidth
-                >
-                    <AutocompleteInput optionText="name" />
-                </ReferenceInput>
-                <TextInput source="model" validate={required()} fullWidth />
-                <TextInput source="code" fullWidth />
-                <TextInput source="website" fullWidth />
-                <RichTextInput source="description" fullWidth />
-                
-            </SimpleForm>
+            <TabbedForm>
+                <FormTab label="General">
+                    <ReferenceInput 
+                        label="Product Family" 
+                        source="family_id" 
+                        reference="productFamilies"
+                        fullWidth
+                    >
+                        <AutocompleteInput optionText="name" />
+                    </ReferenceInput>
+                    <TextInput source="model" validate={required()} fullWidth />
+                    <TextInput source="code" fullWidth />
+                    <TextInput source="website" fullWidth />
+                    <TextInput source="image" fullWidth />
+                    <TextInput 
+                        source="description"
+                        multiline
+                        rows={3} 
+                        fullWidth 
+                    />
+                </FormTab>
+            </TabbedForm>
         </Create>
     );
 };

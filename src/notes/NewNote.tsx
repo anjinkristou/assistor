@@ -38,7 +38,7 @@ export const NewNote = ({
     reference,
 }: {
     showStatus?: boolean;
-    reference: 'companies' | 'contacts' | 'deals';
+    reference: 'companies' | 'contacts' | 'deals' | 'products';
 }) => {
     const classes = useStyles();
     const record = useRecordContext();
@@ -146,4 +146,5 @@ const foreignKeyMapping = {
     contacts: 'contact_id',
     deals: 'deal_id',
     companies: 'company_id',
+    products: 'product_id',
 };

@@ -38,8 +38,12 @@ const App = () => (
         <Resource name="contacts" {...contacts} />
         <Resource name="companies" {...companies} />
         <Resource name="products" {...products} />
+        <Resource name="productProperties" />
+        <Resource name="productProperties" />
+        <Resource name="propertyTypes" />
         <Resource name="contactNotes" />
         <Resource name="companyNotes" />
+        <Resource name="productNotes" />
         <Resource name="dealNotes" />
         <Resource name="productFamilies" {...productFamilies} />
         <Resource name="familyCategories" list={ListGuesser} />

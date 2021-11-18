@@ -31,17 +31,12 @@ import {
 } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link as RouterLink } from 'react-router-dom';
-import { formatDistance } from 'date-fns';
-import BusinessIcon from '@material-ui/icons/Business';
+import { NotesIterator } from '../notes';
 
-import { Avatar } from '../contacts/Avatar';
-import { Status } from '../misc/Status';
-import { TagsList } from '../tags/TagsList';
+
 import { ProductImageField } from './ProductImageField';
 import { ProductAside } from './ProductAside';
-import { Product, Deal, Contact } from '../types';
-import { stageNames } from '../deals/stages';
-import { NotesIterator } from '../notes';
+import { Product, ProductPrperty } from '../types';
 
 export const ProductShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -65,14 +60,7 @@ const ProductShowContent = () => {
                             <ProductImageField record={record as any} />
                             <Box ml={2} flex="1">
                                 <Box display="flex" gridGap={4}>
-                                    <Typography variant="h5">{record.name}</Typography>
-                                    {record.relation && (
-                                        <Chip 
-                                            label={record.relation} 
-                                            variant="outlined" 
-                                            size="small"
-                                        />
-                                    )}
+                                    <Typography variant="h5">{record.model}</Typography>
                                 </Box>
                             </Box>
                         </Box>
@@ -91,48 +79,29 @@ const ProductShowContent = () => {
                             />
                             <Tab
                                 label={
-                                    record.nb_contacts === 1
-                                        ? '1 Contact'
-                                        : `${record.nb_contacts} Contacts`
+                                    record.nb_properties === 1
+                                        ? '1 Specification'
+                                        : `${record.nb_properties} Specifications`
                                 }
                             />
-                            {record.nb_deals && (
-                                <Tab
-                                    label={
-                                        record.nb_deals === 1
-                                            ? '1 deal'
-                                            : `${record.nb_deals} Deals`
-                                    }
-                                />
-                            )}
                         </Tabs>
                         <Divider />
                         <TabPanel value={value} index={0}>
                             <ReferenceManyField
-                                reference="companyNotes"
-                                target="company_id"
-                                sort={{ field: 'date', order: 'DESC' }}
+                                reference="productNotes"
+                                target="product_id"
                             >
-                                 <NotesIterator reference="companies" />
+                                 <NotesIterator reference="products" />
                             </ReferenceManyField>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <ReferenceManyField
-                                reference="contacts"
-                                target="company_id"
+                            {/* <ReferenceManyField
+                                reference="productProperties"
+                                target="product_id"
                                 sort={{ field: 'last_name', order: 'ASC' }}
                             >
-                                <ContactsIterator />
-                            </ReferenceManyField>
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            <ReferenceManyField
-                                reference="deals"
-                                target="company_id"
-                                sort={{ field: 'name', order: 'ASC' }}
-                            >
-                                <DealsIterator />
-                            </ReferenceManyField>
+                                <ProductPrpertiesIterator />
+                            </ReferenceManyField> */}
                         </TabPanel>
                     </CardContent>
                 </Card>
@@ -164,8 +133,8 @@ const TabPanel = (props: TabPanelProps) => {
     );
 };
 
-const ContactsIterator = () => {
-    const { data, ids, loaded } = useListContext<Contact>();
+const ProductPrpertiesIterator = () => {
+    const { data, ids, loaded } = useListContext<ProductPrperty>();
     const record = useRecordContext();
 
     const now = Date.now();
@@ -174,25 +143,24 @@ const ContactsIterator = () => {
         <Box>
             <List>
                 {ids.map(id => {
-                    const contact = data[id];
+                    const productProperty = data[id];
                     return (
                         <ListItem
                             button
                             key={id}
                             component={RouterLink}
-                            to={`/contacts/${id}/show`}
+                            to={`/productProperties/${id}/show`}
                         >
-                            <ListItemAvatar>
-                                <Avatar record={contact} />
+                            {/* <ListItemAvatar>
+                                <Avatar record={productProperty} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={`${contact.first_name} ${contact.last_name}`}
+                                primary={`${productProperty.first_name} ${productProperty.last_name}`}
                                 secondary={
                                     <>
-                                        {contact.title}{' '}
-                                        {contact.nb_notes &&
-                                        `- ${contact.nb_notes} notes `}
-                                        <TagsList record={contact} />
+                                        {productProperty.title}{' '}
+                                        {productProperty.nb_notes &&
+                                        `- ${productProperty.nb_notes} notes `}
                                     </>
                                 }
                             />
@@ -200,91 +168,35 @@ const ContactsIterator = () => {
                                 <Typography variant="body2" color="textSecondary">
                                     last activity{' '}
                                     {formatDistance(
-                                        new Date(contact.last_seen),
+                                        new Date(productProperty.last_seen),
                                         now
                                     )}{' '}
-                                    ago <Status status={contact.status} />
+                                    ago <Status status={productProperty.status} />
                                 </Typography>
-                            </ListItemSecondaryAction>
+                            </ListItemSecondaryAction> */}
                         </ListItem>
                     );
                 })}
             </List>
             <Box textAlign="center" mt={1}>
-                <CreateRelatedContactButton record={record} />
+                {/* <CreateRelatedProductPrpertyButton record={record} /> */}
             </Box>
         </Box>
     );
 };
 
-const CreateRelatedContactButton = ({ record }: any) => (
-    <Button
-        component={RouterLink}
-        to={{
-            pathname: '/contacts/create',
-            state: { record: { company_id: record.id } },
-        }}
-        color="primary"
-        variant="contained"
-        size="small"
-        startIcon={<PersonAddIcon />}
-    >
-        Add contact
-    </Button>
-);
-
-const DealsIterator = () => {
-    const { data, ids, loaded } = useListContext<Deal>();
-
-    const now = Date.now();
-    if (!loaded) return null;
-    return (
-        <Box>
-            <List>
-                {ids.map(id => {
-                    const deal = data[id];
-                    return (
-                        <ListItem
-                            button
-                            key={id}
-                            component={RouterLink}
-                            to={`/deals/${id}/show`}
-                        >
-                            <ListItemText
-                                primary={deal.name}
-                                secondary={
-                                    <>
-                                        {/* @ts-ignore */}
-                                        {stageNames[deal.stage]},{' '}
-                                        {deal.amount.toLocaleString('en-US', {
-                                            notation: 'compact',
-                                            style: 'currency',
-                                            currency: 'USD',
-                                            currencyDisplay: 'narrowSymbol',
-                                            minimumSignificantDigits: 3,
-                                        })}
-                                        , {deal.type}
-                                    </>
-                                }
-                            />
-                            <ListItemSecondaryAction>
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                    component="span"
-                                >
-                                    last activity{' '}
-                                    {formatDistance(
-                                        new Date(deal.updated_at),
-                                        now
-                                    )}{' '}
-                                    ago{' '}
-                                </Typography>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    );
-                })}
-            </List>
-        </Box>
-    );
-};
+// const CreateRelatedProductPrpertyButton = ({ record }: any) => (
+//     <Button
+//         component={RouterLink}
+//         to={{
+//             pathname: '/productProperties/create',
+//             state: { record: { product_id: record.id } },
+//         }}
+//         color="primary"
+//         variant="contained"
+//         size="small"
+//         startIcon={<PersonAddIcon />}
+//     >
+//         Add property
+//     </Button>
+// );

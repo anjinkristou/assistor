@@ -125,3 +125,10 @@ export interface FamilyCategory extends Record {
     description: string;
     nb_families: number;
 }
+
+export interface ProductPrperty extends Record {
+    product_id: Identifier;
+    type_id: Identifier;
+    property_value: string;
+    condition: string;
+}

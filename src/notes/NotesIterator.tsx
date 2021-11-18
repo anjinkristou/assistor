@@ -16,7 +16,7 @@ export const NotesIterator = ({
     reference,
 }: {
     showStatus?: boolean;
-    reference: 'companies' | 'contacts' | 'deals';
+    reference: 'companies' | 'contacts' | 'deals' | 'products';
 }) => {
     const classes = useStyles();
     const { data, ids, loaded } = useListContext();

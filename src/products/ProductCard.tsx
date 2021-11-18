@@ -4,7 +4,7 @@ import { Paper, Typography, Link as MuiLink, Box, Chip } from '@material-ui/core
 import { makeStyles } from '@material-ui/core/styles';
 import ContactsIcon from '@material-ui/icons/AccountCircle';
 import DealIcon from '@material-ui/icons/MonetizationOn';
-import { linkToRecord, SelectField, ReferenceField, ImageField } from 'react-admin';
+import { linkToRecord, TextField, ReferenceField, ImageField } from 'react-admin';
 import { Link } from 'react-router-dom';
 
 import { ProductAvatar } from './ProductAvatar';
@@ -28,6 +28,10 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center',
         marginTop: theme.spacing(1),
     },
+    family: {
+        textAlign: 'center',
+        marginTop: theme.spacing(1),
+    },
     stats: {
         display: 'flex',
         justifyContent: 'space-around',
@@ -48,7 +52,7 @@ export const ProductCard = ({ record }: { record: Product }) => {
     return (
         <MuiLink
             component={Link}
-            to={linkToRecord('/companies', record.id, 'show')}
+            to={linkToRecord('/products', record.id, 'show')}
             underline="none"
             onMouseEnter={() => setElevation(3)}
             onMouseLeave={() => setElevation(1)}
@@ -59,10 +63,25 @@ export const ProductCard = ({ record }: { record: Product }) => {
                     <div className={classes.name}>
                         <Box display="flex" alignItems="center">
                         <Typography variant="subtitle2">
-                            {record.name}
+                            {record.model}
                         </Typography>
                         </Box>
                     </div>
+
+                    <div className={classes.family}>
+                        <Typography variant="body2">
+                            in family{' '}
+                            <ReferenceField
+                                record={record}
+                                source="family_id"
+                                reference="productFamilies"
+                                link="show"
+                            >
+                                <TextField source="name" />
+                            </ReferenceField>
+                        </Typography>
+                    </div>
+
                 </div>
                 <div className={classes.stats}>
                     <div className={classes.singleStat}>
