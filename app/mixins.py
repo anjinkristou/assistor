@@ -11,10 +11,10 @@ class CRUDMixin(object):
     
     @classmethod
     def create(cls, **kwargs):
-        company = cls(**kwargs)
-        db.session.add(company)
+        item = cls(**kwargs)
+        db.session.add(item)
         db.session.commit()
-        return company
+        return item
     
     def delete(self):
         db.session.delete(self)

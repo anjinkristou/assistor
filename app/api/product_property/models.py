@@ -1,6 +1,6 @@
 from app import db, ma
 from app.mixins import CRUDMixin
-from app.api.product.models import Product
+from app.api.product.models import Product, ProductSchema
 from app.api.property_type.models import PropertyType
 
 

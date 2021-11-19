@@ -94,12 +94,10 @@ export const ProductCard = ({ record }: { record: Product }) => {
                                 variant="subtitle2"
                                 style={{ marginBottom: -8 }}
                             >
-                                {record.nb_contacts}
+                                {record.nb_notes}
                             </Typography>
                             <Typography variant="caption" color="textSecondary">
-                                {record.nb_contacts > 1
-                                    ? 'contacts'
-                                    : 'contact'}
+                                {record.nb_notes > 1 ? 'notes' : 'note'}
                             </Typography>
                         </div>
                     </div>
@@ -113,10 +111,10 @@ export const ProductCard = ({ record }: { record: Product }) => {
                                 variant="subtitle2"
                                 style={{ marginBottom: -8 }}
                             >
-                                {record.nb_deals}
+                                {record.nb_properties}
                             </Typography>
                             <Typography variant="caption" color="textSecondary">
-                                {record.nb_deals > 1 ? 'deals' : 'deal'}
+                                {record.nb_properties > 1 ? 'properties' : 'property'}
                             </Typography>
                         </div>
                     </div>

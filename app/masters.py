@@ -33,9 +33,12 @@ class ResourceList(Resource):
         query = query.order_by(order)
     
         records = query.paginate(page=pagination['page'], per_page=pagination['perPage'])
+        data = self.models_schema.dump(records.items)
+        
+        data = self.post_data(data)
 
         return {
-            "data": self.models_schema.dump(records.items),
+            "data": data,
             "total": records.total,
         }, HTTPStatus.OK
     
@@ -52,6 +55,9 @@ class ResourceList(Resource):
             query = query.msearch(self.keyword)
         
         return query
+    
+    def post_data(self, data):
+        return data
 
 
 class ResourceItem(Resource):

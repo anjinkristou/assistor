@@ -9,16 +9,20 @@ import {
     required,
     AutocompleteInput,
     useGetIdentity,
+    ArrayInput,
+    SimpleFormIterator,
+    ReferenceArrayInput,
 } from 'react-admin';
 import RichTextInput from 'ra-input-rich-text';
-import { Box, CardContent, Divider, Avatar } from '@material-ui/core';
+import { Box, CardContent, Divider, Avatar, useTheme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BusinessIcon from '@material-ui/icons/Business';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import clsx from 'clsx';
+import { CreatePropertyType } from './CreatePropertyType';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     inline: {
         display: 'inline-block',
         marginLeft: '1em',
@@ -26,16 +30,22 @@ const useStyles = makeStyles({
             marginLeft: 0,
         },
     },
-});
+    propertyContainer: {
+        display: 'flex',
+        gap: theme.spacing(1),
+        minWidth: '500px',
+    },
+}));
 
 export const ProductCreate = (props: CreateProps) => {
     const classes = useStyles();
     const { identity } = useGetIdentity();
+    const theme = useTheme();
 
     const defaultValue = () => ({ });
 
     return (
-        <Create {...props} actions={false}>
+        <Create {...props} actions={false} >
             <TabbedForm>
                 <FormTab label="General">
                     <ReferenceInput 
@@ -56,6 +66,26 @@ export const ProductCreate = (props: CreateProps) => {
                         rows={3} 
                         fullWidth 
                     />
+                </FormTab>
+                <FormTab label="Properties">
+                    <ArrayInput
+                        source="properties"
+                    >
+                        <SimpleFormIterator>
+                                <ReferenceInput
+                                    source="type_id"
+                                    reference="propertyTypes"
+                                    label="Type"
+                                >
+                                    <AutocompleteInput 
+                                        optionText="name" 
+                                        create={<CreatePropertyType />}
+                                    />
+                                </ReferenceInput>
+                                <TextInput source="property_value" label="Value"/>
+                                <TextInput source="condition"  label="Condition"/>
+                        </SimpleFormIterator>
+                    </ArrayInput>
                 </FormTab>
             </TabbedForm>
         </Create>

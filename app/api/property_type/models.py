@@ -18,6 +18,7 @@ class PropertyCategory(db.Model, CRUDMixin):
 
 class PropertyType(db.Model, CRUDMixin):
     __tablename__ = 'property_types'
+    __searchable__ = ['name']
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode)

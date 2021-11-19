@@ -3,11 +3,13 @@ import { useState, ChangeEvent } from 'react';
 import {
     ShowBase,
     ShowProps,
+    EditButton,
     TextField,
     ReferenceManyField,
     SelectField,
     ReferenceField,
     ImageField,
+    Datagrid,
     useShowContext,
     useRecordContext,
     useListContext,
@@ -72,16 +74,16 @@ const ProductShowContent = () => {
                         >
                             <Tab
                                 label={
-                                    record.nb_notes === 1
-                                        ? '1 Note'
-                                        : `${record.nb_notes} Notes`
+                                    record.nb_notes > 1
+                                        ? `${record.nb_notes} Notes`
+                                        : `${record.nb_notes} Note`
                                 }
                             />
                             <Tab
                                 label={
-                                    record.nb_properties === 1
-                                        ? '1 Specification'
-                                        : `${record.nb_properties} Specifications`
+                                    record.nb_properties > 1
+                                        ? `${record.nb_properties} Properties`
+                                        : `${record.nb_properties} Property`
                                 }
                             />
                         </Tabs>
@@ -95,13 +97,20 @@ const ProductShowContent = () => {
                             </ReferenceManyField>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            {/* <ReferenceManyField
-                                reference="productProperties"
-                                target="product_id"
-                                sort={{ field: 'last_name', order: 'ASC' }}
-                            >
-                                <ProductPrpertiesIterator />
-                            </ReferenceManyField> */}
+                        <ReferenceManyField reference="productProperties" target="product_id" addLabel={false}>
+                            <Datagrid>
+                                <ReferenceField
+                                        source="type_id"
+                                        reference="propertyTypes"
+                                        link={false}
+                                    >
+                                    <TextField source="name" />
+                                </ReferenceField>
+                                <TextField source="property_value" />
+                                <TextField source="condition" />
+                                <EditButton />
+                            </Datagrid>
+                        </ReferenceManyField>
                         </TabPanel>
                     </CardContent>
                 </Card>

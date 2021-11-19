@@ -38,9 +38,16 @@ class ProductSchema(ma.SQLAlchemySchema):
     company_id = ma.auto_field()
     family_id = ma.auto_field()
     
+    # properties = ma.List(ma.Nested(ProductPropertySchema))
+    # properties = ma.Function(lambda obj: [property.id for property in obj.properties])
+    properties = ma.Method('get_properties')
     nb_properties = ma.Function(lambda obj: len(obj.properties))
     nb_notes = ma.Function(lambda obj: len(obj.notes))
-        
+    
+    
+    def get_properties(self, obj):
+        from app.api.product_property.models import product_properties_schema
+        return product_properties_schema.dump(obj.properties)
         
 product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)

@@ -100,6 +100,15 @@ const Menu = ({ dense = false }: MenuProps) => {
                     leftIcon={<productFamilies.icon />}
                     dense={dense}
                 />
+                <MenuItemLink
+                    to={{
+                        pathname: '/familyCategories',
+                        state: { _scrollToTop: true },
+                    }}
+                    primaryText="Categories"
+                    leftIcon={<productFamilies.icon />}
+                    dense={dense}
+                />
             </SubMenu>
         </div>
     );

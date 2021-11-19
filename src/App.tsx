@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Admin, Resource, ListGuesser, defaultTheme } from 'react-admin';
+import { Admin, Resource, ListGuesser, EditGuesser, ShowGuesser, defaultTheme } from 'react-admin';
 import {
     unstable_createMuiStrictModeTheme,
     createTheme,
@@ -39,14 +39,13 @@ const App = () => (
         <Resource name="companies" {...companies} />
         <Resource name="products" {...products} />
         <Resource name="productProperties" />
-        <Resource name="productProperties" />
         <Resource name="propertyTypes" />
         <Resource name="contactNotes" />
         <Resource name="companyNotes" />
         <Resource name="productNotes" />
         <Resource name="dealNotes" />
         <Resource name="productFamilies" {...productFamilies} />
-        <Resource name="familyCategories" list={ListGuesser} />
+        <Resource name="familyCategories" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
         <Resource name="tasks" list={ListGuesser} />
         <Resource name="sales" list={ListGuesser} />
         <Resource name="tags" list={ListGuesser} />

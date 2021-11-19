@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Avatar } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import { makeStyles } from '@material-ui/core/styles';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { Product } from '../types';
 
 const useStyles = makeStyles({
     image: {
@@ -19,7 +21,7 @@ export const ProductImageField = ({
     source,
     size = 'medium',
 }: {
-    record?: { image: string; name: string };
+    record?: Product;
     source?: string;
     size?: 'small' | 'medium';
 }) => {
@@ -27,14 +29,14 @@ export const ProductImageField = ({
     if (!record) return null;
     if(!record.image) return (
         <Avatar>
-            <BusinessIcon />
+            <ShoppingCartIcon />
         </Avatar>
     )
     return (
         <img
             src={process.env.PUBLIC_URL + record.image}
-            alt={record.name}
-            title={record.name}
+            alt={record.model}
+            title={record.model}
             width={sizeInPixel[size]}
             height={sizeInPixel[size]}
             className={classes.image}

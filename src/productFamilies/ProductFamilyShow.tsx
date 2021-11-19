@@ -14,6 +14,7 @@ import { ProductFamilyAside } from './ProductFamilyAside';
 import { LogoField } from '../companies/LogoField';
 import { NotesIterator } from '../notes';
 import { ProductFamily } from '../types';
+import { ProductGridList } from '../products/ProductGridList';
 
 export const ProductFamilyShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -46,6 +47,15 @@ const ProductFamilyShowContent = () => {
                                     </ReferenceField>
                                 </Typography>
                             </Box>
+                        </Box>
+                        <Box mt={2} p={1}>
+                            <ReferenceManyField
+                                reference="products"
+                                target="family_id"
+                                label="Products"
+                            >
+                                <ProductGridList />
+                            </ReferenceManyField>
                         </Box>
                     </CardContent>
                 </Card>
