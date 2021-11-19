@@ -136,7 +136,7 @@ class ResourceItems(Resource):
     
     def __init__(self):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('ids[]', type=list)
+        self.parser.add_argument('ids[]', action='append')
         
     def get(self):
         args = self.parser.parse_args()

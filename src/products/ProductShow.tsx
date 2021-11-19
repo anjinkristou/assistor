@@ -97,20 +97,20 @@ const ProductShowContent = () => {
                             </ReferenceManyField>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                        <ReferenceManyField reference="productProperties" target="product_id" addLabel={false}>
-                            <Datagrid>
-                                <ReferenceField
-                                        source="type_id"
-                                        reference="propertyTypes"
-                                        link={false}
-                                    >
-                                    <TextField source="name" />
-                                </ReferenceField>
-                                <TextField source="property_value" />
-                                <TextField source="condition" />
-                                <EditButton />
-                            </Datagrid>
-                        </ReferenceManyField>
+                            <ReferenceManyField reference="productProperties" target="product_id" addLabel={false}>
+                                <Datagrid>
+                                    <ReferenceField
+                                            source="type_id"
+                                            reference="propertyTypes"
+                                            link={false}
+                                        >
+                                        <TextField source="name" />
+                                    </ReferenceField>
+                                    <TextField source="property_value" />
+                                    <TextField source="condition" />
+                                    <EditButton />
+                                </Datagrid>
+                            </ReferenceManyField>
                         </TabPanel>
                     </CardContent>
                 </Card>
