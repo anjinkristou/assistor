@@ -6,6 +6,9 @@ import {
     ReferenceField,
     EditButton,
     DeleteButton,
+    ReferenceArrayField,
+    SingleFieldList,
+    ChipField,
     ShowButton,
 } from 'react-admin';
 import { Box, Typography, Divider, Link } from '@material-ui/core';
@@ -78,7 +81,7 @@ export const CompanyAside = ({
             <Typography variant="subtitle2">Background</Typography>
             <Divider />
 
-            <Box mt={1}>
+            <Box mt={3}>
                 <Typography
                     variant="body2"
                     color="textSecondary"
@@ -119,6 +122,24 @@ export const CompanyAside = ({
                 <Typography variant="subtitle2">Tags</Typography>
                 <Divider />
                 <TagsListEdit record={record} reference="companies" />
+            </Box>
+
+            <Box mb={3}>
+                <Typography variant="subtitle2">Use Products</Typography>
+                <Divider />
+
+                <Box mt={1}>
+                    <ReferenceArrayField label="Tags" reference="products" source="use_products">
+                        <SingleFieldList>
+                            <ChipField 
+                                source="model" 
+                                variant="outlined" 
+                                color="secondary"
+                                size="small"
+                            />
+                        </SingleFieldList>
+                    </ReferenceArrayField>
+                </Box>
             </Box>
         </Box>
     ) : null;

@@ -3,6 +3,8 @@ from app.mixins import CRUDMixin
 from app.api.user.models import User
 from app.api.country.models import Country
 from app.api.tag.models import Tag
+# from app.api.product.models import Product
+
 
 company_tags_table = db.Table('company_tags',
     db.Column('company_id', db.ForeignKey('companies.id'), primary_key=True),
@@ -70,6 +72,7 @@ class CompanySchema(ma.SQLAlchemySchema):
     nb_customers = ma.Function(lambda obj: len(obj.customers))
     country_iso = ma.Function(lambda obj: obj.country.iso if obj.country else None)
     tags = ma.Function(lambda obj: [tag.id for tag in obj.tags])
+    use_products = ma.Function(lambda obj: [product.id for product in obj.use_products])
 
 
 company_schema = CompanySchema()

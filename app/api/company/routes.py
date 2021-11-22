@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required
 import json
 
 from .models import Company, company_schema, companies_schema, Tag
+from app.api.product.models import Product
 from app.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
 
 class CompanyList(ResourceList):
@@ -17,6 +18,11 @@ class CompanyList(ResourceList):
         if 'tags' in filter:
             self.tags = filter['tags']
             del filter['tags']
+            
+        self.use_products = None
+        if 'use_products' in filter:
+            self.tags = filter['use_products']
+            del filter['use_products']
         
         return filter
     
@@ -41,6 +47,10 @@ class CompanyItem(ResourceItem):
         if 'tags' in data:
             tags = data['tags']
             data['tags'] = Tag.query.filter(Tag.id.in_(tags)).all()
+            
+        if 'use_products' in data:
+            tags = data['use_products']
+            data['use_products'] = Product.query.filter(Product.id.in_(tags)).all()
             
         return data
 

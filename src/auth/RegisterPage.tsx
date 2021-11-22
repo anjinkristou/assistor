@@ -13,7 +13,7 @@ import {
 } from 'react-admin';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import { createTheme, makeStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { lightTheme } from '../layout/themes';
 
@@ -66,7 +66,7 @@ const Register = () => {
 }
 
 const RegisterWithTheme = (props: any) => (
-    <ThemeProvider theme={createMuiTheme(lightTheme)}>
+    <ThemeProvider theme={createTheme(lightTheme)}>
         <Register {...props} />
     </ThemeProvider>
 );

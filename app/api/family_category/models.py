@@ -1,6 +1,5 @@
 from app import db, ma
 from app.mixins import CRUDMixin
-from app.api.company.models import Company
 
 
 class FamilyCategory(db.Model, CRUDMixin):

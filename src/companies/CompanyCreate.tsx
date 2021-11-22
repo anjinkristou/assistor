@@ -10,6 +10,8 @@ import {
     AutocompleteInput,
     useGetIdentity,
     FormDataConsumer,
+    ReferenceArrayInput,
+    AutocompleteArrayInput,
 } from 'react-admin';
 import { Box, CardContent, Divider, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,6 +75,9 @@ export const CompanyCreate = (props: CreateProps) => {
                     }
                 </FormDataConsumer>
 
+                <ReferenceArrayInput source="use_products" reference="products">
+                    <AutocompleteArrayInput source="model" />
+                </ReferenceArrayInput>
 
                 <CustomDivider />
                 <TextInput source="address" fullWidth helperText={false} />

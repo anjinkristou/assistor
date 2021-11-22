@@ -8,6 +8,9 @@ import {
     SelectInput,
     useRecordContext,
     AutocompleteInput,
+    ReferenceArrayInput,
+    AutocompleteArrayInput,
+    FormDataConsumer,
     required,
 } from 'react-admin';
 import { Box, CardContent, Divider } from '@material-ui/core';
@@ -56,12 +59,21 @@ export const CompanyEdit = (props: EditProps) => {
                     choices={relations}
                     formClassName={classes.inline}
                 />
-                <ReferenceInput
-                    source="distributor_id"
-                    reference="companies"
-                >
-                    <DistributorInput />
-                </ReferenceInput>
+                <FormDataConsumer>
+                    {({ formData, ...rest }) => formData.relation != 'Distributor' &&
+                        <ReferenceInput
+                            source="distributor_id"
+                            reference="companies"
+                        >
+                            <DistributorInput />
+                        </ReferenceInput>
+                    }
+                </FormDataConsumer>
+
+                <ReferenceArrayInput source="use_products" reference="products">
+                    <AutocompleteArrayInput optionText="model" />
+                </ReferenceArrayInput>
+
                 <CustomDivider />
                 <TextInput source="address" fullWidth helperText={false} />
                 <TextInput
