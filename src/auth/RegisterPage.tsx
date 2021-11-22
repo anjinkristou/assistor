@@ -4,7 +4,6 @@ import {
     Card, 
     CardContent, 
     Theme, 
-    makeStyles,
     Avatar,
     Grid,
     Link,
@@ -14,8 +13,9 @@ import {
 } from 'react-admin';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { ThemeProvider } from '@material-ui/styles';
-import { createTheme } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
+import { lightTheme } from '../layout/themes';
 
 import RegisterForm from './RegisterForm';
 
@@ -42,20 +42,15 @@ const useStyles = makeStyles((theme: Theme) => ({
             justifyContent: 'center',
         },
         icon: {
-            backgroundColor: theme.palette.secondary.main[500],
+            backgroundColor: theme.palette.secondary.main,
         },
     }),
     { name: 'Register' }
 );
 
-const RegisterPage = ({ children, theme }:{
-    children?: ReactNode;
-    theme?: object;
-}) => {
-    const classes = useStyles(theme);
-    const muiTheme = useMemo(() => createTheme(theme), [theme]);
+const Register = () => {
+    const classes = useStyles();
     return (
-        <ThemeProvider theme={muiTheme}>
             <div className={classes.main}>
                 <Card className={classes.card}>
                     <div className={classes.avatar}>
@@ -63,28 +58,17 @@ const RegisterPage = ({ children, theme }:{
                             <ExitToAppIcon />
                         </Avatar>
                     </div>
-                    {children}
-                    <Grid container justifyContent="center">
-                        <Grid item>
-                            <Link href="/" variant="body2">
-                            Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
+                    <RegisterForm />
                 </Card>
                 <Notification />
             </div>
-        </ThemeProvider>
     );
 }
 
-RegisterPage.propTypes = {
-    children: PropTypes.node,
-    theme: PropTypes.object,
-};
+const RegisterWithTheme = (props: any) => (
+    <ThemeProvider theme={createMuiTheme(lightTheme)}>
+        <Register {...props} />
+    </ThemeProvider>
+);
 
-RegisterPage.defaultProps = {
-    children: <RegisterForm />,
-};
-
-export default RegisterPage;
+export default RegisterWithTheme;

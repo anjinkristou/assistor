@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field, withTypes } from 'react-final-form';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link as RouterLink  } from 'react-router-dom';
 
 import {
     Avatar,
@@ -11,6 +11,8 @@ import {
     CardActions,
     CircularProgress,
     TextField,
+    Link,
+    Typography,
 } from '@material-ui/core';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -26,7 +28,7 @@ const useStyles = makeStyles(theme => ({
         minHeight: '100vh',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        background: 'url(https://source.unsplash.com/random/1600x900)',
+        backgroundImage: 'radial-gradient(circle at 50% 14em, #313264 0%, #00023b 60%, #00023b 100%)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
     },
@@ -56,6 +58,8 @@ const useStyles = makeStyles(theme => ({
     },
     actions: {
         padding: '0 1em 1em 1em',
+        display: 'flex',
+        flexDirection: 'column',
     },
 }));
 
@@ -138,7 +142,7 @@ const Login = () => {
                                 </Avatar>
                             </div>
                             <div className={classes.hint}>
-                                Hint: demo / demo
+                                Wecome to Assistor.
                             </div>
                             <div className={classes.form}>
                                 <div className={classes.input}>
@@ -178,6 +182,15 @@ const Login = () => {
                                     )}
                                     {translate('ra.auth.sign_in')}
                                 </Button>
+                                <Typography variant="body2">Or</Typography>
+                                <Link
+                                    color="textSecondary"
+                                    component={RouterLink}
+                                    to="/register"
+                                    variant="body1"
+                                >
+                                    Register
+                                </Link>
                             </CardActions>
                         </Card>
                         <Notification />

@@ -63,6 +63,34 @@ const login = async ({ username, password }: {username: string; password:string;
     }
 };
 
+const register = async ({ 
+    first_name,
+    last_name,
+    email,
+    username, 
+    password
+}: { 
+    first_name: string;
+    last_name: string;
+    email: string;
+    username: string;
+    password: string;
+}) => {
+    try{
+    const response = await axios.post<ResponseType>(`${baseURL}/register`, { 
+            first_name,
+            last_name,
+            email,
+            username, 
+            password
+        })
+
+    } catch (error: any) {
+        const response = error.response;
+        return Promise.reject({message: response.data, status: response.status});
+    }
+}
+
 const getIdentity = async () => { 
     try{
         refreshToken();
@@ -109,5 +137,6 @@ export const authProvider: AuthProvider =  {
         const credentials = getCredentials();
         const permissions = credentials?.permissions;
         return permissions ? Promise.resolve(permissions) : Promise.reject();
-    }
+    },
+    register: register,
 };

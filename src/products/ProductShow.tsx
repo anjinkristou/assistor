@@ -107,8 +107,15 @@ const ProductShowContent = () => {
                                         <TextField source="name" />
                                     </ReferenceField>
                                     <TextField source="property_value" />
+                                    <ReferenceField
+                                            source="type_id"
+                                            reference="propertyTypes"
+                                            link={false}
+                                        >
+                                        <TextField source="unit" />
+                                    </ReferenceField>
                                     <TextField source="condition" />
-                                    <EditButton />
+    
                                 </Datagrid>
                             </ReferenceManyField>
                         </TabPanel>

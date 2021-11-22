@@ -24,18 +24,11 @@ export const CompanyAside = ({
         <Box ml={4} width={250} minWidth={250}>
             <Box textAlign="center" mb={2}>
                 {link === 'edit' ? (
-                    <Box display="flex" justifyContent="space-evenly">
-                        <EditButton
-                            basePath="/companies"
-                            record={record}
-                            label="Edit"
-                        />
-                        <DeleteButton
-                            basePath="/companies"
-                            record={record}
-                            label="Delete"
-                        />
-                    </Box>
+                    <EditButton
+                        basePath="/companies"
+                        record={record}
+                        label="Edit Company"
+                    />
                 ) : (
                     <ShowButton
                         basePath="/companies"

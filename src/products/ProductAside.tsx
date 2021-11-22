@@ -24,18 +24,11 @@ export const ProductAside = ({
         <Box ml={4} width={250} minWidth={250}>
             <Box textAlign="center" mb={2}>
                 {link === 'edit' ? (
-                    <Box display="flex" justifyContent="space-evenly">
-                        <EditButton
-                            basePath="/products"
-                            record={record}
-                            label="Edit"
-                        />
-                        <DeleteButton
-                            basePath="/products"
-                            record={record}
-                            label="Delete"
-                        />
-                    </Box>
+                    <EditButton
+                        basePath="/products"
+                        record={record}
+                        label="Edit Product"
+                    />
                 ) : (
                     <ShowButton
                         basePath="/products"
@@ -68,5 +61,15 @@ export const ProductAside = ({
                     Website: <Link href={record.website} target="_blank" rel="noreferrer">Link</Link>
                 </Box>
             )}
+
+            <Box mt={3}>
+                <Typography variant="subtitle2">Description</Typography>
+                <Divider />
+
+                <Box mt={1}>
+                    <TextField source="description" />
+                </Box>
+
+            </Box>
         </Box>
     ) : null;

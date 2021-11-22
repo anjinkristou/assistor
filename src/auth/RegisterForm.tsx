@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Field, Form } from 'react-final-form';
+import { useLocation, Link as RouterLink  } from 'react-router-dom';
 import {
     Button,
     CardActions,
@@ -8,6 +9,8 @@ import {
     TextField,
     Grid,
     CardContent,
+    Typography,
+    Link,
     Container,
 } from '@material-ui/core';
 import { Theme } from '@material-ui/core';
@@ -26,21 +29,24 @@ const baseURL = "/auth";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
-        form: {
-            padding: '0 1em 1em 1em',
-        },
-        input: {
-            marginTop: '1em',
-        },
-        button: {
-            width: '100%',
-        },
-        icon: {
-            marginRight: theme.spacing(1),
-        },
-    }),
-    { name: 'RegisterForm' }
-);
+    form: {
+        padding: '0 1em 1em 1em',
+    },
+    input: {
+        marginTop: '1em',
+    },
+    button: {
+        width: '100%',
+    },
+    icon: {
+        marginRight: theme.spacing(1),
+    },
+    actions: {
+        padding: '0 1em 1em 1em',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+}));
 
 const Input = ({
     meta: { touched, error }, // eslint-disable-line react/prop-types
@@ -230,7 +236,7 @@ const RegisterForm = ({ redirectTo }:
                         </Grid>
                     </Container>
                     </CardContent>
-                    <CardActions>
+                    <CardActions className={classes.actions}>
                         <Button
                             variant="contained"
                             type="submit"
@@ -241,13 +247,21 @@ const RegisterForm = ({ redirectTo }:
                         >
                             {loading && (
                                 <CircularProgress
-                                    className={classes.icon}
-                                    size={18}
+                                    size={25}
                                     thickness={2}
                                 />
                             )}
                             Register
                         </Button>
+                        <Typography variant="body2">Or</Typography>
+                        <Link
+                            color="textSecondary"
+                            component={RouterLink}
+                            to="/login"
+                            variant="body1"
+                        >
+                            Login
+                        </Link>
                     </CardActions>
                 </form>
             )}
