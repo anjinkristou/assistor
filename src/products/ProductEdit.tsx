@@ -48,6 +48,14 @@ export const ProductEdit = (props: EditProps) => {
             >
                 <FormTab label="General">
                     <ReferenceInput 
+                        label="Comapny" 
+                        source="company_id" 
+                        reference="companies"
+                        fullWidth
+                    >
+                        <AutocompleteInput optionText="name" />
+                    </ReferenceInput>
+                    <ReferenceInput 
                         label="Product Family" 
                         source="family_id" 
                         reference="productFamilies"

@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '1em',
+        position: 'relative',
     },
     identity: {
         display: 'flex',
@@ -44,6 +45,10 @@ const useStyles = makeStyles(theme => ({
     statIcon: {
         marginRight: theme.spacing(1),
     },
+    image: {
+        width: 28,
+        height: 28,
+    },
 }));
 
 export const ProductCard = ({ record }: { record: Product }) => {
@@ -58,6 +63,20 @@ export const ProductCard = ({ record }: { record: Product }) => {
             onMouseLeave={() => setElevation(1)}
         >
             <Paper className={classes.paper} elevation={elevation}>
+                <Box position="absolute" top={10} right={10}>
+                    <ReferenceField
+                        record={record}
+                        source="company_id"
+                        reference="companies"
+                        link="show"
+                    >
+                        <ImageField 
+                            source="logo" 
+                            title="title"
+                            classes={classes}
+                        />
+                    </ReferenceField>
+                </Box>
                 <div className={classes.identity}>
                     <ProductAvatar record={record} />
                     <div className={classes.name}>

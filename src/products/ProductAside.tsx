@@ -42,7 +42,19 @@ export const ProductAside = ({
             <Divider />
 
             <Box mt={1} display="flex" gridGap={2}>
-                <Typography>Family:</Typography>
+                Company: 
+                <ReferenceField
+                    record={record}
+                    source="company_id"
+                    reference="companies"
+                    link="show"
+                >
+                    <TextField source="name" />
+                </ReferenceField>
+            </Box>
+
+            <Box mt={1} display="flex" gridGap={2}>
+                Family: 
                 <ReferenceField
                     record={record}
                     source="family_id"
