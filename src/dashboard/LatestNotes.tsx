@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(2),
     },
     noteText: {
-        backgroundColor: '#edf3f0',
+        backgroundColor: theme.palette.grey[200],
         padding: theme.spacing(1),
         borderRadius: 10,
     },

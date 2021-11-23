@@ -210,8 +210,7 @@ const ContactsIterator = () => {
                                 secondary={
                                     <>
                                         {contact.title}{' '}
-                                        {contact.nb_notes &&
-                                        `- ${contact.nb_notes} notes `}
+                                        {`- ${contact.nb_notes} notes `}
                                         <TagsList record={contact} />
                                     </>
                                 }

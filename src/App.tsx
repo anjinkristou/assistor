@@ -4,6 +4,7 @@ import {
     unstable_createMuiStrictModeTheme,
     createTheme,
 } from '@material-ui/core/styles';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
 
 import { dataProvider } from './dataProvider';
 import { authProvider } from './authProvider';
@@ -17,12 +18,26 @@ import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
 // import Login from './Login'
 import productFamilies from './productFamilies';
+import englishMessages from './i18n/en';
 
 // FIXME MUI bug https://github.com/mui-org/material-ui/issues/13394
 const theme =
     process.env.NODE_ENV !== 'production'
         ? unstable_createMuiStrictModeTheme(defaultTheme)
         : createTheme(defaultTheme);
+
+const i18nProvider = polyglotI18nProvider(locale => {
+    if (locale === 'fr') {
+        return import('./i18n/fr').then(messages => messages.default);
+    }
+    console.log(locale);
+    if (locale === 'ja') {
+        return import('./i18n/ja').then(messages => messages.default);
+    }
+
+    // Always fallback on english
+    return englishMessages;
+}, 'en');
 
 const App = () => (
     <Admin
@@ -33,6 +48,7 @@ const App = () => (
         layout={Layout}
         dashboard={Dashboard}
         theme={theme}
+        i18nProvider={i18nProvider}
     >
         <Resource name="deals" {...deals} />
         <Resource name="contacts" {...contacts} />

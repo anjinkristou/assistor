@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1),
     },
     content: {
-        backgroundColor: '#edf3f0',
+        backgroundColor: theme.palette.grey[200],
         padding: '0 1em',
         borderRadius: 10,
         display: 'flex',
@@ -56,12 +56,15 @@ const useStyles = makeStyles(theme => ({
     },
     text: {
         flex: 1,
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1)
     },
     paragraph: {
         fontFamily: theme.typography.fontFamily,
         fontSize: theme.typography.body1.fontSize,
-        lineHeight: 1.3,
-        marginBottom: theme.spacing(2.4),
+        lineHeight: 1,
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     },
     toolbar: {
         marginLeft: theme.spacing(2),
