@@ -10,6 +10,7 @@ class Task(db.Model, CRUDMixin):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String)
     text = db.Column(db.String)
+    status = db.Column(db.String)
     due_date = db.Column(db.String)
     
     # Foreign keys
@@ -28,6 +29,7 @@ class TaskSchema(ma.SQLAlchemySchema):
     id = ma.auto_field()
     type = ma.auto_field()
     text = ma.auto_field()
+    status = ma.auto_field()
     due_date = ma.auto_field()
     
     # Foreign keys

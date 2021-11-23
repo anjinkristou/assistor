@@ -132,3 +132,11 @@ export interface ProductPrperty extends Record {
     property_value: string;
     condition: string;
 }
+
+export interface Task extends Record {
+    contact_id: Identifier;
+    type: string;
+    text: string;
+    due_date: string;
+    sales_id: Identifier;
+}

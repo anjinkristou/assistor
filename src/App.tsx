@@ -12,6 +12,7 @@ import { Login, Layout } from './layout';
 import contacts from './contacts';
 import companies from './companies';
 import products from './products';
+import tasks from './tasks';
 import productfamiliess from './productFamilies';
 import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
@@ -62,7 +63,7 @@ const App = () => (
         <Resource name="dealNotes" />
         <Resource name="productFamilies" {...productFamilies} />
         <Resource name="familyCategories" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-        <Resource name="tasks" list={ListGuesser} />
+        <Resource name="tasks" {...tasks} />
         <Resource name="sales" list={ListGuesser} />
         <Resource name="tags" list={ListGuesser} />
         <Resource name="countries" list={ListGuesser} />

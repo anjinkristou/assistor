@@ -136,7 +136,9 @@ class ResourceItems(Resource):
     
     def __init__(self):
         self.parser = reqparse.RequestParser()
+        self.parser.add_argument('data', type=dict)
         self.parser.add_argument('ids[]', action='append')
+        self.parser.add_argument('ids', action='append', type=int)
         
     def get(self):
         args = self.parser.parse_args()
@@ -151,13 +153,28 @@ class ResourceItems(Resource):
         args = self.parser.parse_args()
         ids = args['ids[]']
         
-        items = self.model_cls.query.filter(self.model_cls.id.in_(ids))
+        items = self.model_cls.query.filter(self.model_cls.id.in_(ids)).all()
         if len(items) == 0:
             return {"message": 'No records'}, HTTPStatus.NO_CONTENT
 
         result = self.models_schema.dump(items)
         
         [item.delete() for item in items]
+        
+        return {"data": result}, HTTPStatus.OK
+    
+    def put(self):
+        args = self.parser.parse_args()
+        data = args['data']
+        ids = args['ids']
+        
+        items = self.model_cls.query.filter(self.model_cls.id.in_(ids)).all()
+        if len(items) == 0:
+            return {"message": 'No records'}, HTTPStatus.NO_CONTENT
+        
+        [item.update(**data) for item in items]
+
+        result = self.models_schema.dump(items)
         
         return {"data": result}, HTTPStatus.OK
 
