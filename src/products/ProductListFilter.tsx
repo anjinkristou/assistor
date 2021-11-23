@@ -8,18 +8,14 @@ import {
     useGetList,
 } from 'react-admin';
 import { Box, Chip } from '@material-ui/core';
-import BusinessIcon from '@material-ui/icons/Business';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import CategoryIcon from '@material-ui/icons/Category';
 
-import { TagChip } from '../tags/TagChip';
-import { Tag } from '../types';
+import { ProductFamily } from '../types';
 
 export const ProductListFilter = () => {
     const { identity } = useGetIdentity();
-    const { data, ids } = useGetList<Tag>(
-        'tags',
+    const { data: familyData, ids: familyIds } = useGetList<ProductFamily>(
+        'productFamilies',
         { page: 1, perPage: 10 },
         { field: 'name', order: 'ASC' }
     );
@@ -27,23 +23,16 @@ export const ProductListFilter = () => {
         <Box width="15em" order="-1" marginRight="1em" mb={1}>
             <FilterLiveSearch />
 
-            <FilterList label="Tags" icon={<LocalOfferIcon />}>
-                {ids &&
-                    data &&
-                    ids.map(id => (
+            <FilterList label="Families" icon={<CategoryIcon />}>
+                {familyIds &&
+                    familyData &&
+                    familyIds.map(id => (
                         <FilterListItem
                             key={id}
-                            label={<TagChip record={data[id]}/>}
-                            value={{ tags: [id] }}
+                            label={<Chip label={familyData[id].name} size="small"/>}
+                            value={{ family_id: id }}
                         />
                     ))}
-            </FilterList>
-
-            <FilterList
-                label="Account manager"
-                icon={<SupervisorAccountIcon />}
-            >
-
             </FilterList>
         </Box>
     );

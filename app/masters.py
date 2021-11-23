@@ -123,7 +123,7 @@ class ResourceItem(Resource):
         
         item.delete()
 
-        return {"data": result}, HTTPStatus.OK
+        return {"data": result}, HTTPStatus.NO_CONTENT
     
     def post_data(self, data):
         return data

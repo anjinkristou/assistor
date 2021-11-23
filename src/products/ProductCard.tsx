@@ -13,7 +13,7 @@ import { Product } from '../types';
 const useStyles = makeStyles(theme => ({
     paper: {
         height: 200,
-        width: 193.5,
+        width: 194,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',

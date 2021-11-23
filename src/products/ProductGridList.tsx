@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Box, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useListContext, Identifier } from 'react-admin';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import { ProductCard } from './ProductCard';
 import { Product } from '../types';
@@ -18,6 +19,9 @@ const useStyles = makeStyles(theme => ({
         width: 194,
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: "center",
+        padding: '1em',
         backgroundColor: theme.palette.grey[200],
     },
 }));
@@ -30,7 +34,12 @@ const LoadingGridList = () => {
     return (
         <Box className={classes.gridList}>
             {times(15, key => (
-                <Paper className={classes.paper} key={key} />
+                <Paper className={classes.paper} key={key} >
+                <Skeleton variant="circle" width={60} height={60}  animation="wave"/>
+                <Skeleton variant="text" animation="wave" width={110}/>
+                <Skeleton variant="text" animation="wave" width={150}/>
+                <Skeleton variant="rect" width={180} height={40} />
+                </Paper>
             ))}
         </Box>
     );
@@ -52,6 +61,6 @@ const LoadedGridList = () => {
 };
 
 export const ProductGridList = () => {
-    const { loaded } = useListContext();
-    return loaded ? <LoadedGridList /> : <LoadingGridList />;
+    const { loaded, loading } = useListContext();
+    return loading ? <LoadingGridList /> : <LoadedGridList /> ;
 };
