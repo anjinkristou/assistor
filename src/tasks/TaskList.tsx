@@ -16,6 +16,7 @@ import {
     BulkDeleteButton,
     useGetIdentity,
     BulkActionProps,
+    ListActionsProps,
 } from 'react-admin';
 import {
     List,
@@ -32,6 +33,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import { ImportButton } from "react-admin-import-csv";
 
 import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
@@ -57,7 +59,7 @@ const TaskListContent = () => {
                         button
                         key={id}
                         component={Link}
-                        to={`/Tasks/${id}/show`}
+                        to={`/Tasks/${id}`}
                     >
                         <ListItemIcon>
                             <Checkbox
@@ -100,12 +102,13 @@ const useActionStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(2),
     },
 }));
-const TaskListActions = () => {
+const TaskListActions = (props: ListActionsProps) => {
     const classes = useActionStyles();
     return (
         <TopToolbar>
             <SortButton fields={['due_date']} />
             <ExportButton />
+            <ImportButton {...props} />
             <CreateButton
                 basePath="/Tasks"
                 variant="contained"

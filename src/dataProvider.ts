@@ -95,6 +95,21 @@ const create = async (resource: string, params: any): Promise<CreateResult<any>>
     }
 };
 
+const createMany = async (resource: string, params: any): Promise<CreateResult<any>> => {
+    try{
+        const credentials = getCredentials();
+        const token = credentials?.access_token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+        };
+        const response = await axios.post<CreateResult<any>>(`/${resource}/items`, params, config)
+        return Promise.resolve(response.data);
+    } catch (error: any) {
+        const response = error.response;
+        return Promise.reject({message: response.data, status: response.status});
+    }
+};
+
 const update = async (resource: string, params: any): Promise<UpdateResult<any>> => {
     try{
         const credentials = getCredentials();
@@ -163,6 +178,7 @@ export const dataProvider = {
     getMany:    getMany,
     getManyReference: getManyReference,
     create:     create,
+    createMany: createMany,
     update:     update,
     updateMany: updateMany,
     delete:     deleteOne,

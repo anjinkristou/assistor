@@ -11,6 +11,7 @@ const MarkDoneButton = (props: BulkActionProps) => (
         label="Mark checked"
         data={doneState}
         icon={<DoneIcon/>}
+        mutationMode="pessimistic"
     />
 );
 
