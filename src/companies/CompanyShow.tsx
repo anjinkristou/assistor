@@ -76,6 +76,12 @@ const CompanyShowContent = () => {
                                         />
                                     )}
                                 </Box>
+                                <Typography 
+                                    variant="body2" 
+                                    color="textSecondary"
+                                >
+                                    {`#${record.id} - `}
+                                </Typography>
                                 {record.sector && (
                                         <Typography variant="body2">
                                             <TextField source="sector" />,{' '}

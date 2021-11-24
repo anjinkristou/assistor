@@ -7,11 +7,13 @@ import {
     CreateButton,
     Pagination,
     useGetIdentity,
+    ListActionsProps,
 } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { GridList } from './GridList';
 import { CompanyListFilter } from './CompanyListFilter';
+import { ImportButton } from 'react-admin-import-csv';
 
 export const CompanyList = (props: ListProps) => {
     const { identity } = useGetIdentity();
@@ -37,11 +39,12 @@ const useActionStyles = makeStyles(theme => ({
     },
 }));
 
-const CompanyListActions = (props: any) => {
+const CompanyListActions = (props: ListActionsProps) => {
     const classes = useActionStyles();
     return (
         <TopToolbar>
             <ExportButton />
+            <ImportButton {...props} />
             <CreateButton
                 basePath="/companies"
                 variant="contained"

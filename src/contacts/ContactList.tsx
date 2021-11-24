@@ -13,6 +13,7 @@ import {
     CreateButton,
     Pagination,
     useGetIdentity,
+    ListActionsProps,
 } from 'react-admin';
 import {
     List,
@@ -33,6 +34,7 @@ import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
 import { ContactListFilter } from './ContactListFilter';
 import { Contact } from '../types';
+import { ImportButton } from 'react-admin-import-csv';
 
 const ContactListContent = () => {
     const { data, ids, loaded, onToggleItem, selectedIds } = useListContext<
@@ -111,12 +113,13 @@ const useActionStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(2),
     },
 }));
-const ContactListActions = () => {
+const ContactListActions = (props: ListActionsProps) => {
     const classes = useActionStyles();
     return (
         <TopToolbar>
             <SortButton fields={['last_name', 'first_name', 'last_seen']} />
             <ExportButton />
+            <ImportButton {...props} />
             <CreateButton
                 basePath="/contacts"
                 variant="contained"
