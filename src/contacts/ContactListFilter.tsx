@@ -26,7 +26,7 @@ export const ContactListFilter = () => {
         { field: 'name', order: 'ASC' }
     );
     return (
-        <Box width="15em" order="-1" marginRight="1em">
+        <Box width="15em" order="-1" marginRight="1em" minWidth="13em">
             <FilterLiveSearch />
             <FilterList label="Last seen" icon={<AccessTimeIcon />}>
                 <FilterListItem

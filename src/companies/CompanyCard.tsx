@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Paper, Typography, Link as MuiLink, Box, Chip } from '@material-ui/core';
+import { Paper, Typography, Link as MuiLink, Box, Chip, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ContactsIcon from '@material-ui/icons/AccountCircle';
 import DealIcon from '@material-ui/icons/MonetizationOn';
-import { linkToRecord, SelectField, ReferenceField, ImageField } from 'react-admin';
+import NoteIcon from '@material-ui/icons/Note';
+import { linkToRecord, SelectField, ReferenceField, useListContext } from 'react-admin';
 import { Link } from 'react-router-dom';
 
 import { sectors } from './sectors';
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '1em',
+        position: 'relative',
     },
     identity: {
         display: 'flex',
@@ -42,11 +44,22 @@ const useStyles = makeStyles(theme => ({
     statIcon: {
         marginRight: theme.spacing(1),
     },
+    checkbox: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+    },
+    identifier: {
+        position: 'absolute',
+        top: theme.spacing(1),
+        lrft: 0,
+    }
 }));
 
 export const CompanyCard = ({ record }: { record: Company }) => {
     const classes = useStyles();
     const [elevation, setElevation] = useState(1);
+    const { data, ids, loaded, onToggleItem, selectedIds } = useListContext<Company>();
     return (
         <MuiLink
             component={Link}
@@ -56,6 +69,24 @@ export const CompanyCard = ({ record }: { record: Company }) => {
             onMouseLeave={() => setElevation(1)}
         >
             <Paper className={classes.paper} elevation={elevation}>
+                <Checkbox
+                    edge="start"
+                    checked={selectedIds.includes(record.id)}
+                    tabIndex={-1}
+                    disableRipple
+                    className={classes.checkbox}
+                    onClick={(e: any )=> {
+                        e.stopPropagation();
+                        onToggleItem(record.id);
+                    }}
+                />
+                <Typography 
+                    variant="body2" 
+                    color="textSecondary"
+                    className={classes.identifier}
+                >
+                    {`#${record.id}`}
+                </Typography>
                 <div className={classes.identity}>
                     <CompanyAvatar record={record} />
                     <div className={classes.name}>
@@ -108,7 +139,7 @@ export const CompanyCard = ({ record }: { record: Company }) => {
                         </div>
                     </div>
                     <div className={classes.singleStat}>
-                        <DealIcon
+                        <NoteIcon
                             color="disabled"
                             className={classes.statIcon}
                         />
@@ -117,10 +148,10 @@ export const CompanyCard = ({ record }: { record: Company }) => {
                                 variant="subtitle2"
                                 style={{ marginBottom: -8 }}
                             >
-                                {record.nb_deals}
+                                {record.nb_notes}
                             </Typography>
                             <Typography variant="caption" color="textSecondary">
-                                {record.nb_deals > 1 ? 'deals' : 'deal'}
+                                {record.nb_notes > 1 ? 'notes' : 'note'}
                             </Typography>
                         </div>
                     </div>

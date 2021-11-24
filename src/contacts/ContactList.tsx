@@ -14,6 +14,7 @@ import {
     Pagination,
     useGetIdentity,
     ListActionsProps,
+    FilterLiveSearch,
 } from 'react-admin';
 import {
     List,
@@ -75,6 +76,7 @@ const ContactListContent = () => {
                             primary={`${contact.first_name} ${contact.last_name}`}
                             secondary={
                                 <>
+                                    {`#${contact.id} - `}
                                     {contact.title} at{' '}
                                     <ReferenceField
                                         record={contact}
@@ -85,7 +87,7 @@ const ContactListContent = () => {
                                     >
                                         <TextField source="name" />
                                     </ReferenceField>{' '}
-                                    {contact.nb_notes &&
+                                    {!!contact.nb_notes &&
                                         `- ${contact.nb_notes} notes `}
                                     <TagsList record={contact} />
                                 </>
@@ -117,7 +119,7 @@ const ContactListActions = (props: ListActionsProps) => {
     const classes = useActionStyles();
     return (
         <TopToolbar>
-            <SortButton fields={['last_name', 'first_name', 'last_seen']} />
+            <SortButton fields={['id', 'last_name', 'first_name', 'last_seen']} />
             <ExportButton />
             <ImportButton {...props} />
             <CreateButton

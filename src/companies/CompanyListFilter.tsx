@@ -12,6 +12,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { sizes } from './sizes';
 import { sectors } from './sectors';
@@ -19,7 +20,20 @@ import { relations } from './relations';
 import { TagChip } from '../tags/TagChip';
 import { Tag } from '../types';
 
+const useStyles = makeStyles(theme => ({
+    container: {
+        order: -1,
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        minWidth: '13em',
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
+        }
+    },
+}));
+
 export const CompanyListFilter = () => {
+    const classes = useStyles();
     const { identity } = useGetIdentity();
     const { data, ids } = useGetList<Tag>(
         'tags',
@@ -27,7 +41,7 @@ export const CompanyListFilter = () => {
         { field: 'name', order: 'ASC' }
     );
     return (
-        <Box width="20em" order="-1" marginRight="1em" mb={1}>
+        <div className={classes.container}>
             <FilterLiveSearch />
 
             <FilterList label="Relation" icon={<BusinessIcon />}>
@@ -73,6 +87,6 @@ export const CompanyListFilter = () => {
                     }}
                 />
             </FilterList>
-        </Box>
+        </div>
     );
 };
