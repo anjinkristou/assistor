@@ -8,3 +8,4 @@ flask-jwt-extended
 flask-migrate
 flask-msearch
 gunicorn
+python-dotenv
