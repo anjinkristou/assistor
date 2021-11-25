@@ -7,3 +7,4 @@ python-decouple
 flask-jwt-extended
 flask-migrate
 flask-msearch
+gunicorn
