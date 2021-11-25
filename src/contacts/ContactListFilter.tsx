@@ -13,12 +13,26 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { endOfYesterday, startOfWeek, startOfMonth, subMonths } from 'date-fns';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { Status } from '../misc/Status';
 import { TagChip } from '../tags/TagChip';
 import { Tag } from '../types';
 
+const useStyles = makeStyles(theme => ({
+    container: {
+        order: -1,
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        minWidth: '13em',
+        [theme.breakpoints.down('xs')]: {
+            display: 'none',
+        }
+    },
+}));
+
 export const ContactListFilter = () => {
+    const classes = useStyles();
     const { identity } = useGetIdentity();
     const { data, ids } = useGetList<Tag>(
         'tags',
@@ -26,7 +40,7 @@ export const ContactListFilter = () => {
         { field: 'name', order: 'ASC' }
     );
     return (
-        <Box width="15em" order="-1" marginRight="1em" minWidth="13em">
+        <div className={classes.container}>
             <FilterLiveSearch />
             <FilterList label="Last seen" icon={<AccessTimeIcon />}>
                 <FilterListItem
@@ -132,6 +146,6 @@ export const ContactListFilter = () => {
                     }}
                 />
             </FilterList>
-        </Box>
+        </div>
     );
 };
