@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexWrap: 'wrap',
         width:  '100%',
-        gap: '10px',
+        gap: '5px',
     },
     paper: {
         height: 200,
