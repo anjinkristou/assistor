@@ -9,3 +9,4 @@ flask-migrate
 flask-msearch
 gunicorn
 python-dotenv
+psycopg2
