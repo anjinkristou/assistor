@@ -40,6 +40,7 @@ import { TagsList } from '../tags/TagsList';
 import { TaskListFilter } from './TaskListFilter';
 import { Task } from '../types';
 import MarkDoneButton from './MarkDoneButton';
+import { TaskStatus } from './TaskStatus';
 
 const TaskListContent = () => {
     const { data, ids, loaded, onToggleItem, selectedIds } = useListContext<
@@ -53,7 +54,7 @@ const TaskListContent = () => {
     return (
         <List>
             {ids.map(id => {
-                const Task = data[id];
+                const task = data[id];
                 return (
                     <ListItem
                         button
@@ -79,15 +80,20 @@ const TaskListContent = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={Task.text}
+                            primary={
+                                <>
+                                {task.text} 
+                                </>
+                            }
                         />
                         <ListItemSecondaryAction>
                             <Typography variant="body2" color="textSecondary">
                                 due in{' '}
                                 {formatDistance(
-                                    new Date(Task.due_date),
+                                    new Date(task.due_date),
                                     now
                                 )}
+                                {' '}<TaskStatus status={task.status} />
                             </Typography>
                         </ListItemSecondaryAction>
                     </ListItem>
@@ -137,7 +143,7 @@ export const TaskList = (props: ListProps) => {
             bulkActionButtons={<TaskBulkActionButtons />}
             perPage={25}
             pagination={<Pagination rowsPerPageOptions={[10, 25, 50, 100]} />}
-            filterDefaultValues={{ sales_id: identity?.id }}
+            filterDefaultValues={{ sales_id: identity?.id, status: 'pending' }}
             sort={{ field: 'due_date', order: 'DESC' }}
         >
             <TaskListContent />

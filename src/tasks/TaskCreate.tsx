@@ -41,13 +41,13 @@ export const TaskCreate = (props: CreateProps) => {
     
     if (!identity) return null;
 
-    const defaultValue = () => ({ 
-        sales_id: identity && identity?.id, 
+    const defaultValue = () => ({
         due_date: new Date(), 
         status: 'Pending',
     });
     const transform = (data: Task) => ({
         ...data,
+        sales_id: identity && identity?.id, 
     });
     
     return (
@@ -73,19 +73,6 @@ export const TaskCreate = (props: CreateProps) => {
                     choices={statuses}
                     formClassName={classes.inline}
                 />
-                <ReferenceInput
-                    source="sales_id"
-                    reference="sales"
-                    label="Account manager"
-                    helperText={false}
-                    formClassName={classes.inline}
-                >
-                    <SelectInput
-                        optionText={(sales: any) =>
-                            `${sales.first_name} ${sales.last_name}`
-                        }
-                    />
-                </ReferenceInput>
             </SimpleForm>
         </Create>
     );

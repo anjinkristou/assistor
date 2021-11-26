@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 
 import { Welcome } from './Welcome';
 import { DealsChart } from './DealsChart';
@@ -11,44 +11,17 @@ import { CompaniesMap } from './CompaniesMap';
 export const Dashboard = () => {
     return (
         <>
-            {/* <Box display="flex" mt="2em">
-                <Box flex="3" mr="1em">
-                    <DealsChart />
-                </Box>
-                <Box flex="1">
-                    <Welcome />
-                </Box>
-            </Box> */}
-
-            <Box display="flex" mt="2em">
-                <Box flex="3" mr="1em">
+            <Grid container spacing={1}>
+                <Grid item xs={12} sm={8}>
                     <CompaniesMap />
-                </Box>
-                <Box flex="1" mr="1em">
+                </Grid>
+                <Grid item xs={12} sm={4}>
                     <HotContacts />
-                </Box>
-            </Box>
-
-            <Box display="flex" mt="2em">
-                <Box flex="1" mr="1em">
+                </Grid>
+                <Grid item xs={12}>
                     <LatestNotes />
-                </Box>
-                <Box flex="1" display="flex">
-                    <Box flex="1" mr="1em">
-                        <HotContacts />
-                    </Box>
-                    <Box flex="1">
-                        <DealsPipeline />
-                        {/*<Card>
-                            <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                Upcoming tasks
-                            </Typography>
-                            </CardContent>
-                        </Card>*/}
-                    </Box>
-                </Box>
-            </Box>
+                </Grid>
+            </Grid>
         </>
     );
 };

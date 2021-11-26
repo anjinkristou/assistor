@@ -253,7 +253,9 @@ export const DealListContent = () => {
                     data: {
                         index: destinationDeal
                             ? destinationDeal.index
-                            : destinationDeals.pop()!.index + 1,
+                            : (destinationDeals.length > 0)
+                            ? destinationDeals.pop()!.index + 1 
+                            : 0,
                         stage: destination.droppableId,
                     },
                     previousData: sourceDeal,

@@ -14,9 +14,10 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { endOfYesterday, startOfWeek, startOfMonth, subMonths } from 'date-fns';
 
-import { Status } from '../misc/Status';
+import { TaskStatus } from './TaskStatus';
 import { TagChip } from '../tags/TagChip';
 import { Tag } from '../types';
+import { statuses } from './status';
 
 export const TaskListFilter = () => {
     const { identity } = useGetIdentity();
@@ -62,6 +63,20 @@ export const TaskListFilter = () => {
                         ).toISOString(),
                     }}
                 />
+            </FilterList>
+            <FilterList label="Status" icon={<TrendingUpIcon />}>
+                {statuses.map(status =>(
+                    <FilterListItem
+                    label={
+                        <>
+                            {status.name} <TaskStatus status={status.id} />
+                        </>
+                    }
+                    value={{
+                        status: status.id,
+                    }}
+                />
+                ))}
             </FilterList>
             <FilterList
                 label="Account manager"

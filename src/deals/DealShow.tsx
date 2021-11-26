@@ -7,6 +7,8 @@ import {
     ReferenceArrayField,
     useRecordContext,
     useRedirect,
+    useRefresh,
+    useDataProvider,
     Identifier,
 } from 'react-admin';
 import {
@@ -15,7 +17,9 @@ import {
     DialogContent,
     Typography,
     Divider,
+    Button,
 } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import { format } from 'date-fns';
 
@@ -58,7 +62,40 @@ export const DealShow = ({ open, id }: { open: boolean; id: Identifier }) => {
 
 const DealShowContent = () => {
     const record = useRecordContext();
+    const dataProvider = useDataProvider();
+    const redirect = useRedirect();
+    const refresh = useRefresh();
+    
     if (!record) return null;
+
+    const onDelete = async() =>{
+        const { data: columnDeals } = await dataProvider.getList('deals', {
+            sort: { field: 'index', order: 'ASC' },
+            pagination: { page: 1, perPage: 100 },
+            filter: { stage: record.droppableId },
+        });
+        await Promise.all([
+            ...columnDeals
+                .filter(
+                    deal => deal.index < record.index
+                )
+                .map(deal =>
+                    dataProvider.update('deals', {
+                        id: deal.id,
+                        data: { index: deal.index - 1 },
+                        previousData: deal,
+                    })
+                ),
+            // for the deal that was moved, update its index
+            dataProvider.delete('deals', {
+                id: record.id,
+                previousData: record,
+            }),
+        ]);
+        redirect('/deals');
+        refresh();
+    };
+
     return (
         <>
             <Box display="flex">
@@ -88,7 +125,19 @@ const DealShowContent = () => {
                     </ReferenceField>
                 </Box>
                 <Box ml={2} flex="1">
-                    <Typography variant="h5">{record.name}</Typography>
+                    <Box display="flex" justifyContent="space-between" >
+                        <Typography variant="h5">{record.name}</Typography>
+                        <Button
+                            variant="contained"
+                            startIcon={<DeleteIcon />}            
+                            onClick={(e:any) =>{
+                                e.stopPropagation();
+                                onDelete();
+                            }}
+                        >
+                            Delete
+                        </Button>
+                    </Box>
 
                     <Box display="flex" mt={2}>
                         <Box display="flex" mr={5} flexDirection="column">

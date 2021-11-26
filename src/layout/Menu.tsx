@@ -19,6 +19,7 @@ import { AppState } from '../types';
 import companies from '../companies';
 import contacts from '../contacts';
 import tasks from '../tasks';
+import deals from '../deals';
 import products from '../products';
 import productFamilies from '../productFamilies';
 
@@ -73,6 +74,15 @@ const Menu = ({ dense = false }: MenuProps) => {
                     }}
                     primaryText="Contacts"
                     leftIcon={<contacts.icon />}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={{
+                        pathname: '/deals',
+                        state: { _scrollToTop: true },
+                    }}
+                    primaryText="Deals"
+                    leftIcon={<deals.icon />}
                     dense={dense}
                 />
                 <MenuItemLink
