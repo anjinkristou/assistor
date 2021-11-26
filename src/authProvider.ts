@@ -6,6 +6,7 @@ import {
     setCredentials,
     getCredentials,
     removeCredentials,
+    refreshToken,
 } from "./auth"
 
 const baseURL = "/auth";
@@ -19,31 +20,10 @@ interface LoginToken {
     refresh_token: string;
 }
 
-interface RefreshToken {
-    access_token: string;
-}
-
 interface UserIdentity {
     id: number;
     fullName: string;
     avatar: string;
-}
-
-const refreshToken = async () => {
-    const credentials = getCredentials();
-    if(!credentials) return;
-
-    const token = credentials?.refresh_token;
-
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
-    let response = await axios.post<RefreshToken>(`${baseURL}/refresh`, undefined, config)
-    const { access_token } = response.data;
-    setCredentials({
-        ...credentials,
-        access_token: access_token,
-    });
 }
 
 const login = async ({ username, password }: {username: string; password:string;}) => {
@@ -62,6 +42,12 @@ const login = async ({ username, password }: {username: string; password:string;
         return Promise.reject({message: response.data, status: response.status});
     }
 };
+
+const logout = async () => {
+    await axios.get(`${baseURL}/logout`)
+    removeCredentials();
+    return Promise.resolve('/login');
+}
 
 const register = async ({ 
     first_name,
@@ -123,20 +109,30 @@ const getIdentity = async () => {
     return Promise.resolve();
 };
 
+const checkAuth = () => {
+    try{
+        refreshToken();
+        return Promise.resolve();
+    } catch (error: any) {
+        return Promise.reject();
+    }
+}
+
+const getPermissions = () => {
+    try{
+        refreshToken();
+        return Promise.resolve();
+    } catch (error: any) {
+        return Promise.reject();
+    }
+}
+
 export const authProvider: AuthProvider =  {
     login: login,
     checkError: checkError,
-    checkAuth: () => (isAuthenticated() ? Promise.resolve() : Promise.reject()),
-    logout: async () => {
-        await axios.get(`${baseURL}/logout`)
-        removeCredentials();
-        return Promise.resolve();
-    },
+    checkAuth: checkAuth,
+    logout: logout,
     getIdentity: getIdentity,
-    getPermissions: () => {
-        const credentials = getCredentials();
-        const permissions = credentials?.permissions;
-        return permissions ? Promise.resolve(permissions) : Promise.reject();
-    },
+    getPermissions: getPermissions,
     register: register,
 };

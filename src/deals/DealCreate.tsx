@@ -10,6 +10,7 @@ import {
     required,
     useRedirect,
     useDataProvider,
+    useGetIdentity,
 } from 'react-admin';
 import { Dialog } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,6 +29,7 @@ export const DealCreate = ({ open }: { open: boolean }) => {
     const classes = useStyles();
     const redirect = useRedirect();
     const dataProvider = useDataProvider();
+    const { identity } = useGetIdentity();
 
     const handleClose = () => {
         redirect('/deals');
@@ -65,7 +67,7 @@ export const DealCreate = ({ open }: { open: boolean }) => {
                 className={classes.root}
                 onSuccess={onSuccess}
             >
-                <SimpleForm initialValues={{ index: 0 }}>
+                <SimpleForm initialValues={{ index: 0, sales_id: identity && identity?.id }}>
                     <TextInput
                         source="name"
                         label="Deal name"

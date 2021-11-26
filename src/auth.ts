@@ -1,3 +1,7 @@
+import axios, { AxiosError } from 'axios';
+
+const baseURL = "/auth";
+
 export type Credentials = {
   access_token: string;
   refresh_token: string;
@@ -27,4 +31,26 @@ export function getCredentials(): Credentials | null {
 
 export function removeCredentials(): void {
   localStorage.removeItem(CREDENTIALS_LOCAL_STORAGE_ITEM);
+}
+
+
+interface RefreshToken {
+  access_token: string;
+}
+
+export const refreshToken = async () => {
+  const credentials = getCredentials();
+  if(!credentials) return;
+
+  const token = credentials?.refresh_token;
+
+  const config = {
+      headers: { Authorization: `Bearer ${token}` }
+  };
+  let response = await axios.post<RefreshToken>(`${baseURL}/refresh`, undefined, config)
+  const { access_token } = response.data;
+  setCredentials({
+      ...credentials,
+      access_token: access_token,
+  });
 }
