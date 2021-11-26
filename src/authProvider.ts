@@ -6,8 +6,11 @@ import {
     setCredentials,
     getCredentials,
     removeCredentials,
-    refreshToken,
 } from "./auth"
+
+interface RefreshToken {
+    access_token: string;
+  }
 
 const baseURL = "/auth";
 
@@ -25,6 +28,24 @@ interface UserIdentity {
     fullName: string;
     avatar: string;
 }
+
+const refreshToken = async () => {
+    const credentials = getCredentials();
+    if(!credentials) return;
+  
+    const token = credentials?.refresh_token;
+  
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+    let response = await axios.post<RefreshToken>(`${baseURL}/refresh`, undefined, config)
+    const { access_token } = response.data;
+    setCredentials({
+        ...credentials,
+        access_token: access_token,
+    });
+};
+
 
 const login = async ({ username, password }: {username: string; password:string;}) => {
     try{
