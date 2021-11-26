@@ -110,15 +110,24 @@ const ContactListContent = () => {
     );
 };
 
-const useActionStyles = makeStyles(theme => ({
+const useStyle = makeStyles(theme => ({
     createButton: {
         marginLeft: theme.spacing(2),
     },
+    searchbox: {
+        display: 'block',
+        [theme.breakpoints.up('sm')]: {
+            display: 'none',
+        }
+    },
 }));
 const ContactListActions = (props: ListActionsProps) => {
-    const classes = useActionStyles();
+    const classes = useStyle();
     return (
-        <TopToolbar>
+        <TopToolbar>            
+            <div className={classes.searchbox}>
+                <FilterLiveSearch />
+            </div>
             <SortButton fields={['id', 'last_name', 'first_name', 'last_seen']} />
             <ExportButton />
             <ImportButton {...props} />

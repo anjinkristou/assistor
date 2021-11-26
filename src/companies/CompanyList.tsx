@@ -9,6 +9,7 @@ import {
     useGetIdentity,
     ListActionsProps,
     SortButton,
+    FilterLiveSearch,
 } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -16,6 +17,7 @@ import { GridList } from './GridList';
 import { CompanyListFilter } from './CompanyListFilter';
 import { ImportButton } from 'react-admin-import-csv';
 import SelectAllButton from './SelectAllButton';
+import { Box } from '@material-ui/core';
 
 export const CompanyList = (props: ListProps) => {
     const { identity } = useGetIdentity();
@@ -35,10 +37,22 @@ export const CompanyList = (props: ListProps) => {
     ) : null;
 };
 
-const useActionStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
+    toolbar: {
+        
+    },
     createButton: {
         marginLeft: theme.spacing(2),
     },
+    spacer: {
+
+    },
+    searchbox: {
+        display: 'block',
+        [theme.breakpoints.up('sm')]: {
+            display: 'none',
+        }
+    }
 }));
 
 const importOptions = {
@@ -48,10 +62,14 @@ const importOptions = {
     }
 }
 
+
 const CompanyListActions = (props: ListActionsProps) => {
-    const classes = useActionStyles();
+    const classes = useStyles();
     return (
-        <TopToolbar>
+        <TopToolbar className={classes.toolbar} >
+            <div className={classes.searchbox}>
+                <FilterLiveSearch />
+            </div>
             <SortButton fields={['id', 'name']} />
             <SelectAllButton />
             <ExportButton />
