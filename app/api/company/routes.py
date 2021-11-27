@@ -44,6 +44,21 @@ class CompanyItem(ResourceItem):
     def post_data(self, data):
         data = super(CompanyItem, self).post_data(data)
         
+        if 'nb_contacts' in data:
+            del data['nb_contacts']
+        if 'nb_deals' in data:
+            del data['nb_deals']
+        if 'nb_notes' in data:
+            del data['nb_notes']
+        if 'nb_customers' in data:
+            del data['nb_customers']
+        if 'country_iso' in data:
+            del data['country_iso']
+        if 'tags' in data:
+            del data['tags']
+        if 'use_products' in data:
+            del data['use_products']
+        
         if 'tags' in data:
             tags = data['tags']
             data['tags'] = Tag.query.filter(Tag.id.in_(tags)).all()

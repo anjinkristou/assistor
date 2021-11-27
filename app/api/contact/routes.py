@@ -39,6 +39,14 @@ class ContactItem(ResourceItem):
         data = super(ContactItem, self).post_data(data)
         
         if 'tags' in data:
+            del data['tags']
+        if 'nb_notes' in data:
+            del data['nb_notes']
+            
+        if 'has_newsletter' in data:
+            data['has_newsletter'] = data['has_newsletter'] == '1'
+        
+        if 'tags' in data:
             tags = data['tags']
             data['tags'] = Tag.query.filter(Tag.id.in_(tags)).all()
             

@@ -20,6 +20,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import TrashIcon from '@material-ui/icons/Delete';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 import { Status } from '../misc/Status';
 
@@ -56,8 +58,6 @@ const useStyles = makeStyles(theme => ({
     },
     text: {
         flex: 1,
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1)
     },
     paragraph: {
         fontFamily: theme.typography.fontFamily,
@@ -196,13 +196,7 @@ export const Note = ({
             ) : (
                 <div className={classes.content}>
                     <div className={classes.text}>
-                        {note.text
-                            .split('\n')
-                            .map((paragraph: string, index: number) => (
-                                <p className={classes.paragraph} key={index}>
-                                    {paragraph}
-                                </p>
-                            ))}
+                        <ReactMarkdown children={note.text} remarkPlugins={[remarkGfm]} />
                     </div>
                     <div
                         className={classes.toolbar}

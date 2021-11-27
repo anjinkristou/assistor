@@ -10,8 +10,10 @@ import {
     Identifier,
     useResourceContext,
 } from 'react-admin';
-import { TextField as TextInput, Button } from '@material-ui/core';
+import { TextField as TextInput, Button, ButtonGroup } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 import { StatusSelector } from './StatusSelector';
 
@@ -31,6 +33,20 @@ const useStyles = makeStyles(theme => ({
             paddingTop: 10,
         },
     },
+    buttonSwitcher: {
+        marginBottom: theme.spacing(1),
+    },
+    previewConatiner: {
+        display: 'flex',
+    },
+    previewRaw: {
+        flex: 1,
+    },
+    previewMarkdown: {
+        flex: 1,
+        marginLeft: theme.spacing(1),
+        borderColor: theme.palette.primary.main,
+    },
 }));
 
 export const NewNote = ({
@@ -44,6 +60,7 @@ export const NewNote = ({
     const record = useRecordContext();
     const resource = useResourceContext();
     const [text, setText] = useState('');
+    const [preview, setPreview] = useState(false);
     const [status, setStatus] = useState(record && record.status);
     const [date, setDate] = useState(getCurrentDate());
     const [create, { loading }] = useCreate();
@@ -86,18 +103,30 @@ export const NewNote = ({
     return (
         <div className={classes.root}>
             <form onSubmit={handleSubmit}>
-                <TextInput
-                    label="Add a note"
-                    variant="filled"
-                    size="small"
-                    fullWidth
-                    multiline
-                    value={text}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                        setText(event.target.value)
-                    }
-                    rows={3}
-                />
+                <div className={classes.buttonSwitcher}>
+                    <ButtonGroup color="primary" aria-label="outlined primary button group">
+                        <Button>Raw</Button>
+                        <Button>Markdown</Button>
+                    </ButtonGroup>
+                </div>
+                <div className={classes.previewConatiner}>
+                    <div className={classes.previewRaw}>
+                        <TextInput
+                            label="Add a note"
+                            variant="filled"
+                            size="small"
+                            fullWidth
+                            multiline
+                            value={text}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                setText(event.target.value)
+                            }
+                        />
+                    </div>
+                    <div className={classes.previewMarkdown}>
+                        <ReactMarkdown children={text} remarkPlugins={[remarkGfm]} />
+                    </div>
+                </div>
                 <div className={classes.toolbar}>
                     <span>
                         {text ? (
