@@ -11,13 +11,17 @@ import {
     useResourceContext,
 } from 'react-admin';
 import { TextField as TextInput, Button, ButtonGroup } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 import { StatusSelector } from './StatusSelector';
 
-const useStyles = makeStyles(theme => ({
+type Props = {
+    preview: Boolean;
+}
+
+const useStyles = makeStyles<Theme, Props>(theme => ({
     root: {
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(1),
@@ -46,6 +50,7 @@ const useStyles = makeStyles(theme => ({
         flex: 1,
         marginLeft: theme.spacing(1),
         borderColor: theme.palette.primary.main,
+        display: ({preview}) => (preview ? 'block' : 'none'),
     },
 }));
 
@@ -56,11 +61,11 @@ export const NewNote = ({
     showStatus?: boolean;
     reference: 'companies' | 'contacts' | 'deals' | 'products';
 }) => {
-    const classes = useStyles();
+    const [preview, setPreview] = useState(false);
+    const classes = useStyles({preview});
     const record = useRecordContext();
     const resource = useResourceContext();
     const [text, setText] = useState('');
-    const [preview, setPreview] = useState(false);
     const [status, setStatus] = useState(record && record.status);
     const [date, setDate] = useState(getCurrentDate());
     const [create, { loading }] = useCreate();
@@ -104,10 +109,11 @@ export const NewNote = ({
         <div className={classes.root}>
             <form onSubmit={handleSubmit}>
                 <div className={classes.buttonSwitcher}>
-                    <ButtonGroup color="primary" aria-label="outlined primary button group">
-                        <Button>Raw</Button>
-                        <Button>Markdown</Button>
-                    </ButtonGroup>
+                    <Button 
+                        variant={preview ? "contained": "outlined"} 
+                        color="primary"
+                        onClick={()=> setPreview(!preview)}
+                    >Markdown</Button>
                 </div>
                 <div className={classes.previewConatiner}>
                     <div className={classes.previewRaw}>
