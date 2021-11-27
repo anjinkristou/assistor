@@ -64,6 +64,7 @@ export const CompanyEdit = (props: EditProps) => {
                         <ReferenceInput
                             source="distributor_id"
                             reference="companies"
+                            filter={{ relation: 'Distributor' }}
                         >
                             <DistributorInput />
                         </ReferenceInput>
