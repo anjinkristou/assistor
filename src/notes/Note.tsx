@@ -194,7 +194,10 @@ export const Note = ({
                     </div>
                 </form>
             ) : (
-                <div className={classes.content}>
+                <div 
+                    className={classes.content}
+                    onClick={() => setHover(true)}
+                >
                     <div className={classes.text}>
                         <ReactMarkdown children={note.text} remarkPlugins={[remarkGfm]} />
                     </div>

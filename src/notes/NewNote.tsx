@@ -10,10 +10,10 @@ import {
     Identifier,
     useResourceContext,
 } from 'react-admin';
-import { TextField as TextInput, Button, ButtonGroup } from '@material-ui/core';
+import { TextField as TextInput, Button, Paper } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import { StatusSelector } from './StatusSelector';
 
@@ -49,6 +49,8 @@ const useStyles = makeStyles<Theme, Props>(theme => ({
     previewMarkdown: {
         flex: 1,
         marginLeft: theme.spacing(1),
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
         borderColor: theme.palette.primary.main,
         display: ({preview}) => (preview ? 'block' : 'none'),
     },
@@ -129,9 +131,9 @@ export const NewNote = ({
                             }
                         />
                     </div>
-                    <div className={classes.previewMarkdown}>
+                    <Paper className={classes.previewMarkdown}>
                         <ReactMarkdown children={text} remarkPlugins={[remarkGfm]} />
-                    </div>
+                    </Paper>
                 </div>
                 <div className={classes.toolbar}>
                     <span>

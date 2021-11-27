@@ -10,6 +10,9 @@ import {
     FunctionField,
 } from 'react-admin';
 import { formatDistance } from 'date-fns';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 
 import { Contact as ContactType } from '../types';
 
@@ -130,9 +133,7 @@ export const LatestNotes = () => {
                                 )}
                             </Typography>
                             <div className={classes.noteText}>
-                                <Typography className={classes.noteTextText}>
-                                    {note.text}
-                                </Typography>
+                                <ReactMarkdown children={note.text} remarkPlugins={[remarkGfm]} />
                             </div>
                         </div>
                     ))}
