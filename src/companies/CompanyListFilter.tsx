@@ -1,5 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import * as React from 'react';
+import { useState } from 'react';
 import {
     FilterList,
     FilterLiveSearch,
@@ -7,28 +8,23 @@ import {
     useGetIdentity,
     useGetList,
 } from 'react-admin';
-import { Box, Chip } from '@material-ui/core';
+import { Box, Chip, Drawer, IconButton } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { sizes } from './sizes';
 import { sectors } from './sectors';
 import { relations } from './relations';
 import { TagChip } from '../tags/TagChip';
 import { Tag } from '../types';
+import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
 
 const useStyles = makeStyles(theme => ({
     container: {
-        order: -1,
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
         minWidth: '13em',
-        [theme.breakpoints.down('xs')]: {
-            display: 'none',
-        }
     },
 }));
 
@@ -41,7 +37,7 @@ export const CompanyListFilter = () => {
         { field: 'name', order: 'ASC' }
     );
     return (
-        <div className={classes.container}>
+        <CollapsibleListFilter>
             <FilterLiveSearch />
 
             <FilterList label="Relation" icon={<BusinessIcon />}>
@@ -87,6 +83,6 @@ export const CompanyListFilter = () => {
                     }}
                 />
             </FilterList>
-        </div>
+        </CollapsibleListFilter>
     );
 };

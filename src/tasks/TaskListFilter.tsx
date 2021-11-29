@@ -18,11 +18,12 @@ import { TaskStatus } from './TaskStatus';
 import { TagChip } from '../tags/TagChip';
 import { Tag } from '../types';
 import { statuses } from './status';
+import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
 
 export const TaskListFilter = () => {
     const { identity } = useGetIdentity();
     return (
-        <Box width="15em" order="-1" marginRight="1em">
+        <CollapsibleListFilter>
             <FilterLiveSearch />
             <FilterList label="Due date" icon={<AccessTimeIcon />}>
                 <FilterListItem
@@ -89,6 +90,6 @@ export const TaskListFilter = () => {
                     }}
                 />
             </FilterList>
-        </Box>
+        </CollapsibleListFilter>
     );
 };

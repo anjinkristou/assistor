@@ -114,21 +114,12 @@ const useStyles = makeStyles(theme => ({
     createButton: {
         marginLeft: theme.spacing(2),
     },
-    searchbox: {
-        display: 'block',
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        }
-    },
 }));
 
 const ContactListActions = (props: ListActionsProps) => {
     const classes = useStyles();
     return (
-        <TopToolbar>            
-            <div className={classes.searchbox}>
-                <FilterLiveSearch />
-            </div>
+        <TopToolbar>
             <SortButton fields={['id', 'last_name', 'first_name', 'last_seen']} />
             <ExportButton />
             <ImportButton {...props} />

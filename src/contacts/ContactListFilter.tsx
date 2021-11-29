@@ -18,6 +18,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Status } from '../misc/Status';
 import { TagChip } from '../tags/TagChip';
 import { Tag } from '../types';
+import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -40,7 +41,7 @@ export const ContactListFilter = () => {
         { field: 'name', order: 'ASC' }
     );
     return (
-        <div className={classes.container}>
+        <CollapsibleListFilter>
             <FilterLiveSearch />
             <FilterList label="Last seen" icon={<AccessTimeIcon />}>
                 <FilterListItem
@@ -146,6 +147,6 @@ export const ContactListFilter = () => {
                     }}
                 />
             </FilterList>
-        </div>
+        </CollapsibleListFilter>
     );
 };

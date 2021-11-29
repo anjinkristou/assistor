@@ -11,6 +11,7 @@ import { Box, Chip } from '@material-ui/core';
 import CategoryIcon from '@material-ui/icons/Category';
 
 import { ProductFamily } from '../types';
+import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
 
 export const ProductListFilter = () => {
     const { identity } = useGetIdentity();
@@ -20,7 +21,7 @@ export const ProductListFilter = () => {
         { field: 'name', order: 'ASC' }
     );
     return (
-        <Box width="15em" order="-1" marginRight="1em" mb={1}>
+        <CollapsibleListFilter>
             <FilterLiveSearch />
 
             <FilterList label="Families" icon={<CategoryIcon />}>
@@ -34,6 +35,6 @@ export const ProductListFilter = () => {
                         />
                     ))}
             </FilterList>
-        </Box>
+        </CollapsibleListFilter>
     );
 };

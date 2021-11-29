@@ -8,12 +8,13 @@ import {
     useGetList,
 } from 'react-admin';
 import { Box, Chip } from '@material-ui/core';
+import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
 
 export const ProductFamilyListFilter = () => {
 
     return (
-        <Box width="15em" order="-1" marginRight="1em">
+        <CollapsibleListFilter>
             <FilterLiveSearch />
-        </Box>
+        </CollapsibleListFilter>
     );
 };

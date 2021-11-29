@@ -44,15 +44,6 @@ const useStyles = makeStyles(theme => ({
     createButton: {
         marginLeft: theme.spacing(2),
     },
-    spacer: {
-
-    },
-    searchbox: {
-        display: 'block',
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        }
-    }
 }));
 
 const importOptions = {
@@ -67,9 +58,6 @@ const CompanyListActions = (props: ListActionsProps) => {
     const classes = useStyles();
     return (
         <TopToolbar className={classes.toolbar} >
-            <div className={classes.searchbox}>
-                <FilterLiveSearch />
-            </div>
             <SortButton fields={['id', 'name']} />
             <SelectAllButton />
             <ExportButton />
