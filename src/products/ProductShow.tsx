@@ -39,6 +39,7 @@ import { NotesIterator } from '../notes';
 import { ProductImageField } from './ProductImageField';
 import { ProductAside } from './ProductAside';
 import { Product, ProductPrperty } from '../types';
+import { LogoField } from '../companies/LogoField';
 
 export const ProductShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -64,6 +65,15 @@ const ProductShowContent = () => {
                                 <Box display="flex" gridGap={4}>
                                     <Typography variant="h5">{record.model}</Typography>
                                 </Box>
+                            </Box>
+                            <Box>
+                                <ReferenceField
+                                    source="company_id"
+                                    reference="companies"
+                                    link="show"
+                                >
+                                    <LogoField />
+                                </ReferenceField>
                             </Box>
                         </Box>
                         <Tabs

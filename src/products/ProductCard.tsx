@@ -72,7 +72,7 @@ export const ProductCard = ({ record }: { record: Product }) => {
                     >
                         <ImageField 
                             source="logo" 
-                            title="title"
+                            title="name"
                             classes={classes}
                         />
                     </ReferenceField>
