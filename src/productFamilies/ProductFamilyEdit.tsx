@@ -9,6 +9,7 @@ import {
     FormWithRedirect,
     Toolbar,
     useEditContext,
+    SelectInput,
 } from 'react-admin';
 import { Card, CardContent, Divider, Box } from '@material-ui/core';
 import omit from 'lodash/omit';
@@ -16,7 +17,7 @@ import omit from 'lodash/omit';
 import { Avatar } from './Avatar';
 import { ProductFamilyAside } from './ProductFamilyAside';
 import { ProductFamily } from '../types';
-import { CreateCategory } from './CreateCategory';
+import { categories } from './categories';
 
 const Spacer = () => <Box width={20} component="span" />;
 
@@ -39,16 +40,10 @@ const ProductFamilyEditContent = () => {
                                             <Avatar record={record} />
                                         </Box>
                                         <Box flex={1}>
-                                            <ReferenceInput
-                                                source="category_id"
-                                                reference="familyCategories"
-                                                fullWidth
-                                            >
-                                                <AutocompleteInput 
-                                                    optionText="name"
-                                                    create={<CreateCategory />}
-                                                />
-                                            </ReferenceInput>
+                                            <SelectInput
+                                                source="category"
+                                                choices={categories}
+                                            />
                                             <TextInput source="name" fullWidth />
                                             <TextInput source="website" fullWidth />
                                             <TextInput source="image" fullWidth />

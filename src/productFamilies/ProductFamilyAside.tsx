@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
     TextField,
     ReferenceField,
+    SelectField,
 } from 'react-admin';
 import { 
     Box, 
@@ -12,6 +13,7 @@ import {
 
 import { ProductFamily, Sale } from '../types';
 import { CollapsibleAside } from '../components/CollapsibleAside';
+import { categories } from './categories';
 
 export const ProductFamilyAside = ({
     record,
@@ -40,14 +42,10 @@ const AsideContent = ({
             <Divider />
             <Box mt={1} display="flex" gridGap={2}>
                 <Typography>Category:</Typography>
-                <ReferenceField
-                    record={record}
-                    source="category_id"
-                    reference="familyCategories"
-                    link="show"
-                >
-                    <TextField source="name" />
-                </ReferenceField>
+                <SelectField
+                    source="category"
+                    choices={categories}
+                />
             </Box>
 
             {record.website && (

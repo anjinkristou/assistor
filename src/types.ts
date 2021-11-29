@@ -110,10 +110,10 @@ export interface Product extends Record {
 }
 
 export interface ProductFamily extends Record {
-    category_id: Identifier;
     name: string;
     website: string;
     image: string;
+    category: string;
     description: string;
     nb_products: number;
 }

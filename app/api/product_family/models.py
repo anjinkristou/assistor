@@ -1,6 +1,5 @@
 from app import db, ma
 from app.mixins import CRUDMixin
-from app.api.family_category.models import FamilyCategory
 
 
 class ProductFamily(db.Model, CRUDMixin):
@@ -14,10 +13,9 @@ class ProductFamily(db.Model, CRUDMixin):
     description = db.Column(db.Unicode)
 
     # Foreign keys
-    category_id = db.Column(db.Integer, db.ForeignKey(FamilyCategory.id))
+    category = db.Column(db.String)
 
     # Relationships
-    category = db.relationship('FamilyCategory', backref='families')
     
     
     
@@ -31,7 +29,7 @@ class ProductFamilySchema(ma.SQLAlchemySchema):
     image = ma.auto_field()
     description = ma.auto_field()
     
-    category_id = ma.auto_field()
+    category = ma.auto_field()
     
     nb_products = ma.Function(lambda obj: len(obj.products))
         

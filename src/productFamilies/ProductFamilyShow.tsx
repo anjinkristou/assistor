@@ -6,6 +6,7 @@ import {
     ReferenceField,
     ReferenceManyField,
     useShowContext,
+    SelectField,
 } from 'react-admin';
 import { Box, Card, CardContent, Typography } from '@material-ui/core';
 
@@ -15,6 +16,7 @@ import { LogoField } from '../companies/LogoField';
 import { NotesIterator } from '../notes';
 import { ProductFamily } from '../types';
 import { ProductGridList } from '../products/ProductGridList';
+import { categories } from './categories';
 
 export const ProductFamilyShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -38,13 +40,11 @@ const ProductFamilyShowContent = () => {
                                 </Typography>
                                 <Typography variant="body2">
                                     {record.title} in{' '}
-                                    <ReferenceField
-                                        source="category_id"
-                                        reference="familyCategories"
-                                        link="show"
-                                    >
-                                        <TextField source="name" />
-                                    </ReferenceField>
+                                    <SelectField
+                                        record={record}
+                                        source="category"
+                                        choices={categories}
+                                    />
                                 </Typography>
                             </Box>
                         </Box>

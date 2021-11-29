@@ -29,9 +29,9 @@ import {
 import CategoryIcon from '@material-ui/icons/Category';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { CreateCategory } from './CreateCategory';
 
 import { ProductFamily } from '../types';
+import { categories } from './categories';
 
 const useStyles = makeStyles({
     inline: {
@@ -60,16 +60,11 @@ export const ProductFamilyCreate = (props: CreateProps) => {
                 initialValues={contactDefaultValue}
                 transform={transform}
             >
-                <ReferenceInput
-                    source="category_id"
-                    reference="familyCategories"
-                    fullWidth
-                >
-                    <AutocompleteInput 
-                        optionText="name"
-                        create={<CreateCategory />}
-                    />
-                </ReferenceInput>
+                <SelectInput
+                    source="category"
+                    choices={categories}
+                    formClassName={clsx(classes.inline, 'first-child')}
+                />
                 <TextInput source="name" fullWidth />
                 <TextInput source="website" fullWidth />
                 <TextInput source="image" fullWidth />

@@ -62,7 +62,6 @@ const App = () => (
         <Resource name="productNotes" />
         <Resource name="dealNotes" />
         <Resource name="productFamilies" {...productFamilies} />
-        <Resource name="familyCategories" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
         <Resource name="tasks" {...tasks} />
         <Resource name="sales" list={ListGuesser} />
         <Resource name="tags" list={ListGuesser} />

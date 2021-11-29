@@ -13,6 +13,7 @@ import {
     CreateButton,
     Pagination,
     useGetIdentity,
+    SelectField,
 } from 'react-admin';
 import {
     List,
@@ -33,6 +34,7 @@ import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
 import { ProductFamilyListFilter } from './ProductFamilyListFilter';
 import { ProductFamily } from '../types';
+import { categories } from './categories';
 
 const ProductFamilyListContent = () => {
     const { data, ids, loaded, onToggleItem, selectedIds } = useListContext<
@@ -74,15 +76,11 @@ const ProductFamilyListContent = () => {
                             secondary={
                                 <>
                                     {record.name} in{' '}
-                                    <ReferenceField
+                                    <SelectField
                                         record={record}
-                                        source="category_id"
-                                        reference="familyCategories"
-                                        basePath="/familyCategories"
-                                        link={false}
-                                    >
-                                        <TextField source="name" />
-                                    </ReferenceField>
+                                        source="category"
+                                        choices={categories}
+                                    />
                                 </>
                             }
                         />

@@ -13,7 +13,6 @@ import {
     DialogTitle,
  } from '@material-ui/core';
  import { makeStyles } from '@material-ui/core/styles';
- import { FamilyCategory } from '../types';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,7 +42,7 @@ export const CreatePropertyType = () => {
                 },
             },
             {
-                onSuccess: ({ data }: {data: FamilyCategory;}) => {
+                onSuccess: ({ data }: {data: any;}) => {
                     setName('');
                     setUnit('');
                     setSynonyms('');
