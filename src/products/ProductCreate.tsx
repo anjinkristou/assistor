@@ -20,6 +20,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import clsx from 'clsx';
 import { CreatePropertyType } from './CreatePropertyType';
+import { PropertyFormIterator } from './PropertyFormIterator';
 
 
 const useStyles = makeStyles(theme => ({
@@ -79,20 +80,7 @@ export const ProductCreate = (props: CreateProps) => {
                     <ArrayInput
                         source="properties"
                     >
-                        <SimpleFormIterator>
-                                <ReferenceInput
-                                    source="type_id"
-                                    reference="propertyTypes"
-                                    label="Type"
-                                >
-                                    <AutocompleteInput 
-                                        optionText="name" 
-                                        create={<CreatePropertyType />}
-                                    />
-                                </ReferenceInput>
-                                <TextInput source="property_value" label="Value"/>
-                                <TextInput source="condition"  label="Condition"/>
-                        </SimpleFormIterator>
+                        <PropertyFormIterator />
                     </ArrayInput>
                 </FormTab>
             </TabbedForm>

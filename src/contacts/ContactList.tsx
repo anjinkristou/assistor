@@ -110,7 +110,7 @@ const ContactListContent = () => {
     );
 };
 
-const useStyle = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
     createButton: {
         marginLeft: theme.spacing(2),
     },
@@ -121,8 +121,9 @@ const useStyle = makeStyles(theme => ({
         }
     },
 }));
+
 const ContactListActions = (props: ListActionsProps) => {
-    const classes = useStyle();
+    const classes = useStyles();
     return (
         <TopToolbar>            
             <div className={classes.searchbox}>

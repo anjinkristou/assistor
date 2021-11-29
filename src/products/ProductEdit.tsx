@@ -20,6 +20,7 @@ import clsx from 'clsx';
 import { ProductAside } from './ProductAside';
 import { ProductImageField } from './ProductImageField';
 import { CreatePropertyType } from './CreatePropertyType';
+import { PropertyFormIterator } from './PropertyFormIterator';
 
 const useStyles = makeStyles({
     inline: {
@@ -78,20 +79,7 @@ export const ProductEdit = (props: EditProps) => {
                     <ArrayInput
                         source="properties"
                     >
-                        <SimpleFormIterator>
-                                <ReferenceInput
-                                    source="type_id"
-                                    reference="propertyTypes"
-                                    label="Type"
-                                >
-                                    <AutocompleteInput 
-                                        optionText="name" 
-                                        create={<CreatePropertyType />}
-                                    />
-                                </ReferenceInput>
-                                <TextInput source="property_value" label="Value"/>
-                                <TextInput source="condition"  label="Condition"/>
-                        </SimpleFormIterator>
+                        <PropertyFormIterator />
                     </ArrayInput>
                 </FormTab>
             </TabbedForm>
