@@ -1,17 +1,12 @@
 import * as React from 'react';
 import {
     TextField,
-    DateField,
-    FunctionField,
     ReferenceField,
-    EditButton,
-    DeleteButton,
-    ShowButton,
 } from 'react-admin';
 import { Box, Typography, Divider, Link } from '@material-ui/core';
-import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 
 import { Product, Sale } from '../types';
+import { CollapsibleAside } from '../components/CollapsibleAside';
 
 export const ProductAside = ({
     record,
@@ -19,25 +14,23 @@ export const ProductAside = ({
 }: {
     record?: Product;
     link?: string;
-}) =>
-    record ? (
-        <Box ml={4} width={250} minWidth={250}>
-            <Box textAlign="center" mb={2}>
-                {link === 'edit' ? (
-                    <EditButton
-                        basePath="/products"
-                        record={record}
-                        label="Edit Product"
-                    />
-                ) : (
-                    <ShowButton
-                        basePath="/products"
-                        record={record}
-                        label="Show Product"
-                    />
-                )}
-            </Box>
+}) =>{
+    if (!record) return null;
 
+    return (
+        <CollapsibleAside record={record} link={link} basePath="/products">
+            <AsideContent record={record} />
+        </CollapsibleAside>
+    );
+};
+
+const AsideContent = ({ 
+    record 
+}: { 
+    record?: Product;
+}) => 
+    record ? (
+        <>
             <Typography variant="subtitle2">Product info</Typography>
             <Divider />
 
@@ -83,5 +76,5 @@ export const ProductAside = ({
                 </Box>
 
             </Box>
-        </Box>
+        </>
     ) : null;

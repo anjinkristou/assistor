@@ -1,49 +1,23 @@
 import * as React from 'react';
-import { useState } from 'react';
 import {
     TextField,
     DateField,
     FunctionField,
     ReferenceField,
-    EditButton,
-    DeleteButton,
     ReferenceArrayField,
     SingleFieldList,
     ChipField,
     ShowButton,
 } from 'react-admin';
-import { Box, Typography, Divider, Link, Drawer, IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import clsx from 'clsx';
-
+import { 
+    Box, 
+    Typography, 
+    Divider, 
+    Link,
+} from '@material-ui/core';
 import { Company, Sale } from '../types';
 import { TagsListEdit } from '../tags/TagsListEdit';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    sideBig: {
-        width: 250,
-        minWidth: 250,
-        marginLeft: theme.spacing(2),
-        [theme.breakpoints.down('xs')]:{
-            display: 'none',
-        }
-    },
-    sideSmall: {
-        [theme.breakpoints.up('sm')]:{
-            display: 'none',
-        }
-    },
-    drawerContent: {
-         marginTop: theme.spacing(2),
-         marginLeft: theme.spacing(1),
-         marginRight: theme.spacing(1),
-    }
-}));
+import { CollapsibleAside } from '../components/CollapsibleAside';
 
 export const CompanyAside = ({
     record,
@@ -52,51 +26,13 @@ export const CompanyAside = ({
     record?: Company;
     link?: string;
 }) => {
-    const classes = useStyles();
-    const [isOpen, setOpen] = useState(false);
     if (!record) return null;
 
     return (
-        <div className={classes.root}>
-        <Box textAlign="center" mb={2}>
-            {link === 'edit' ? (
-                <EditButton
-                    basePath="/companies"
-                    record={record}
-                    label="Edit Company"
-                />
-            ) : (
-                <ShowButton
-                    basePath="/companies"
-                    record={record}
-                    label="Show Company"
-                />
-            )}
-        </Box>
-        <div className={classes.sideBig}>
-
-            
+        <CollapsibleAside record={record} link={link} basePath="/companies">
             <AsideContent record={record} />
-            
-        </div>
-        <div className={classes.sideSmall}>
-            <IconButton 
-                onClick={() => setOpen(true)}
-                color="secondary"
-            >
-                <MenuOpenIcon />
-            </IconButton>
-        </div>
-        <Drawer 
-            anchor="right" 
-            open={isOpen} onClose={() => setOpen(false)}
-        >
-            <div className={classes.drawerContent}>
-                <AsideContent record={record} />
-            </div>
-        </Drawer>
-        </div>
-    )
+        </CollapsibleAside>
+    );
 };
     
 
