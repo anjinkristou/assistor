@@ -19,7 +19,7 @@ export const ProductAside = ({
 
     return (
         <CollapsibleAside record={record} link={link} basePath="/products">
-            <AsideContent record={record} />
+            <AsideContent />
         </CollapsibleAside>
     );
 };

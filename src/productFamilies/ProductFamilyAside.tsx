@@ -1,26 +1,17 @@
 import * as React from 'react';
 import {
     TextField,
-    EmailField,
-    DateField,
-    ReferenceManyField,
-    EditButton,
-    ShowButton,
-    useListContext,
     ReferenceField,
-    FunctionField,
-    ListButton,
 } from 'react-admin';
 import { 
     Box, 
     Typography, 
-    Divider, 
-    List, 
-    ListItem,
+    Divider,
     Link,
  } from '@material-ui/core';
 
 import { ProductFamily, Sale } from '../types';
+import { CollapsibleAside } from '../components/CollapsibleAside';
 
 export const ProductFamilyAside = ({
     record,
@@ -28,28 +19,23 @@ export const ProductFamilyAside = ({
 }: {
     record?: ProductFamily;
     link?: string;
-}) =>
-    record ? (
-        <Box ml={4} width={250} minWidth={250}>
-            <Box textAlign="center" mb={2}>
-                {link === 'edit' ? (
-                    <Box>
-                        <EditButton
-                            basePath="/productfamilies"
-                            record={record}
-                        />
-                        <ListButton 
-                            basePath="/productFamilies"
-                        />
-                    </Box>
-                ) : (
-                    <ShowButton
-                        basePath="/productfamilies"
-                        record={record}
-                    />
-                )}
-            </Box>
+}) => {
+    if (!record) return null;
 
+    return (
+        <CollapsibleAside record={record} link={link} basePath="/productFamilies">
+            <AsideContent />
+        </CollapsibleAside>
+    );
+};
+
+const AsideContent = ({ 
+    record 
+}: { 
+    record?: ProductFamily;
+}) => 
+    record ? (
+        <>
             <Typography variant="subtitle2">Family info</Typography>
             <Divider />
             <Box mt={1} display="flex" gridGap={2}>
@@ -69,6 +55,5 @@ export const ProductFamilyAside = ({
                     Website: <Link href={record.website} target="_blank" rel="noreferrer">Link</Link>
                 </Box>
             )}
-            
-        </Box>
-) : null;
+        </>
+    ) : null;

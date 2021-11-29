@@ -25,7 +25,7 @@ export const ContactAside = ({
 
     return (
         <CollapsibleAside record={record} link={link} basePath="/contacts">
-            <AsideContent record={record} />
+            <AsideContent />
         </CollapsibleAside>
     );
 };

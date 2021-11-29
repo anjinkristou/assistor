@@ -30,6 +30,7 @@ const useStyles = makeStyles(theme => ({
          marginTop: theme.spacing(2),
          marginLeft: theme.spacing(1),
          marginRight: theme.spacing(1),
+         maxWidth: theme.spacing(32),
     }
 }));
 
@@ -47,6 +48,12 @@ export const CollapsibleAside = ({
     const classes = useStyles();
     const [isOpen, setOpen] = useState(false);
     if (!record) return null;
+
+    const childrenWithProps = React.Children.map(children, child => 
+        React.isValidElement(child)
+        ? React.cloneElement(child as React.ReactElement<any>, { record })
+        : child
+    );
 
     return (
         <div className={classes.root}>
@@ -66,7 +73,7 @@ export const CollapsibleAside = ({
                 )}
             </Box>
             <div className={classes.sideBig}>
-                {children}
+                {childrenWithProps}
             </div>
             <div className={classes.sideSmall}>
                 <IconButton 
@@ -81,7 +88,7 @@ export const CollapsibleAside = ({
                 open={isOpen} onClose={() => setOpen(false)}
             >
                 <div className={classes.drawerContent}>
-                    {children}
+                    {childrenWithProps}
                 </div>
             </Drawer>
         </div>
