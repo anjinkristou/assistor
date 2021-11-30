@@ -123,24 +123,20 @@ const CompanyShowContent = () => {
                                         : `${record.nb_contacts} Contacts`
                                 }
                             />
-                            {record.nb_deals && (
-                                <Tab
-                                    label={
-                                        record.nb_deals === 1
-                                            ? '1 Deal'
-                                            : `${record.nb_deals} Deals`
-                                    }
-                                />
-                            )}
-                            {record.nb_products && (
-                                <Tab
-                                    label={
-                                        record.nb_products === 1
-                                            ? '1 Product'
-                                            : `${record.nb_products} Products`
-                                    }
-                                />
-                            )}
+                            <Tab
+                                label={
+                                    record.nb_deals === 1
+                                        ? '1 Deal'
+                                        : `${record.nb_deals} Deals`
+                                }
+                            />
+                            <Tab
+                                label={
+                                    record.nb_products === 1
+                                        ? '1 Product'
+                                        : `${record.nb_products} Products`
+                                }
+                            />
                         </Tabs>
                         <Divider />
                         <TabPanel value={value} index={0}>
@@ -171,9 +167,9 @@ const CompanyShowContent = () => {
                             </ReferenceManyField>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
-                        <ReferenceManyField
+                            <ReferenceManyField
                                 reference="products"
-                                target="product_id"
+                                target="company_id"
                                 label="Products"
                             >
                                 <ProductGridList />
