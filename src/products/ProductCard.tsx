@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Paper, Typography, Link as MuiLink, Box, Chip } from '@material-ui/core';
+import { Paper, Typography, Link as MuiLink, Box, Chip, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ContactsIcon from '@material-ui/icons/AccountCircle';
 import DealIcon from '@material-ui/icons/MonetizationOn';
-import { linkToRecord, TextField, ReferenceField, ImageField } from 'react-admin';
+import { linkToRecord, TextField, ReferenceField, ImageField, useListContext } from 'react-admin';
 import { Link } from 'react-router-dom';
 
 import { ProductAvatar } from './ProductAvatar';
 import { Product } from '../types';
+import classNames from 'classnames';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -49,11 +50,20 @@ const useStyles = makeStyles(theme => ({
         width: 28,
         height: 28,
     },
+    checkbox: {
+        position: 'absolute',
+        top: 0,
+        left: theme.spacing(1),
+    },
+    hidden:{
+        display: 'none',
+    }
 }));
 
 export const ProductCard = ({ record }: { record: Product }) => {
     const classes = useStyles();
     const [elevation, setElevation] = useState(1);
+    const { data, ids, loaded, onToggleItem, selectedIds } = useListContext<Product>();
     return (
         <MuiLink
             component={Link}
@@ -63,6 +73,17 @@ export const ProductCard = ({ record }: { record: Product }) => {
             onMouseLeave={() => setElevation(1)}
         >
             <Paper className={classes.paper} elevation={elevation}>
+                <Checkbox
+                    edge="start"
+                    checked={selectedIds.includes(record.id)}
+                    tabIndex={-1}
+                    disableRipple
+                    className={classNames(classes.checkbox, {[classes.hidden]: !loaded})}
+                    onClick={(e: any )=> {
+                        e.stopPropagation();
+                        onToggleItem(record.id);
+                    }}
+                />
                 <Box position="absolute" top={10} right={10}>
                     <ReferenceField
                         record={record}
