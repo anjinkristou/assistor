@@ -44,6 +44,7 @@ import { Company, Deal, Contact } from '../types';
 import { stageNames } from '../deals/stages';
 import { NotesIterator } from '../notes';
 import { CountryField } from './CountryField';
+import { ProductGridList } from '../products/ProductGridList';
 
 export const CompanyShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -126,8 +127,17 @@ const CompanyShowContent = () => {
                                 <Tab
                                     label={
                                         record.nb_deals === 1
-                                            ? '1 deal'
+                                            ? '1 Deal'
                                             : `${record.nb_deals} Deals`
+                                    }
+                                />
+                            )}
+                            {record.nb_products && (
+                                <Tab
+                                    label={
+                                        record.nb_products === 1
+                                            ? '1 Product'
+                                            : `${record.nb_products} Products`
                                     }
                                 />
                             )}
@@ -158,6 +168,15 @@ const CompanyShowContent = () => {
                                 sort={{ field: 'name', order: 'ASC' }}
                             >
                                 <DealsIterator />
+                            </ReferenceManyField>
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                        <ReferenceManyField
+                                reference="products"
+                                target="product_id"
+                                label="Products"
+                            >
+                                <ProductGridList />
                             </ReferenceManyField>
                         </TabPanel>
                     </CardContent>

@@ -70,6 +70,7 @@ class CompanySchema(ma.SQLAlchemySchema):
     nb_deals = ma.Function(lambda obj: len(obj.deals))
     nb_notes = ma.Function(lambda obj: len(obj.notes))
     nb_customers = ma.Function(lambda obj: len(obj.customers))
+    nb_products = ma.Function(lambda obj: len(obj.products))
     country_iso = ma.Function(lambda obj: obj.country.iso if obj.country else None)
     tags = ma.Function(lambda obj: [tag.id for tag in obj.tags])
     use_products = ma.Function(lambda obj: [product.id for product in obj.use_products])

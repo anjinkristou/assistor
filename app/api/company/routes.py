@@ -58,6 +58,8 @@ class CompanyItem(ResourceItem):
             del data['tags']
         if 'use_products' in data:
             del data['use_products']
+        if 'nb_products' in data:
+            del data['nb_products']
         
         if 'tags' in data:
             tags = data['tags']

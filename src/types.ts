@@ -30,6 +30,7 @@ export interface Company extends Record {
     nb_deals: number;
     nb_notes: number;
     nb_customers: number;
+    nb_products: number;
     country_iso: string;
     tags: Identifier[];
 }
