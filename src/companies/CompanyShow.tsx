@@ -11,6 +11,7 @@ import {
     useShowContext,
     useRecordContext,
     useListContext,
+    Pagination,
 } from 'react-admin';
 import {
     Avatar as MuiAvatar,
@@ -167,13 +168,17 @@ const CompanyShowContent = () => {
                             </ReferenceManyField>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
+                            <Box mt={1}>
                             <ReferenceManyField
                                 reference="products"
                                 target="company_id"
                                 label="Products"
+                                pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
                             >
                                 <ProductGridList />
                             </ReferenceManyField>
+
+                            </Box>
                         </TabPanel>
                     </CardContent>
                 </Card>

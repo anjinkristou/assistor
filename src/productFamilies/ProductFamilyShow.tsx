@@ -7,6 +7,7 @@ import {
     ReferenceManyField,
     useShowContext,
     SelectField,
+    Pagination,
 } from 'react-admin';
 import { Box, Card, CardContent, Typography } from '@material-ui/core';
 
@@ -53,6 +54,7 @@ const ProductFamilyShowContent = () => {
                                 reference="products"
                                 target="family_id"
                                 label="Products"
+                                pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
                             >
                                 <ProductGridList />
                             </ReferenceManyField>
