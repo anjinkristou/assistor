@@ -54,10 +54,6 @@ class CompanyItem(ResourceItem):
             del data['nb_customers']
         if 'country_iso' in data:
             del data['country_iso']
-        if 'tags' in data:
-            del data['tags']
-        if 'use_products' in data:
-            del data['use_products']
         if 'nb_products' in data:
             del data['nb_products']
         
