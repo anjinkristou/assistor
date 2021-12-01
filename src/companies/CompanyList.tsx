@@ -13,7 +13,7 @@ import {
 } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { GridList } from './GridList';
+import { CompanyGridList } from './CompanyGridList';
 import { CompanyListFilter } from './CompanyListFilter';
 import { ImportButton } from 'react-admin-import-csv';
 import SelectAllButton from './SelectAllButton';
@@ -32,7 +32,7 @@ export const CompanyList = (props: ListProps) => {
             sort={{ field: 'name', order: 'ASC' }}
             component="div"
         >
-            <GridList />
+            <CompanyGridList />
         </List>
     ) : null;
 };

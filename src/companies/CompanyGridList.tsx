@@ -52,7 +52,7 @@ const LoadedGridList = () => {
     );
 };
 
-export const GridList = () => {
+export const CompanyGridList = () => {
     const { loaded } = useListContext();
     return loaded ? <LoadedGridList /> : <LoadingGridList />;
 };

@@ -51,6 +51,8 @@ class ProductSchema(ma.SQLAlchemySchema):
     properties = ma.Method('get_properties')
     nb_properties = ma.Function(lambda obj: len(obj.properties))
     nb_notes = ma.Function(lambda obj: len(obj.notes))
+    nb_used_by = ma.Function(lambda obj: len(obj.used_by_companies))
+    used_by_companies = ma.Function(lambda obj: [product.id for product in obj.used_by_companies])
     
     
     def get_properties(self, obj):

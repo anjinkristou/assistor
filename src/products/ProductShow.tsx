@@ -13,6 +13,9 @@ import {
     useShowContext,
     useRecordContext,
     useListContext,
+    ReferenceArrayField,
+    SingleFieldList,
+    ChipField,
 } from 'react-admin';
 import {
     Avatar as MuiAvatar,
@@ -40,6 +43,8 @@ import { ProductImageField } from './ProductImageField';
 import { ProductAside } from './ProductAside';
 import { Product, ProductPrperty } from '../types';
 import { LogoField } from '../companies/LogoField';
+import { CompanyGridList } from '../companies/CompanyGridList';
+import { CompanyCard } from '../companies/CompanyCard';
 
 export const ProductShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -96,6 +101,13 @@ const ProductShowContent = () => {
                                         : `${record.nb_properties} Property`
                                 }
                             />
+                            <Tab
+                                label={
+                                    record.nb_used_by > 1
+                                        ? `Used by ${record.nb_used_by} Companies`
+                                        : `Used by ${record.nb_used_by} Company`
+                                }
+                            />
                         </Tabs>
                         <Divider />
                         <TabPanel value={value} index={0}>
@@ -128,6 +140,18 @@ const ProductShowContent = () => {
     
                                 </Datagrid>
                             </ReferenceManyField>
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <Box mt={2}>
+                            <ReferenceArrayField
+                                reference="companies"
+                                source="used_by_companies"
+                            >
+                                <SingleFieldList>
+                                    <ChipField source="name" />
+                                </SingleFieldList>
+                            </ReferenceArrayField>
+                            </Box>
                         </TabPanel>
                     </CardContent>
                 </Card>
