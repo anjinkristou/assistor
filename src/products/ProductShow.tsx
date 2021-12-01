@@ -16,6 +16,7 @@ import {
     ReferenceArrayField,
     SingleFieldList,
     ChipField,
+    Pagination,
 } from 'react-admin';
 import {
     Avatar as MuiAvatar,
@@ -142,14 +143,14 @@ const ProductShowContent = () => {
                             </ReferenceManyField>
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            <Box mt={2}>
+                            <Box mt={1}>
                             <ReferenceArrayField
                                 reference="companies"
                                 source="used_by_companies"
+                                pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
+                                perPage={25}
                             >
-                                <SingleFieldList>
-                                    <ChipField source="name" />
-                                </SingleFieldList>
+                                <CompanyGridList />
                             </ReferenceArrayField>
                             </Box>
                         </TabPanel>

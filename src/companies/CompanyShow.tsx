@@ -174,6 +174,7 @@ const CompanyShowContent = () => {
                                 target="company_id"
                                 label="Products"
                                 pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
+                                perPage={25}
                             >
                                 <ProductGridList />
                             </ReferenceManyField>
