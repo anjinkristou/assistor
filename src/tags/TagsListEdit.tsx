@@ -19,13 +19,13 @@ import {
     MenuItem,
     Menu,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { colors } from './colors';
 import { Contact, Company, Product } from '../types';
 import { Tag } from '../types';
+import { RoundButton } from '../components/RoundButton';
 
 export const TagsListEdit = ({ 
     record,
@@ -216,30 +216,5 @@ export const TagsListEdit = ({
                 </form>
             </Dialog>
         </>
-    );
-};
-
-const useStyles = makeStyles({
-    root: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        display: 'inline-block',
-        margin: 8,
-    },
-});
-
-const RoundButton = ({ color, handleClick, selected }: any) => {
-    const classes = useStyles();
-    return (
-        <button
-            type="button"
-            className={classes.root}
-            style={{
-                backgroundColor: color,
-                border: selected ? '2px solid grey' : 'none',
-            }}
-            onClick={handleClick}
-        />
     );
 };

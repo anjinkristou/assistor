@@ -38,8 +38,6 @@ class ContactItem(ResourceItem):
     def post_data(self, data):
         data = super(ContactItem, self).post_data(data)
         
-        if 'tags' in data:
-            del data['tags']
         if 'nb_notes' in data:
             del data['nb_notes']
             

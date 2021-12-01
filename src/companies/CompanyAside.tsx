@@ -18,6 +18,7 @@ import {
 import { Company, Sale } from '../types';
 import { TagsListEdit } from '../tags/TagsListEdit';
 import { CollapsibleAside } from '../components/CollapsibleAside';
+import { ProductsListEdit } from '../products/ProductsListEdit';
 
 export const CompanyAside = ({
     record,
@@ -130,18 +131,7 @@ const AsideContent = ({
                 <Typography variant="subtitle2">Use Products</Typography>
                 <Divider />
 
-                <Box mt={1}>
-                    <ReferenceArrayField label="Tags" reference="products" source="use_products">
-                        <SingleFieldList>
-                            <ChipField 
-                                source="model" 
-                                variant="outlined" 
-                                color="secondary"
-                                size="small"
-                            />
-                        </SingleFieldList>
-                    </ReferenceArrayField>
-                </Box>
+                <ProductsListEdit record={record} reference="companies" />
             </Box>
         </>
     ) : null;

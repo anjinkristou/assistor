@@ -77,7 +77,7 @@ export const CompanyCreate = (props: CreateProps) => {
                 </FormDataConsumer>
 
                 <ReferenceArrayInput source="use_products" reference="products">
-                    <AutocompleteArrayInput source="model" />
+                    <AutocompleteArrayInput optionText="model" />
                 </ReferenceArrayInput>
 
                 <CustomDivider />
