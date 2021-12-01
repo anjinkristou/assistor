@@ -3,7 +3,7 @@ import * as React from 'react';
 import { BulkUpdateButton, BulkActionProps } from 'react-admin';
 import DoneIcon from '@material-ui/icons/Done';
 
-const doneState = { status: 'Done' };
+const doneState = { status: 'done' };
 
 const MarkDoneButton = (props: BulkActionProps) => (
     <BulkUpdateButton
