@@ -33,6 +33,7 @@ export interface Company extends Record {
     nb_products: number;
     country_iso: string;
     tags: Identifier[];
+    use_products: Identifier[];
 }
 
 export interface CompanyNote extends Record {
@@ -108,6 +109,8 @@ export interface Product extends Record {
     image: string;
     description: string;
     nb_properties: number;
+    nb_used_by: number;
+    used_by_companies: Identifier[];
 }
 
 export interface ProductFamily extends Record {

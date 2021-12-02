@@ -17,6 +17,7 @@ import {
     useGetIdentity,
     BulkActionProps,
     ListActionsProps,
+    FunctionField,
 } from 'react-admin';
 import {
     List,
@@ -38,7 +39,7 @@ import { ImportButton } from "react-admin-import-csv";
 import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
 import { TaskListFilter } from './TaskListFilter';
-import { Task } from '../types';
+import { Sale, Task } from '../types';
 import MarkDoneButton from './MarkDoneButton';
 import { TaskStatus } from './TaskStatus';
 
@@ -60,7 +61,7 @@ const TaskListContent = () => {
                         button
                         key={id}
                         component={Link}
-                        to={`/Tasks/${id}`}
+                        to={`/Tasks/${id}/show`}
                     >
                         <ListItemIcon>
                             <Checkbox
@@ -83,6 +84,25 @@ const TaskListContent = () => {
                             primary={
                                 <>
                                 {task.text} 
+                                </>
+                            }
+                            secondary={
+                                <>
+                                    <Typography component="span" variant="body2" color="textSecondary">
+                                        Assigned to
+                                    </Typography>{' '}
+                                    <ReferenceField
+                                        record={task}
+                                        source="sales_id"
+                                        reference="sales"
+                                    >
+                                        <FunctionField<Sale>
+                                            source="last_name"
+                                            render={record =>
+                                                record ? `${record.first_name} ${record.last_name}` : ''
+                                            }
+                                        />
+                                    </ReferenceField>
                                 </>
                             }
                         />

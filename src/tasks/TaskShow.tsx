@@ -6,13 +6,16 @@ import {
     ReferenceField,
     ReferenceManyField,
     useShowContext,
+    FunctionField,
 } from 'react-admin';
-import { Box, Card, CardContent, Typography } from '@material-ui/core';
+import { Avatar, Box, Card, CardContent, Typography } from '@material-ui/core';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+
 
 import { TaskAside } from './TaskAside';
 import { LogoField } from '../companies/LogoField';
 import { NotesIterator } from '../notes';
-import { Task } from '../types';
+import { Sale, Task } from '../types';
 
 export const TaskShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -29,18 +32,28 @@ const TaskShowContent = () => {
                 <Card>
                     <CardContent>
                         <Box display="flex">
+                            <Avatar >
+                                <AssignmentTurnedInIcon />
+                            </Avatar>
                             <Box ml={2} flex="1">
                                 <Typography variant="h5">
-                                    {record.first_name} {record.last_name}
+                                    {record.text}
                                 </Typography>
                                 <Typography variant="body2">
-                                    {record.title} at{' '}
+                                <Typography component="span" variant="body2" color="textSecondary">
+                                        Assigned to
+                                    </Typography>{' '}
                                     <ReferenceField
-                                        source="company_id"
-                                        reference="companies"
-                                        link="show"
+                                        record={record}
+                                        source="sales_id"
+                                        reference="sales"
                                     >
-                                        <TextField source="name" />
+                                        <FunctionField<Sale>
+                                            source="last_name"
+                                            render={record =>
+                                                record ? `${record.first_name} ${record.last_name}` : ''
+                                            }
+                                        />
                                     </ReferenceField>
                                 </Typography>
                             </Box>

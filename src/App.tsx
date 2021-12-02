@@ -31,7 +31,7 @@ const i18nProvider = polyglotI18nProvider(locale => {
     if (locale === 'fr') {
         return import('./i18n/fr').then(messages => messages.default);
     }
-    console.log(locale);
+    
     if (locale === 'ja') {
         return import('./i18n/ja').then(messages => messages.default);
     }

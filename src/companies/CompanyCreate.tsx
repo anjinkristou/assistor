@@ -39,13 +39,13 @@ export const CompanyCreate = (props: CreateProps) => {
 
     if (!identity) return null;
 
-    const companyDefaultValue = () => ({ sales_id: identity && identity?.id });
+    const defaultValue = () => ({ sales_id: identity && identity?.id });
 
     return (
         <Create {...props} actions={false}>
             <SimpleForm 
                 component={CustomLayout} 
-                initialValues={companyDefaultValue}
+                initialValues={defaultValue}
                 redirect="show"
             >
                 <TextInput source="name" validate={required()} fullWidth />

@@ -12,7 +12,8 @@ import {
     useEditController, 
     useGetList, 
     useGetMany, 
-    useUpdate 
+    useUpdate, 
+    useRefresh
 } from 'react-admin';
 
 import {
@@ -30,6 +31,7 @@ import {
 } from '@material-ui/core';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import { Company, Product } from '../types';
+import { string } from 'prop-types';
 
 export const ProductsListEdit = ({ 
     record,
@@ -42,6 +44,7 @@ export const ProductsListEdit = ({
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [version, setVersion] = useState(0); // used to force the refresh of useGetList without refreshing the whole page
     const [update] = useUpdate();
+    const refresh = useRefresh();
 
 
 
@@ -60,6 +63,11 @@ export const ProductsListEdit = ({
         setAnchorEl(event.currentTarget);
     };
 
+    const handleSucess = (values: any) =>{
+        refresh();
+        handleClose();
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -69,7 +77,7 @@ export const ProductsListEdit = ({
 
      return (
         <>
-            {products.map(product => (
+            {loaded && products.map(product => (
                 <Box mt={1} key={product.id}>
                     <Chip
                         size="small"
@@ -90,7 +98,7 @@ export const ProductsListEdit = ({
                     color="primary"
                 />
             </Box>
-            {/* <Popover
+            <Popover
                 open={Boolean(anchorEl)}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -103,17 +111,19 @@ export const ProductsListEdit = ({
                     horizontal: 'center',
                 }}
             >
-                <Edit 
-                    basePath="/companies" 
+                <Edit
+                    basePath="/companies"
                     resource={reference}
+                    id={record.id.toString()}
+                    onSuccess={handleSucess}
                 >
                     <SimpleForm>
-                        <ReferenceArrayInput source="use_products" reference="products" record={record}>
+                        <ReferenceArrayInput source="use_products" reference="products">
                             <AutocompleteArrayInput optionText="model" />
                         </ReferenceArrayInput>
                     </SimpleForm>
                 </Edit>
-            </Popover> */}
+            </Popover>
         </>
     );
 }

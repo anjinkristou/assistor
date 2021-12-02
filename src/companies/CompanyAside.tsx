@@ -19,10 +19,12 @@ import { Company, Sale } from '../types';
 import { TagsListEdit } from '../tags/TagsListEdit';
 import { CollapsibleAside } from '../components/CollapsibleAside';
 import { ProductsListEdit } from '../products/ProductsListEdit';
+import { any } from 'prop-types';
 
 export const CompanyAside = ({
     record,
     link = 'edit',
+    ...props
 }: {
     record?: Company;
     link?: string;

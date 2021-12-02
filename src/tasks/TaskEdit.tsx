@@ -64,19 +64,19 @@ const TaskEditContent = () => {
                                             />
                                             <DateInput
                                                 source="due_date"
-                                                formClassName={clsx(classes.inline, 'first-child')}
+                                                className={clsx(classes.inline, 'first-child')}
                                             />
                                             <SelectInput
                                                 source="status"
                                                 choices={statuses}
-                                                formClassName={classes.inline}
+                                                className={classes.inline}
                                             />
+                                            
                                             <ReferenceInput
                                                 source="sales_id"
                                                 reference="sales"
-                                                label="Account manager"
+                                                label="Assigned to"
                                                 helperText={false}
-                                                formClassName={classes.inline}
                                             >
                                                 <SelectInput
                                                     optionText={(sales: any) =>
