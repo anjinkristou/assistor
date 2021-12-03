@@ -34,6 +34,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link as RouterLink } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import BusinessIcon from '@material-ui/icons/Business';
+import AddIcon from '@material-ui/icons/Add';
 
 import { Avatar } from '../contacts/Avatar';
 import { Status } from '../misc/Status';
@@ -171,16 +172,18 @@ const CompanyShowContent = () => {
                         </TabPanel>
                         <TabPanel value={value} index={3}>
                             <Box mt={1}>
-                            <ReferenceManyField
-                                reference="products"
-                                target="company_id"
-                                label="Products"
-                                pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
-                                perPage={25}
-                            >
-                                <ProductGridList />
-                            </ReferenceManyField>
-
+                                <ReferenceManyField
+                                    reference="products"
+                                    target="company_id"
+                                    label="Products"
+                                    pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
+                                    perPage={25}
+                                >
+                                    <ProductGridList />
+                                </ReferenceManyField>
+                            </Box>
+                            <Box textAlign="center" mt={1}>
+                                <CreateRelatedProductButton record={record} />
                             </Box>
                         </TabPanel>
                     </CardContent>
@@ -278,6 +281,22 @@ const CreateRelatedContactButton = ({ record }: any) => (
         startIcon={<PersonAddIcon />}
     >
         Add contact
+    </Button>
+);
+
+const CreateRelatedProductButton = ({ record }: any) => (
+    <Button
+        component={RouterLink}
+        to={{
+            pathname: '/products/create',
+            state: { record: { company_id: record.id } },
+        }}
+        color="primary"
+        variant="contained"
+        size="small"
+        startIcon={<AddIcon />}
+    >
+        Add product
     </Button>
 );
 
