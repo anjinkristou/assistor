@@ -87,6 +87,8 @@ const ProductShowContent = () => {
                             indicatorColor="primary"
                             textColor="primary"
                             onChange={handleChange}
+                            variant="scrollable"
+                            scrollButtons="auto"
                         >
                             <Tab
                                 label={

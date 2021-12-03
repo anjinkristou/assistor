@@ -21,6 +21,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import clsx from 'clsx';
 import { CreatePropertyType } from './CreatePropertyType';
 import { PropertyFormIterator } from './PropertyFormIterator';
+import { CreateProductFamily } from '../productFamilies/CreateProductFamily';
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,7 +48,7 @@ export const ProductCreate = (props: CreateProps) => {
 
     return (
         <Create {...props} actions={false} >
-            <TabbedForm>
+            <TabbedForm redirect="show">
                 <FormTab label="General">
                     <ReferenceInput 
                         label="Comapny" 
@@ -63,7 +64,10 @@ export const ProductCreate = (props: CreateProps) => {
                         reference="productFamilies"
                         fullWidth
                     >
-                        <AutocompleteInput optionText="name" />
+                        <AutocompleteInput 
+                            optionText="name" 
+                            create={<CreateProductFamily />}
+                        />
                     </ReferenceInput>
                     <TextInput source="model" validate={required()} fullWidth />
                     <TextInput source="code" fullWidth />
