@@ -16,7 +16,7 @@ import { CountryField } from './CountryField';
 const useStyles = makeStyles(theme => ({
     paper: {
         height: 200,
-        width: 185,
+        width: 194,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',

@@ -60,7 +60,7 @@ const login = async ({ username, password }: {username: string; password:string;
         return Promise.resolve();
     } catch (error: any) {
         const response = error.response;
-        return Promise.reject({message: response.data, status: response.status});
+        return Promise.reject({message: response.data.message, status: response.status});
     }
 };
 
@@ -94,7 +94,7 @@ const register = async ({
 
     } catch (error: any) {
         const response = error.response;
-        return Promise.reject({message: response.data, status: response.status});
+        return Promise.reject({message: response.data.message, status: response.status});
     }
 }
 

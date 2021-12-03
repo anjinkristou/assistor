@@ -24,17 +24,17 @@ const useStyles = makeStyles((theme: Theme) => ({
             display: 'flex',
             flexDirection: 'column',
             minHeight: '100vh',
-            height: '1px',
+            // height: '1px',
             alignItems: 'center',
-            justifyContent: 'flex-start',
+            justifyContent: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundImage:
-                'radial-gradient(circle at 50% 14em, #313264 0%, #00023b 60%, #00023b 100%)',
+                'radial-gradient(circle at 50% 50%, #313264 0%, #00023b 50%, #00023b 100%)',
         },
         card: {
             minWidth: 300,
-            marginTop: '6em',
+            // marginTop: '6em',
         },
         avatar: {
             margin: '1em',
@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         icon: {
             backgroundColor: theme.palette.secondary.main,
+        },
+        hint: {
+            marginTop: '1em',
+            display: 'flex',
+            justifyContent: 'center',
+            color: theme.palette.grey[500],
         },
     }),
     { name: 'Register' }
@@ -58,6 +64,9 @@ const Register = () => {
                             <ExitToAppIcon />
                         </Avatar>
                     </div>
+                    <div className={classes.hint}>
+                                Register to Assistor.
+                            </div>
                     <RegisterForm />
                 </Card>
                 <Notification />

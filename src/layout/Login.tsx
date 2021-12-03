@@ -27,14 +27,14 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         minHeight: '100vh',
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundImage: 'radial-gradient(circle at 50% 14em, #313264 0%, #00023b 60%, #00023b 100%)',
+        justifyContent: 'center',
+        backgroundImage: 'radial-gradient(circle at 50% 50%, #313264 0%, #00023b 50%, #00023b 100%)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
     },
     card: {
         minWidth: 300,
-        marginTop: '6em',
+        // marginTop: '6em',
     },
     avatar: {
         margin: '1em',
@@ -92,39 +92,24 @@ const Login = () => {
     const login = useLogin();
     const location = useLocation<{ nextPathname: string } | null>();
 
-    const handleSubmit = (auth: FormValues) => {
+    const handleSubmit = async (auth: FormValues) => {
         setLoading(true);
-        login(auth, location.state ? location.state.nextPathname : '/').catch(
-            (error: Error) => {
-                setLoading(false);
-                notify(
-                    typeof error === 'string'
-                        ? error
-                        : typeof error === 'undefined' || !error.message
-                        ? 'ra.auth.sign_in_error'
-                        : error.message,
-                    'warning',
-                    {
-                        _:
-                            typeof error === 'string'
-                                ? error
-                                : error && error.message
-                                ? error.message
-                                : undefined,
-                    }
-                );
-            }
-        );
+        try{
+            const response = await login(auth, location.state ? location.state.nextPathname : '/');
+        } catch (error: any) {
+            setLoading(false);
+            notify(error.message, 'warning');
+        }
     };
 
-    const validate = (values: FormValues) => {
-        const errors: FormValues = {};
-        if (!values.username) {
-            errors.username = translate('ra.validation.required');
-        }
-        if (!values.password) {
-            errors.password = translate('ra.validation.required');
-        }
+    const validate = ({
+        username,
+        password,
+    }: FormValues) => {
+        const errors = { 
+            username: !username ? translate('ra.validation.required') : undefined, 
+            password: !password ? translate('ra.validation.required') : undefined,
+        };
         return errors;
     };
 

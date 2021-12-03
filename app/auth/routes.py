@@ -24,9 +24,9 @@ def register():
     last_name = request.json.get('last_name', None)
     
     if username is None or password is None:
-        jsonify({"message": "No user name or password"}), 400
+        return jsonify({"message": "No user name or password"}), 400
     if User.query.filter_by(username = username).first() is not None:
-        jsonify({"message": "User already exists"}), 400
+        return jsonify({"message": "User already exists"}), 400
         
     user = User(
         username = username,

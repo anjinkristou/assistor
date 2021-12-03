@@ -21,7 +21,8 @@ import {
     useLogin, 
     useSafeSetState, 
     useRedirect,
-} from 'ra-core';
+    useAuthProvider,
+} from 'react-admin';
 import axios from 'axios';
 
 
@@ -65,8 +66,18 @@ const Input = ({
     />
 );
 
+interface FormValues {
+    first_name: string;
+    last_name: string;
+    email: string;
+    username: string;
+    password: string;
+    confirm: string;
+}
+
 const RegisterForm = ({ redirectTo }:
     {redirectTo?: string | undefined;}) => {
+    const authProvider = useAuthProvider();
     const [loading, setLoading] = useSafeSetState(false);
     const translate = useTranslate();
     const login = useLogin();
@@ -81,15 +92,7 @@ const RegisterForm = ({ redirectTo }:
         username, 
         password, 
         confirm 
-    }: {
-        first_name: string;
-        last_name: string;
-        email: string;
-        username: string;
-        password: string;
-        confirm: string;
-
-    }) => {
+    }: FormValues) => {
         const errors = { 
             first_name: !first_name ? translate('ra.validation.required') : undefined, 
             last_name: !last_name ? translate('ra.validation.required') : undefined, 
@@ -110,37 +113,23 @@ const RegisterForm = ({ redirectTo }:
         last_name,
         email,
         username, 
-        password, 
-        confirm 
-    }: { 
-        first_name: string;
-        last_name: string;
-        email: string;
-        username: string;
-        password: string;
-        confirm?: string;
-    }) => {
+        password,
+    }: FormValues) => {
         setLoading(true);
         try{
-        const response = await axios.post<ResponseType>(`${baseURL}/register`, { 
-                first_name,
-                last_name,
-                email,
-                username, 
-                password
-            })
+            const response = await authProvider.register({ 
+                    first_name,
+                    last_name,
+                    email,
+                    username, 
+                    password
+                });
         
-        setLoading(false)
-        login({ username, password }, redirectTo)
+            setLoading(false)
+            login({ username, password }, redirectTo)
         } catch (error: any) {
             setLoading(false);
-            const response = error.response;
-            if (response.status == 401) {
-                const { message } = error.response.data;
-                notify(`Error:${message}`, 'warning');
-                return Promise.reject(message);
-            }
-            return Promise.reject(error);
+            notify(error.message, 'warning');
         }
     };
 
