@@ -6,6 +6,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Logo from './Logo';
+import NotificationButton from '../notifications/NotificationButton';
 
 const useStyles = makeStyles({
     title: {
@@ -42,7 +43,11 @@ const CustomUserMenu = (props: any) => (
 const CustomAppBar = (props: any) => {
     const classes = useStyles();
     return (
-        <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
+        <AppBar 
+            {...props} 
+            elevation={1} 
+            userMenu={<CustomUserMenu />
+        }>
             <Typography
                 variant="h6"
                 color="inherit"
@@ -51,6 +56,7 @@ const CustomAppBar = (props: any) => {
             />
             <Logo />
             <span className={classes.spacer} />
+            <NotificationButton />
         </AppBar>
     );
 };
