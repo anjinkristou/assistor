@@ -50,6 +50,7 @@ const App = () => (
         dashboard={Dashboard}
         theme={theme}
         i18nProvider={i18nProvider}
+        disableTelemetry
     >
         <Resource name="deals" {...deals} />
         <Resource name="contacts" {...contacts} />
