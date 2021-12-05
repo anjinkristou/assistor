@@ -92,22 +92,7 @@ const Login = () => {
         login(auth, location.state ? location.state.nextPathname : '/').catch(
             (error: Error) => {
                 setLoading(false);
-                notify(
-                    typeof error === 'string'
-                        ? error
-                        : typeof error === 'undefined' || !error.message
-                        ? 'ra.auth.sign_in_error'
-                        : error.message,
-                    'warning',
-                    {
-                        _:
-                            typeof error === 'string'
-                                ? error
-                                : error && error.message
-                                ? error.message
-                                : undefined,
-                    }
-                );
+                notify(typeof error.message, 'warning');
             }
         );
     };

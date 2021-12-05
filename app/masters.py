@@ -90,7 +90,7 @@ class ResourceItem(Resource):
         
         item = self.model_cls.query.get(id)
         if item is None:
-            return {"message": 'No record'}, HTTPStatus.NO_CONTENT
+            return {"msg": 'No record'}, HTTPStatus.NO_CONTENT
         
         item.update(**data)
         
@@ -117,7 +117,7 @@ class ResourceItem(Resource):
         
         item = self.model_cls.query.get(id)
         if item is None:
-            return {"message": 'No record'}, HTTPStatus.NO_CONTENT
+            return {"msg": 'No record'}, HTTPStatus.NO_CONTENT
         
         result = self.model_schema.dump(item)
         
@@ -155,7 +155,7 @@ class ResourceItems(Resource):
         
         items = self.model_cls.query.filter(self.model_cls.id.in_(ids)).all()
         if len(items) == 0:
-            return {"message": 'No records'}, HTTPStatus.NO_CONTENT
+            return {"msg": 'No records'}, HTTPStatus.NO_CONTENT
 
         result = self.models_schema.dump(items)
         
@@ -170,7 +170,7 @@ class ResourceItems(Resource):
         
         items = self.model_cls.query.filter(self.model_cls.id.in_(ids)).all()
         if len(items) == 0:
-            return {"message": 'No records'}, HTTPStatus.NO_CONTENT
+            return {"msg": 'No records'}, HTTPStatus.NO_CONTENT
         
         [item.update(**data) for item in items]
 
