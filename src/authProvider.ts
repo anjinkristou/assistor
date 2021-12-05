@@ -7,6 +7,7 @@ import {
     getCredentials,
     removeCredentials,
 } from "./auth"
+import jwtDecode from 'jwt-decode';
 
 interface RefreshToken {
     access_token: string;
@@ -29,7 +30,8 @@ interface UserIdentity {
     avatar: string;
 }
 
-const refreshToken = async () => {
+
+export const refreshToken = async () => {
     const credentials = getCredentials();
     if(!credentials) return;
   

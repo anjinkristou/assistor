@@ -24,9 +24,9 @@ def register():
     last_name = request.json.get('last_name', None)
     
     if username is None or password is None:
-        return jsonify({'msg: "No user name or password"}), 400
+        return jsonify({'msg': "No user name or password"}), 400
     if User.query.filter_by(username = username).first() is not None:
-        return jsonify({'msg: "User already exists"}), 400
+        return jsonify({'msg': "User already exists"}), 400
         
     user = User(
         username = username,
@@ -37,7 +37,7 @@ def register():
     user.hash_password(password)
     db.session.add(user)
     db.session.commit()
-    return jsonify({'msg: "User registred successfuly"}), HTTPStatus.CREATED
+    return jsonify({'msg': "User registred successfuly"}), HTTPStatus.CREATED
 
 
 @blueprint.route("/login", methods=["POST"])
@@ -47,7 +47,7 @@ def login():
     
     user = User.query.filter_by(username=username).one_or_none()
     if not user or not user.verify_password(password):
-        return jsonify({'msg: "Wrong username or password"}), 401
+        return jsonify({'msg': "Wrong username or password"}), 401
 
     # Notice that we are passing in the actual sqlalchemy user object here
     access_token = create_access_token(identity=user, fresh=True)
@@ -65,7 +65,7 @@ def refresh():
     user = User.query.get(user_id)
     
     if user is None:
-        return jsonify({'msg: "No user"}), 401
+        return jsonify({'msg': "No user"}), 401
         
     access_token = create_access_token(identity=user)
     return jsonify(access_token=access_token)

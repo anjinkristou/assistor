@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import decodeJwt, { JwtPayload } from 'jwt-decode';
 
 const baseURL = "/auth";
 
@@ -31,4 +32,11 @@ export function getCredentials(): Credentials | null {
 
 export function removeCredentials(): void {
   localStorage.removeItem(CREDENTIALS_LOCAL_STORAGE_ITEM);
+}
+
+
+export const isTokenValid = (access_token: string) => {
+  const currentDate = new Date();
+  const decodedToken: JwtPayload = decodeJwt<JwtPayload>(access_token);
+  return decodedToken && decodedToken.exp && (decodedToken.exp * 1000 > currentDate.getTime());
 }

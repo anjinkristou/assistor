@@ -12,11 +12,25 @@ import {
 }  from 'react-admin'
 
 import {
-    getCredentials,
+    getCredentials, 
+    isTokenValid,
 } from "./auth"
+
+import { refreshToken } from './authProvider';
+
+const refreshTokenIfInvalid = () => {
+    const credentials = getCredentials();
+    const token = credentials?.access_token;
+
+    if(token && !isTokenValid(token)){
+        refreshToken();
+    }
+}
 
 
 const getList = async (resource: string, params: any): Promise<GetListResult<any>> => {
+    refreshTokenIfInvalid();
+
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -33,6 +47,8 @@ const getList = async (resource: string, params: any): Promise<GetListResult<any
 };
 
 const getOne = async (resource: string, params: any): Promise<GetOneResult<any>> => {
+    refreshTokenIfInvalid();
+
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -49,6 +65,8 @@ const getOne = async (resource: string, params: any): Promise<GetOneResult<any>>
 };
 
 const getMany = async (resource: string, params: any): Promise<GetManyResult<any>> => {
+    refreshTokenIfInvalid();
+    
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -65,6 +83,8 @@ const getMany = async (resource: string, params: any): Promise<GetManyResult<any
 };
 
 const getManyReference = async (resource: string, params: any): Promise<GetManyReferenceResult<any>>  => {
+    refreshTokenIfInvalid();
+    
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -81,6 +101,8 @@ const getManyReference = async (resource: string, params: any): Promise<GetManyR
 };
 
 const create = async (resource: string, params: any): Promise<CreateResult<any>> => {
+    refreshTokenIfInvalid();
+    
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -96,6 +118,8 @@ const create = async (resource: string, params: any): Promise<CreateResult<any>>
 };
 
 const update = async (resource: string, params: any): Promise<UpdateResult<any>> => {
+    refreshTokenIfInvalid();
+    
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -111,6 +135,8 @@ const update = async (resource: string, params: any): Promise<UpdateResult<any>>
 };
 
 const updateMany = async (resource: string, params: any): Promise<UpdateManyResult> => {
+    refreshTokenIfInvalid();
+    
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -126,6 +152,8 @@ const updateMany = async (resource: string, params: any): Promise<UpdateManyResu
 };
 
 const deleteOne = async (resource: string, params: any): Promise<DeleteResult<any>> => {
+    refreshTokenIfInvalid();
+    
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
@@ -142,6 +170,8 @@ const deleteOne = async (resource: string, params: any): Promise<DeleteResult<an
 };
 
 const deleteMany = async (resource: string, params: any): Promise<DeleteManyResult> => {
+    refreshTokenIfInvalid();
+    
     try{
         const credentials = getCredentials();
         const token = credentials?.access_token;
