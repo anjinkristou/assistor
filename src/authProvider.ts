@@ -6,6 +6,7 @@ import {
     setCredentials,
     getCredentials,
     removeCredentials,
+    isTokenValid,
 } from "./auth"
 import jwtDecode from 'jwt-decode';
 
@@ -102,7 +103,6 @@ const register = async ({
 
 const getIdentity = async () => { 
     try{
-        refreshToken();
         const credentials = getCredentials();
         const token = credentials?.access_token;
         const config = {
@@ -133,21 +133,13 @@ const getIdentity = async () => {
 };
 
 const checkAuth = () => {
-    try{
-        refreshToken();
-        return Promise.resolve();
-    } catch (error: any) {
-        return Promise.reject();
-    }
+    const credentials = getCredentials();
+    const token = credentials?.access_token;
+    return token && isTokenValid(token)? Promise.resolve() : Promise.reject();
 }
 
 const getPermissions = () => {
-    try{
-        refreshToken();
-        return Promise.resolve();
-    } catch (error: any) {
-        return Promise.reject();
-    }
+    return Promise.resolve();
 }
 
 export const authProvider: AuthProvider =  {
