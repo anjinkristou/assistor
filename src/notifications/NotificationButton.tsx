@@ -72,7 +72,7 @@ const NotificationButton = (props: any) => {
             >
                 <Badge 
                     badgeContent={ids.length} 
-                    color="primary"
+                    color="error"
                 > 
                     { hasNotification
                         ? <NotificationsIcon />
