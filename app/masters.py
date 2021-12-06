@@ -51,7 +51,7 @@ class ResourceList(Resource):
         
         self.spcial_fields = []
         for key in filter:
-            if key.endswith('_gte') or key.endswith('_lte'):
+            if key.endswith('_gte') or key.endswith('_lte') or key.endswith('_dif'):
                 self.spcial_fields.append({
                     'key': key,
                     'field': key[:-4],
@@ -70,10 +70,13 @@ class ResourceList(Resource):
         for field in self.spcial_fields:
             if field['operation'] == 'gte':
                 query = query.filter(getattr(self.model_cls, field['field']) >= field['value'])
-                print(field)
+
             if field['operation'] == 'lte':
                 query = query.filter(getattr(self.model_cls, field['field']) <= field['value'])
-                print(field)
+            
+            if field['operation'] == 'dif':
+                query = query.filter(getattr(self.model_cls, field['field']) != field['value'])
+
        
         return query
     

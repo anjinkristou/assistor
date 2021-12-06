@@ -29,12 +29,15 @@ import {
     Checkbox,
     Typography,
     Avatar,
+    Chip,
 } from '@material-ui/core';
+import { red } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { ImportButton } from "react-admin-import-csv";
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 
 import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
@@ -56,6 +59,7 @@ const TaskListContent = () => {
         <List>
             {ids.map(id => {
                 const task = data[id];
+                const taskOverdue = (task.status !== 'done') &&  (task.due_date < (new Date()).toISOString());
                 return (
                     <ListItem
                         button
@@ -76,14 +80,26 @@ const TaskListContent = () => {
                             />
                         </ListItemIcon>
                         <ListItemAvatar>
-                            <Avatar>
-                                <AssignmentTurnedInIcon />
+                            <Avatar
+                                style={taskOverdue ? { backgroundColor: red[400] } : undefined}
+                            >
+                                {taskOverdue
+                                ? <NotificationsActiveIcon />
+                                : <AssignmentTurnedInIcon />
+                                }
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
                             primary={
                                 <>
-                                {task.text} 
+                                {task.text} {' '}
+                                {(task.status !== 'done') && 
+                                    (task.due_date < (new Date()).toISOString()) &&
+                                    <NotificationsActiveIcon
+                                        fontSize="small"
+                                        style={{ color: red[500] }}
+                                    />
+                                }
                                 </>
                             }
                             secondary={
@@ -132,7 +148,7 @@ const TaskListActions = (props: ListActionsProps) => {
     const classes = useActionStyles();
     return (
         <TopToolbar>
-            <SortButton fields={['due_date']} />
+            <SortButton fields={['due_date', 'status']} />
             <ExportButton />
             <ImportButton {...props} />
             <CreateButton

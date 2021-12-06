@@ -21,8 +21,11 @@ import {
     FunctionField,
     useGetIdentity,
 } from 'react-admin';
+import { red } from '@material-ui/core/colors';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+
 import { Sale, Task } from '../types';
 import { formatDistance } from 'date-fns';
 import { TaskStatus } from '../tasks/TaskStatus';
@@ -43,7 +46,7 @@ const NotificationButton = (props: any) => {
         'tasks',
         { page: 1, perPage: 1000 },
         { field: 'due_date', order: 'ASC' },
-        { status: 'pending', sales_id: identity && identity?.id,},
+        { status_dif: 'done', sales_id: identity && identity?.id,},
     );
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -93,34 +96,42 @@ const NotificationButton = (props: any) => {
                     horizontal: 'center',
                 }}
                 >
-                    {ids.map(id => (
-                        <MenuItem onClick={() => handleNotificationClick(id)}>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <AssignmentTurnedInIcon />
+                    {ids.map(id => {
+                        const task = data[id];
+                        const taskOverdue = task.due_date < (new Date()).toISOString();
+                        return (
+                            <MenuItem onClick={() => handleNotificationClick(id)}>
+                                <ListItemAvatar>
+                                <Avatar
+                                    style={taskOverdue ? { backgroundColor: red[400] } : undefined}
+                                >
+                                    {taskOverdue
+                                    ? <NotificationsActiveIcon />
+                                    : <AssignmentTurnedInIcon />
+                                    }
                                 </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={
-                                    <>
-                                    {data[id].text} 
-                                    </>
-                                }
-                                secondary={
-                                    <>
-                                        <Typography variant="body2" color="textSecondary">
-                                            due in{' '}
-                                            {formatDistance(
-                                                new Date(data[id].due_date),
-                                                now
-                                                )}
-                                        </Typography>
-                                    </>
-                                }
-                                />
-                        </MenuItem>
-                    ))
-                    }
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={
+                                        <>
+                                        {task.text}
+                                        </>
+                                    }
+                                    secondary={
+                                        <>
+                                            <Typography variant="body2" color="textSecondary">
+                                                due in{' '}
+                                                {formatDistance(
+                                                    new Date(task.due_date),
+                                                    now
+                                                    )}
+                                            </Typography>
+                                        </>
+                                    }
+                                    />
+                            </MenuItem>
+                        );
+                    })}
                 </Menu>
              }
         </div>

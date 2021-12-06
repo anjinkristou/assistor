@@ -34,7 +34,7 @@ export const TaskListFilter = () => {
     return (
         <CollapsibleListFilter>
             <FilterLiveSearch />
-            <FilterList label="Due date" icon={<AccessTimeIcon />}>
+            <FilterList label="Due date" icon={<AccessTimeIcon />}>                
                 <FilterListItem
                     label="Today"
                     value={{
