@@ -1,24 +1,25 @@
 import { Box, Chip } from '@material-ui/core';
 import { Task } from '../types'
-import { statuses } from './status';
+import { getStatus } from './status';
 
 export const TaskChip = ({ record }: { record: Task; }) => {
-    const status = statuses.find(status => status.id == record.status);
+    const statusItem = getStatus(record.status);
+    const statusName = statusItem ? statusItem.name: '';
+    const statusColor = statusItem ? statusItem.color: '#000'
     
-    return (status
-        ? <>
+    return (
+         <>
             { record && (
                     <Chip
-                    label={status.name}
+                    label={statusName}
                     size="small"
                     style={{
-                        backgroundColor: status.color,
+                        backgroundColor: statusColor,
                         border: 0,
                         cursor: 'pointer',
                     }}
                 />
             )}
         </>
-        : null
     );
 };

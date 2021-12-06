@@ -42,7 +42,7 @@ const NotificationButton = (props: any) => {
     const { data, ids, loaded } = useGetList<Task>(
         'tasks',
         { page: 1, perPage: 1000 },
-        { field: 'id', order: 'ASC' },
+        { field: 'due_date', order: 'ASC' },
         { status: 'pending', sales_id: identity && identity?.id,},
     );
 
@@ -114,7 +114,6 @@ const NotificationButton = (props: any) => {
                                                 new Date(data[id].due_date),
                                                 now
                                                 )}
-                                            {' '}<TaskStatus status={data[id].status} />
                                         </Typography>
                                     </>
                                 }

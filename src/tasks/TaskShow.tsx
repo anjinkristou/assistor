@@ -31,6 +31,8 @@ import { NotesIterator } from '../notes';
 import { Sale, Task } from '../types';
 import { TaskChip } from './TaskChip';
 
+const doneStatus = 'done';
+
 export const TaskShow = (props: ShowProps) => (
     <ShowBase {...props}>
         <TaskShowContent />
@@ -78,7 +80,7 @@ const TaskShowContent = () => {
                                 </Typography>
                             </Box>
                             {
-                                record.status != 'done' && 
+                                record.status != doneStatus && 
                                 <DoneButton record={record} />
                             }
                             <Box>
@@ -115,7 +117,7 @@ const DoneButton = ({
             'tasks',
             ((record && record.id) as unknown) as Identifier,
             {
-                status: 'done',
+                status: doneStatus,
             },
             record, {
                 onSuccess: () => {

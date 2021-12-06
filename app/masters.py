@@ -1,3 +1,4 @@
+from typing import _SpecialForm
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse
 import json
@@ -48,12 +49,32 @@ class ResourceList(Resource):
             self.keyword = filter['q']
             del filter['q']
         
+        self.spcial_fields = []
+        for key in filter:
+            if key.endswith('_gte') or key.endswith('_lte'):
+                self.spcial_fields.append({
+                    'key': key,
+                    'field': key[:-4],
+                    'operation': key[-3:],
+                    'value': filter[key]
+                })
+        
+        [filter.pop(field['key'], None) for field in self.spcial_fields]
+        
         return filter
     
     def post_query(self, query):
         if self.keyword:
             query = query.msearch(self.keyword)
-        
+            
+        for field in self.spcial_fields:
+            if field['operation'] == 'gte':
+                query = query.filter(getattr(self.model_cls, field['field']) >= field['value'])
+                print(field)
+            if field['operation'] == 'lte':
+                query = query.filter(getattr(self.model_cls, field['field']) <= field['value'])
+                print(field)
+       
         return query
     
     def post_data(self, data):
