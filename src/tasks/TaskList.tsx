@@ -164,7 +164,7 @@ export const TaskList = (props: ListProps) => {
             perPage={25}
             pagination={<Pagination rowsPerPageOptions={[10, 25, 50, 100]} />}
             filterDefaultValues={{ sales_id: identity?.id, status: 'pending' }}
-            sort={{ field: 'due_date', order: 'DESC' }}
+            sort={{ field: 'due_date', order: 'ASC' }}
         >
             <TaskListContent />
         </RaList>
