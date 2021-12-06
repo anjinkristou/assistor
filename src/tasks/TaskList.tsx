@@ -92,14 +92,7 @@ const TaskListContent = () => {
                         <ListItemText
                             primary={
                                 <>
-                                {task.text} {' '}
-                                {(task.status !== 'done') && 
-                                    (task.due_date < (new Date()).toISOString()) &&
-                                    <NotificationsActiveIcon
-                                        fontSize="small"
-                                        style={{ color: red[500] }}
-                                    />
-                                }
+                                {task.text}
                                 </>
                             }
                             secondary={
