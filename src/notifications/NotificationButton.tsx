@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 
 import {
     Avatar,
@@ -10,6 +11,7 @@ import {
     ListItemText, 
     Menu,
     MenuItem,
+    PopoverOrigin,
     Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,11 +36,22 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
+
+const AnchorOrigin: PopoverOrigin = {
+    vertical: 'bottom',
+    horizontal: 'right',
+};
+
+const TransformOrigin: PopoverOrigin = {
+    vertical: 'top',
+    horizontal: 'right',
+};
+
 const NotificationButton = (props: any) => {
     const classes = useStyles();
     const redirect = useRedirect();
     const { identity } = useGetIdentity();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const now = Date.now();
 
@@ -49,13 +62,8 @@ const NotificationButton = (props: any) => {
         { status_dif: 'done', sales_id: identity && identity?.id,},
     );
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
 
     const handleNotificationClick = (id: any) => {
         setAnchorEl(null);
@@ -63,11 +71,16 @@ const NotificationButton = (props: any) => {
         redirect(`/tasks/${id}/show`);
     }
 
+    const open = Boolean(anchorEl);
+
     const hasNotification = ids.length > 0;
       
     return (
         <div {...props}>
             <IconButton 
+                aria-owns={open ? 'notification-menu' : ''}
+                aria-haspopup={true}
+                color="inherit"
                 onClick={handleClick}
             >
                 <Badge 
@@ -82,19 +95,14 @@ const NotificationButton = (props: any) => {
             </IconButton>
             { hasNotification &&
                 <Menu 
-                id="simple-menu"
+                id="notification-menu"
+                disableScrollLock
                 anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
+                anchorOrigin={AnchorOrigin}
+                transformOrigin={TransformOrigin}
+                getContentAnchorEl={null}
+                open={open}
                 onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
                 >
                     {ids.map(id => {
                         const task = data[id];
