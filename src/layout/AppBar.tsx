@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Logo from './Logo';
 import NotificationButton from '../notifications/NotificationButton';
 import GlobalSearch from './GlobalSearch';
+import SwitchLanguage from './SwitchLanguage';
 
 const useStyles = makeStyles({
     title: {
@@ -38,6 +39,7 @@ const ConfigurationMenu = forwardRef<any, any>((props, ref) => {
 const CustomUserMenu = (props: any) => (
     <UserMenu {...props}>
         <ConfigurationMenu />
+        <SwitchLanguage />
     </UserMenu>
 );
 
