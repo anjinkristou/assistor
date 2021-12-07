@@ -16,6 +16,7 @@ import {
  } from '@material-ui/core';
  import { ProductFamily } from '../types';
  import { productFamilyCategories } from './productFamilyCategories';
+import ChoiceSelector from '../components/ChoiceSelector';
 
 export const CreateProductFamily = () => {
     const { filter, onCancel, onCreate } = useCreateSuggestionContext();
@@ -56,21 +57,12 @@ export const CreateProductFamily = () => {
             <form onSubmit={handleSubmit}>
                 <DialogContent>
                     <Box display="flex" flexDirection="column">
-                        <Select
+                        <ChoiceSelector
                             label="Category"
                             value={category}
-                            onChange={(event:any) => setCategory(event.target.value)}
-                        >
-                            <MenuItem value=""><em>None</em></MenuItem>
-                            {productFamilyCategories.map(category => (
-                                <MenuItem
-                                    key={category.id}
-                                    value={category.id}
-                                >
-                                    {category.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                            onChange={setCategory}
+                            choices={productFamilyCategories}
+                        />
 
                         <TextField
                             label="New category name"

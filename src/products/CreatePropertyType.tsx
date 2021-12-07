@@ -11,8 +11,12 @@ import {
     TextField,
     Button,
     DialogTitle,
+    Select,
+    MenuItem,
  } from '@material-ui/core';
  import { makeStyles } from '@material-ui/core/styles';
+import { productProprtyCategories } from './productProprtyCategories';
+import ChoiceSelector from '../components/ChoiceSelector';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 export const CreatePropertyType = () => {
     const classes = useStyles();
     const { filter, onCancel, onCreate } = useCreateSuggestionContext();
+    const [category, setCategory] = useState('');
     const [name, setName] = useState(filter || '');
     const [unit, setUnit] = useState('');
     const [synonyms, setSynonyms] = useState('');
@@ -38,6 +43,7 @@ export const CreatePropertyType = () => {
                         name: name,
                         unit: unit,
                         synonyms: synonyms,
+                        category: category,
                     },
                 },
             },
@@ -46,6 +52,7 @@ export const CreatePropertyType = () => {
                     setName('');
                     setUnit('');
                     setSynonyms('');
+                    setCategory('');
                     onCreate(data);
                 },
             }
@@ -58,6 +65,12 @@ export const CreatePropertyType = () => {
             <form onSubmit={handleSubmit}>
                 <DialogContent>
                     <div className={classes.root}>
+                        <ChoiceSelector
+                            label="Category"
+                            value={category}
+                            onChange={setCategory}
+                            choices={productProprtyCategories}
+                        />
                         <TextField
                             label="New type name"
                             value={name}

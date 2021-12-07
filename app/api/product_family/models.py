@@ -11,14 +11,13 @@ class ProductFamily(db.Model, CRUDMixin):
     website = db.Column(db.String)
     image = db.Column(db.String)
     description = db.Column(db.Unicode)
+    category = db.Column(db.String)
 
     # Foreign keys
-    category = db.Column(db.String)
 
     # Relationships
     
-    
-    
+     
 class ProductFamilySchema(ma.SQLAlchemySchema):
     class Meta:
         model = ProductFamily
@@ -28,7 +27,6 @@ class ProductFamilySchema(ma.SQLAlchemySchema):
     website = ma.auto_field()
     image = ma.auto_field()
     description = ma.auto_field()
-    
     category = ma.auto_field()
     
     nb_products = ma.Function(lambda obj: len(obj.products))
