@@ -17,7 +17,7 @@ import omit from 'lodash/omit';
 import { Avatar } from './Avatar';
 import { ProductFamilyAside } from './ProductFamilyAside';
 import { ProductFamily } from '../types';
-import { categories } from './categories';
+import { productFamilyCategories } from './productFamilyCategories';
 
 const Spacer = () => <Box width={20} component="span" />;
 
@@ -42,7 +42,7 @@ const ProductFamilyEditContent = () => {
                                         <Box flex={1}>
                                             <SelectInput
                                                 source="category"
-                                                choices={categories}
+                                                choices={productFamilyCategories}
                                             />
                                             <TextInput source="name" fullWidth />
                                             <TextInput source="website" fullWidth />

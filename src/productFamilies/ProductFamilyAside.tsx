@@ -13,7 +13,7 @@ import {
 
 import { ProductFamily, Sale } from '../types';
 import { CollapsibleAside } from '../components/CollapsibleAside';
-import { categories } from './categories';
+import { productFamilyCategories } from './productFamilyCategories';
 
 export const ProductFamilyAside = ({
     record,
@@ -44,7 +44,7 @@ const AsideContent = ({
                 <Typography>Category:</Typography>
                 <SelectField
                     source="category"
-                    choices={categories}
+                    choices={productFamilyCategories}
                 />
             </Box>
 

@@ -17,7 +17,7 @@ import { LogoField } from '../companies/LogoField';
 import { NotesIterator } from '../notes';
 import { ProductFamily } from '../types';
 import { ProductGridList } from '../products/ProductGridList';
-import { categories } from './categories';
+import { productFamilyCategories } from './productFamilyCategories';
 
 export const ProductFamilyShow = (props: ShowProps) => (
     <ShowBase {...props}>
@@ -44,7 +44,7 @@ const ProductFamilyShowContent = () => {
                                     <SelectField
                                         record={record}
                                         source="category"
-                                        choices={categories}
+                                        choices={productFamilyCategories}
                                     />
                                 </Typography>
                             </Box>

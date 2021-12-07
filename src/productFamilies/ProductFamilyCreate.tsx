@@ -31,7 +31,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
 import { ProductFamily } from '../types';
-import { categories } from './categories';
+import { productFamilyCategories } from './productFamilyCategories';
 
 const useStyles = makeStyles({
     inline: {
@@ -62,7 +62,7 @@ export const ProductFamilyCreate = (props: CreateProps) => {
             >
                 <SelectInput
                     source="category"
-                    choices={categories}
+                    choices={productFamilyCategories}
                     formClassName={clsx(classes.inline, 'first-child')}
                 />
                 <TextInput source="name" fullWidth />

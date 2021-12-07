@@ -1,4 +1,4 @@
-export const categories = [
+export const productFamilyCategories = [
     'Safety laser scanners', 
     '2D LiDAR sensors', 
     '3D LiDAR sensors', 

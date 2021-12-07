@@ -15,7 +15,7 @@ import {
     DialogTitle,
  } from '@material-ui/core';
  import { ProductFamily } from '../types';
- import { categories } from './categories';
+ import { productFamilyCategories } from './productFamilyCategories';
 
 export const CreateProductFamily = () => {
     const { filter, onCancel, onCreate } = useCreateSuggestionContext();
@@ -62,7 +62,7 @@ export const CreateProductFamily = () => {
                             onChange={(event:any) => setCategory(event.target.value)}
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
-                            {categories.map(category => (
+                            {productFamilyCategories.map(category => (
                                 <MenuItem
                                     key={category.id}
                                     value={category.id}

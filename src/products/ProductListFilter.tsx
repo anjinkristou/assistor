@@ -13,7 +13,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 
 import { ProductFamily } from '../types';
 import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
-import { categories } from '../productFamilies/categories';
+import { productFamilyCategories } from '../productFamilies/productFamilyCategories';
 
 const useStyles = makeStyles(theme => ({
     familyList: {
@@ -54,7 +54,7 @@ export const ProductListFilter = () => {
 
             <FilterList label="Categories" icon={<CategoryIcon />}>
                 <div className={classes.categoryList}>
-                    {categories.map(category => (
+                    {productFamilyCategories.map(category => (
                             <FilterListItem
                                 key={category.id}
                                 label={category.name}

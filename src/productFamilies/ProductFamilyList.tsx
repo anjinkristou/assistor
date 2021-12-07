@@ -34,7 +34,7 @@ import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
 import { ProductFamilyListFilter } from './ProductFamilyListFilter';
 import { ProductFamily } from '../types';
-import { categories } from './categories';
+import { productFamilyCategories } from './productFamilyCategories';
 
 const ProductFamilyListContent = () => {
     const { data, ids, loaded, onToggleItem, selectedIds } = useListContext<
@@ -79,7 +79,7 @@ const ProductFamilyListContent = () => {
                                     <SelectField
                                         record={record}
                                         source="category"
-                                        choices={categories}
+                                        choices={productFamilyCategories}
                                     />
                                 </>
                             }
