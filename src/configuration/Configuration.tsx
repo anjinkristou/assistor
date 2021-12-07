@@ -22,10 +22,10 @@ const Configuration = () => {
     const dispatch = useDispatch();
     return (
         <Card>
-            <Title title={translate('pos.configuration')} />
+            <Title title={translate('app.configuration')} />
             <CardContent>
                 <div className={classes.label}>
-                    {translate('pos.theme.name')}
+                    {translate('app.theme.name')}
                 </div>
                 <Button
                     variant="contained"
@@ -33,7 +33,7 @@ const Configuration = () => {
                     color={theme === 'light' ? 'primary' : 'default'}
                     onClick={() => dispatch(changeTheme('light'))}
                 >
-                    {translate('pos.theme.light')}
+                    {translate('app.theme.light')}
                 </Button>
                 <Button
                     variant="contained"
@@ -41,7 +41,7 @@ const Configuration = () => {
                     color={theme === 'dark' ? 'primary' : 'default'}
                     onClick={() => dispatch(changeTheme('dark'))}
                 >
-                    {translate('pos.theme.dark')}
+                    {translate('app.theme.dark')}
                 </Button>
             </CardContent>
             <CardContent>

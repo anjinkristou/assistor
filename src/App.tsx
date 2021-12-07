@@ -17,6 +17,7 @@ import productfamiliess from './productFamilies';
 import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
+import themeReducer from './themeReducer';
 // import Login from './Login'
 import productFamilies from './productFamilies';
 import englishMessages from './i18n/en';
@@ -48,7 +49,7 @@ const App = () => (
         loginPage={Login}
         layout={Layout}
         dashboard={Dashboard}
-        theme={theme}
+        customReducers={{ theme: themeReducer }}
         i18nProvider={i18nProvider}
         disableTelemetry
     >

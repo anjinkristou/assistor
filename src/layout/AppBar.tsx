@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Logo from './Logo';
 import NotificationButton from '../notifications/NotificationButton';
+import GlobalSearch from './GlobalSearch';
 
 const useStyles = makeStyles({
     title: {
@@ -56,6 +57,7 @@ const CustomAppBar = (props: any) => {
             />
             <Logo />
             <span className={classes.spacer} />
+            <GlobalSearch />
             <NotificationButton />
         </AppBar>
     );
