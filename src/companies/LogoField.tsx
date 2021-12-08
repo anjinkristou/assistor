@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React, { useState} from 'react';
 import { Avatar } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import { makeStyles } from '@material-ui/core/styles';
+import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 
 const useStyles = makeStyles({
     image: {
@@ -24,20 +25,32 @@ export const LogoField = ({
     size?: 'small' | 'medium';
 }) => {
     const classes = useStyles();
+    const [imageBroken, setImageBroken] = useState(false);
     if (!record) return null;
     if(!record.logo) return (
         <Avatar>
             <BusinessIcon />
         </Avatar>
     )
+
+    const onError = () => setImageBroken(true);
     return (
-        <img
+        <>
+        {
+        imageBroken
+        ? <Avatar>
+            <BrokenImageIcon />
+        </Avatar>
+        : <img
             src={process.env.PUBLIC_URL + record.logo}
             alt={record.name}
             title={record.name}
             width={sizeInPixel[size]}
             height={sizeInPixel[size]}
             className={classes.image}
+            onError={onError}
         />
+        }
+        </>
     );
 };

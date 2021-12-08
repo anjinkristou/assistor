@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { ProductAvatar } from './ProductAvatar';
 import { Product } from '../types';
 import classNames from 'classnames';
+import { LogoField } from '../companies/LogoField';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -91,11 +92,7 @@ export const ProductCard = ({ record }: { record: Product }) => {
                         reference="companies"
                         link="show"
                     >
-                        <ImageField 
-                            source="logo" 
-                            title="name"
-                            classes={classes}
-                        />
+                        <LogoField />
                     </ReferenceField>
                 </Box>
                 <div className={classes.identity}>

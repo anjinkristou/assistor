@@ -6,11 +6,12 @@ import clsx from 'clsx';
 
 import { Company } from '../types';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     avatar: {
         width: 60,
         height: 60,
         backgroundColor: 'aliceblue',
+        color: theme.palette.secondary.main,
     },
     img: {
         objectFit: 'contain',
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
         width: 40,
         height: 40,
     },
-});
+}));
 
 export const CompanyAvatar = ({
     record,
