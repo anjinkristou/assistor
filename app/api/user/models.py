@@ -17,6 +17,9 @@ class User(db.Model, CRUDMixin):
     last_name = db.Column(db.String)
     password_hash = db.Column(db.String)
     
+    linkedin_username = db.Column(db.String)
+    linkedin_password = db.Column(db.String)
+    
     # Relationships
     
     def __repr__(self):
@@ -65,6 +68,7 @@ class UserSchema(ma.SQLAlchemySchema):
     first_name = ma.auto_field()
     last_name = ma.auto_field()
     email = ma.auto_field()
+    linkedin_username = ma.auto_field()
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)

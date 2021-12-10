@@ -1,78 +1,96 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import { useTranslate, useLocale, useSetLocale, Title } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { changeTheme } from './actions';
 import { AppState } from '../types';
+import { 
+    Card,
+    CardContent,
+    Tabs, 
+    Tab,
+} from '@material-ui/core';
+import GeneralSettings from './GeneralSettings';
+import UserSettings from './UserSettngs';
 
-const useStyles = makeStyles({
-    label: { width: '10em', display: 'inline-block' },
-    button: { margin: '1em' },
-});
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+        display: 'flex',
+    },
+    tabPanel: {
+        flexGrow: 1,
+    },
+    tabs: {
+        borderRight: `1px solid ${theme.palette.divider}`,
+    },
+}));
+
+function a11yProps(index: any) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`,
+    };
+}
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+    const classes = useStyles();
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`wrapped-tabpanel-${index}`}
+            aria-labelledby={`wrapped-tab-${index}`}
+            {...other}
+            className={classes.tabPanel}
+        >
+            {children}
+        </div>
+    );
+};
 
 const Configuration = () => {
-    const translate = useTranslate();
-    const locale = useLocale();
-    const setLocale = useSetLocale();
     const classes = useStyles();
-    const theme = useSelector((state: AppState) => state.theme);
-    const dispatch = useDispatch();
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setValue(newValue);
+      };
+
     return (
         <Card>
-            <Title title={translate('app.configuration')} />
-            <CardContent>
-                <div className={classes.label}>
-                    {translate('app.theme.name')}
-                </div>
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    color={theme === 'light' ? 'primary' : 'default'}
-                    onClick={() => dispatch(changeTheme('light'))}
+            <CardContent className={classes.root}>
+                <Tabs
+                    orientation="vertical"
+                    variant="scrollable"
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Vertical tabs example"
+                    className={classes.tabs}
                 >
-                    {translate('app.theme.light')}
-                </Button>
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    color={theme === 'dark' ? 'primary' : 'default'}
-                    onClick={() => dispatch(changeTheme('dark'))}
-                >
-                    {translate('app.theme.dark')}
-                </Button>
-            </CardContent>
-            <CardContent>
-                <div className={classes.label}>{translate('pos.language')}</div>
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    color={locale === 'en' ? 'primary' : 'default'}
-                    onClick={() => setLocale('en')}
-                >
-                    en
-                </Button>
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    color={locale === 'fr' ? 'primary' : 'default'}
-                    onClick={() => setLocale('fr')}
-                >
-                    fr
-                </Button>
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    color={locale === 'ja' ? 'primary' : 'default'}
-                    onClick={() => setLocale('ja')}
-                >
-                    ja
-                </Button>
+                    <Tab label="General" {...a11yProps(0)} />
+                    <Tab label="User" {...a11yProps(1)} />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                    <GeneralSettings />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <UserSettings />
+                </TabPanel>
             </CardContent>
         </Card>
     );
 };
 
 export default Configuration;
+
