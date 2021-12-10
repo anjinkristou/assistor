@@ -20,6 +20,7 @@ import { TagsListEdit } from '../tags/TagsListEdit';
 import { CollapsibleAside } from '../components/CollapsibleAside';
 import { ProductsListEdit } from '../products/ProductsListEdit';
 import { any } from 'prop-types';
+import { UpdateLinkedinCompany } from '../linkedin/UpdateLinkedinCompany';
 
 export const CompanyAside = ({
     record,
@@ -52,7 +53,13 @@ const AsideContent = ({
             <Box mt={2}>
                 Website: <Link href={record.website} target="_blank" rel="noreferrer">{record.website}</Link>
                 <br />
-                LinkedIn: <Link href={record.linkedIn} target="_blank" rel="noreferrer">LinkedIn</Link>
+                
+                {record.linkedIn &&
+                    <>
+                    LinkedIn: <Link href={record.linkedIn} target="_blank" rel="noreferrer">LinkedIn</Link>
+                    <UpdateLinkedinCompany record={record} />
+                    </>
+                }
             </Box>
             <Box mt={1}>
                 Relation: <TextField source="relation" record={record} />

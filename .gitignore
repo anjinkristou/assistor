@@ -130,3 +130,4 @@ node_modules
 .sqlite3
 yarn.lock
 app/assistor.sqlite3
+chromedriver

@@ -9,6 +9,7 @@ import {
     UpdateManyResult,
     DeleteResult,
     DeleteManyResult,
+    Identifier,
 }  from 'react-admin'
 
 import {
@@ -187,6 +188,24 @@ const deleteMany = async (resource: string, params: any): Promise<DeleteManyResu
     }
 };
 
+const fetchCompany = async (company_id: Identifier): Promise<any> => {
+    refreshTokenIfInvalid();
+
+    try{
+        const credentials = getCredentials();
+        const token = credentials?.access_token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+            params: {id: company_id },
+        };
+        const response = await axios.get<GetOneResult<any>>(`/linkedin/fetch-company`, config)
+        return Promise.resolve(response.data);
+    } catch (error: any) {
+        const response = error.response;
+        return Promise.reject({message: response.data, status: response.status});
+    }
+};
+
 export const dataProvider = {
     getList:    getList,
     getOne:     getOne,
@@ -197,4 +216,5 @@ export const dataProvider = {
     updateMany: updateMany,
     delete:     deleteOne,
     deleteMany: deleteMany,
+    fetchCompany: fetchCompany,
 }

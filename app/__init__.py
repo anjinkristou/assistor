@@ -50,6 +50,7 @@ def create_app(config):
         # Include our Routes
         for module_name in (
                 'auth', 
+                'linkedin',
             ):
             module = import_module(f'app.{module_name}.routes')
             app.register_blueprint(module.blueprint)
