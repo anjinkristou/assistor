@@ -10,7 +10,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Switch from '@material-ui/core/Switch';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import LockIcon from '@material-ui/icons/Lock';
-import { Icon, IconButton, InputAdornment, TextField , Button} from '@material-ui/core';
+import { Icon, IconButton, InputAdornment, TextField , Button, Paper} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { Identifier, useGetIdentity, useGetOne, useNotify, useUpdate } from 'react-admin';
 import SendIcon from '@material-ui/icons/Send';
@@ -42,12 +42,11 @@ const UserSettings = () => {
 
     
     return (
-    <List 
+    <div 
         className={classes.root}
-        subheader={<ListSubheader>LinkedIn Account</ListSubheader>} 
     >
         {identity && <LinkedinSettings userId={identity.id}/>}
-    </List>
+    </div>
     );
 };
 
@@ -81,51 +80,51 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
     }
 
     return (
-        <>
-        <ListItem>
-            <TextField 
-                label="Username" 
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start" disablePointerEvents>
-                            <AccountBoxIcon />
-                        </InputAdornment>
-                    ),
-                }}
-                style={{ width: '100%'}}
-            />
-        </ListItem>
-        <ListItem>
-            <TextField 
-                label="Password" 
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start" disablePointerEvents>
-                            <LockIcon />
-                        </InputAdornment>
-                    ),
-                }}
-                style={{ width: '100%'}}
-            />
-        </ListItem>
-        <ListItem>
-            <Button
-                variant="contained"
-                color="primary"
-                endIcon={<SendIcon />}
-                style={{ width: '100%'}}
-                onClick={handleUpdate}
-                disabled={loading}
-            >
-                Send
-            </Button>
-        </ListItem>
-        </>
+        <List subheader={<ListSubheader>LinkedIn Account</ListSubheader>}>
+            <ListItem>
+                <TextField 
+                    label="Username" 
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start" disablePointerEvents>
+                                <AccountBoxIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                    style={{ width: '100%'}}
+                />
+            </ListItem>
+            <ListItem>
+                <TextField 
+                    label="Password" 
+                    type="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start" disablePointerEvents>
+                                <LockIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                    style={{ width: '100%'}}
+                />
+            </ListItem>
+            <ListItem>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    endIcon={<SendIcon />}
+                    style={{ width: '100%'}}
+                    onClick={handleUpdate}
+                    disabled={loading}
+                >
+                    Send
+                </Button>
+            </ListItem>
+        </List>
     );
 };
 
