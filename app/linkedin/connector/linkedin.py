@@ -56,7 +56,12 @@ class Linkedin:
         except:
             pass
         self.driver.wait.until(EC.presence_of_element_located((By.XPATH, "//a[@data-control-name='nav_homepage']")))
-        
+    
+    def verify_login(self, pin):
+        self.driver.find_element(By.XPATH, "//input[@name='pin']").send_keys(pin)
+        self.driver.find_element_by_id('email-pin-submit-button').submit()
+
+         
     def logout(self):
         self.driver.find_element(By.XPATH, "//button[contains(., 'Me')]").click()
         self.driver.wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'global-nav__me-content')]")))

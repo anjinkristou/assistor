@@ -223,6 +223,26 @@ const loginLinkedin = async (): Promise<any> => {
     }
 };
 
+const verifyLoginLinkedin = async (pin: string) : Promise<any> => {
+    refreshTokenIfInvalid();
+    
+    try{
+        const credentials = getCredentials();
+        const token = credentials?.access_token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+        };
+        const params = {
+            pin
+        }
+        const response = await axios.post<any>(`/linkedin/login/verify`, params, config)
+        return Promise.resolve(response.data);
+    } catch (error: any) {
+        const response = error.response;
+        return Promise.reject({message: response.data, status: response.status});
+    }
+};
+
 export const dataProvider = {
     getList:    getList,
     getOne:     getOne,
@@ -236,4 +256,5 @@ export const dataProvider = {
     // Linkedin
     fetchLinkedinCompany: fetchLinkedinCompany,
     loginLinkedin: loginLinkedin,
+    verifyLoginLinkedin: verifyLoginLinkedin,
 }

@@ -70,7 +70,22 @@ def linkedin_login():
         driver.login(account.linkedin_username, account.linkedin_password)
         return jsonify({'data': "Login successful"}), HTTPStatus.OK
     except:
-        page_source = driver.pageSource()
-        page_source = page_source.replace('action="/', 'action="https://www.linkedin.com/')
-        return jsonify({'html': page_source}), HTTPStatus.UNPROCESSABLE_ENTITY
-        
+        return jsonify({'html': driver.pageSource()}), HTTPStatus.UNPROCESSABLE_ENTITY
+
+
+@blueprint.route('/login/check', methods = ['POST'])
+@jwt_required()
+def linkedin_login_check():
+    driver = get_driver(current_user.id)
+    if driver is None:
+        return jsonify({'msg': "No possible to make driver for this user"}), HTTPStatus.BAD_REQUEST
+    
+    pin = request.json.get('pin', None)
+    if pin is None:
+        return jsonify({'msg': "Pin not available"}), HTTPStatus.BAD_REQUEST
+   
+    try:
+        driver.verify_login(pin)
+        return jsonify({'data': "Login successful"}), HTTPStatus.OK
+    except:
+        return jsonify({'html': driver.pageSource()}), HTTPStatus.UNPROCESSABLE_ENTITY

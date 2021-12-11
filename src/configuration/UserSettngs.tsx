@@ -10,7 +10,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Switch from '@material-ui/core/Switch';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import LockIcon from '@material-ui/icons/Lock';
-import { Icon, IconButton, InputAdornment, TextField , Button, Paper, Dialog, DialogActions, DialogContent, DialogContentText} from '@material-ui/core';
+import { Icon, IconButton, InputAdornment, TextField , Button, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { Identifier, useDataProvider, useGetIdentity, useGetOne, useNotify, useUpdate } from 'react-admin';
 import Frame from 'react-frame-component';
@@ -66,6 +66,7 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
     const dataProvider = useDataProvider();
     const [open, setOpen] = React.useState(false);
     const [htmlData, setHtmlData] = useState('');
+    const [pin, setPin] = useState('');
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -111,8 +112,17 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
             const message = error.message;
             notify('Linkedin login failed', 'warning');
             console.log(error);
-            setHtmlData(message.html)
             setOpen(true);
+        }
+    }
+
+    const handleSubmitPin = async () => {
+        try {
+            await dataProvider.verifyLoginLinkedin(pin);
+            notify('Linkedin login successfull', 'info');
+        } catch (error: any) {
+            const message = error.message;
+            notify('Linkedin login failed', 'warning');
         }
     }
 
@@ -174,19 +184,29 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
             </ListItem>
         </List>
         <Dialog onClose={handleClose} open={open} className={classes.dialog}>
+            <DialogTitle>Pin verification</DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    {/* <Frame className={classes.iframe} initialContent={htmlData}></Frame> */}
-                    <div dangerouslySetInnerHTML={{__html: htmlData}}/>
-                </DialogContentText>
+            <DialogContentText>
+                Check your email and insert the pin
+            </DialogContentText>
+            <TextField
+                autoFocus
+                margin="dense"
+                id="pin"
+                label="Pin"
+                type="string"
+                fullWidth
+                value={pin}
+                onChange={e => setPin(e.target.value)}
+            />
             </DialogContent>
             <DialogActions>
                 <Button 
                     variant="contained"
-                    onClick={handleClose} 
+                    onClick={handleSubmitPin} 
                     color="primary" 
                     autoFocus>
-                    Close
+                    Submit
                 </Button>
             </DialogActions>
         </Dialog>
