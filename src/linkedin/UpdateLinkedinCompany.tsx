@@ -65,7 +65,7 @@ export const UpdateLinkedinCompany = ({ record }: { record: Company}) => {
         setLoading(true)
         setAvailable(false);
         try{
-            const data: any = await dataProvider.fetchCompany(record.id);
+            const data: any = await dataProvider.fetchLinkedinCompany(record.id);
             setData(data.data as ResponseData);
             setAvailable(true);
         }
@@ -112,6 +112,7 @@ export const UpdateLinkedinCompany = ({ record }: { record: Company}) => {
         <>
             <IconButton
                 onClick={() => setOpen(true)}
+                size='small'
             >
                 <LinkedInIcon />
             </IconButton>

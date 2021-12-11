@@ -77,4 +77,7 @@ class Linkedin:
     
     def person(self, page_url) -> Person:
         return Person(self.driver, page_url)
+    
+    def pageSource(self):
+        return self.driver.page_source
         

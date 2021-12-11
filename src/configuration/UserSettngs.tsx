@@ -10,12 +10,14 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Switch from '@material-ui/core/Switch';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import LockIcon from '@material-ui/icons/Lock';
-import { Icon, IconButton, InputAdornment, TextField , Button, Paper} from '@material-ui/core';
+import { Icon, IconButton, InputAdornment, TextField , Button, Paper, Dialog, DialogActions, DialogContent, DialogContentText} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { Identifier, useGetIdentity, useGetOne, useNotify, useUpdate } from 'react-admin';
+import { Identifier, useDataProvider, useGetIdentity, useGetOne, useNotify, useUpdate } from 'react-admin';
+import Frame from 'react-frame-component';
 import SendIcon from '@material-ui/icons/Send';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { ControlCameraOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +26,18 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 360,
       backgroundColor: theme.palette.background.paper,
     },
+    iframe: {
+        width: '100%',
+        minHeight: '1200px',
+    },
+    actionItem: {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '1em',
+    },
+    dialog: {
+        minWidth: '20em',
+    }
   }),
 );
 
@@ -31,10 +45,6 @@ const UserSettings = () => {
     const classes = useStyles();  
     const { identity, loaded } = useGetIdentity();
     // const { data, loading: userLoading, error } = useGetOne('sales', identity ? identity.id : 0, { enabled: loaded });
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
     
     if (!loaded) return null;
 
@@ -51,7 +61,11 @@ const UserSettings = () => {
 };
 
 const LinkedinSettings = ({userId}: {userId: Identifier}) => {
+    const classes = useStyles();  
     const notify = useNotify();
+    const dataProvider = useDataProvider();
+    const [open, setOpen] = React.useState(false);
+    const [htmlData, setHtmlData] = useState('');
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -62,24 +76,48 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
     );
     const [update, { loading }] = useUpdate();
 
+    const handleClose = () => setOpen(false);
+
     if(!loaded) return <LinearProgress />
 
     // setUsername(data?.linkedin_username);
 
-    const handleUpdate = () => {
-        update(
-            'sales',
-            userId,
-            { 
-                linkedin_username: username,
-                linkedin_password: password,
-            },
-            data,
-            { onSuccess: () => notify('Linkedin account updated', 'info') },
-        );
+    const handleUpdate = async () => {
+        try {
+            await update(
+                'sales',
+                userId,
+                { 
+                    linkedin_username: username,
+                    linkedin_password: password,
+                },
+                data,
+            );
+
+            notify('Linkedin account updated', 'info');
+        } catch (error: any) {
+            const message = error.message;
+            notify('Linkedin account failed', 'warning');
+            console.log(error);
+        }
+        
+    }
+
+    const handleLogin = async () => {
+        try {
+            await dataProvider.loginLinkedin();
+            notify('Linkedin login successfull', 'info');
+        } catch (error: any) {
+            const message = error.message;
+            notify('Linkedin login failed', 'warning');
+            console.log(error);
+            setHtmlData(message.html)
+            setOpen(true);
+        }
     }
 
     return (
+        <>
         <List subheader={<ListSubheader>LinkedIn Account</ListSubheader>}>
             <ListItem>
                 <TextField 
@@ -112,19 +150,47 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
                     style={{ width: '100%'}}
                 />
             </ListItem>
-            <ListItem>
+            <ListItem
+                className={classes.actionItem}
+            >
                 <Button
                     variant="contained"
                     color="primary"
                     endIcon={<SendIcon />}
-                    style={{ width: '100%'}}
                     onClick={handleUpdate}
                     disabled={loading}
                 >
                     Send
                 </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    endIcon={<SendIcon />}
+                    onClick={handleLogin}
+                    disabled={loading}
+                >
+                    Login
+                </Button>
             </ListItem>
         </List>
+        <Dialog onClose={handleClose} open={open} className={classes.dialog}>
+            <DialogContent>
+                <DialogContentText>
+                    {/* <Frame className={classes.iframe} initialContent={htmlData}></Frame> */}
+                    <div dangerouslySetInnerHTML={{__html: htmlData}}/>
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button 
+                    variant="contained"
+                    onClick={handleClose} 
+                    color="primary" 
+                    autoFocus>
+                    Close
+                </Button>
+            </DialogActions>
+        </Dialog>
+        </>
     );
 };
 

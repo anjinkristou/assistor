@@ -14,7 +14,6 @@ from app.api.user.models import User
 linkedin_connectors = []
 
 def find_driver(items, user_id):
-    print(linkedin_connectors)
     result = None
     for item in items:
         if item["id"] == user_id:
@@ -26,15 +25,12 @@ def get_driver(user_id):
     if driver is None:
         driver = Linkedin()
         linkedin_connectors.append({"id": user_id, "driver": driver})
-        account = User.query.get(user_id)
-        if account:
-            driver.login(account.linkedin_username, account.linkedin_password)
     return driver
 
 
-@blueprint.route('/fetch-company', methods = ['GET'])
+@blueprint.route('/company/fetch', methods = ['GET'])
 @jwt_required()
-def fetch_company():
+def linkedin_company_fetch():
     id = request.args.get('id', None)
     if id is None:
         return jsonify({'msg': "id parameter is needed"}), HTTPStatus.BAD_REQUEST
@@ -55,3 +51,26 @@ def fetch_company():
         return jsonify({'msg': "Page parging error happened"}), HTTPStatus.UNPROCESSABLE_ENTITY
         
 
+@blueprint.route('/login', methods = ['GET'])
+@jwt_required()
+def linkedin_login():
+    driver = get_driver(current_user.id)
+    if driver is None:
+        return jsonify({'msg': "No possible to make driver for this user"}), HTTPStatus.BAD_REQUEST
+    
+    account = User.query.get(current_user.id)
+    if account is None:
+        return jsonify({'msg': "User does not have an account"}), HTTPStatus.BAD_REQUEST
+    
+    
+    if len(account.linkedin_username) == 0 or len(account.linkedin_password) == 0:
+        return jsonify({'msg': "Account information is missing"}), HTTPStatus.BAD_REQUEST
+          
+    try:
+        driver.login(account.linkedin_username, account.linkedin_password)
+        return jsonify({'data': "Login successful"}), HTTPStatus.OK
+    except:
+        page_source = driver.pageSource()
+        page_source = page_source.replace('action="/', 'action="https://www.linkedin.com/')
+        return jsonify({'html': page_source}), HTTPStatus.UNPROCESSABLE_ENTITY
+        

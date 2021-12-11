@@ -188,7 +188,7 @@ const deleteMany = async (resource: string, params: any): Promise<DeleteManyResu
     }
 };
 
-const fetchCompany = async (company_id: Identifier): Promise<any> => {
+const fetchLinkedinCompany = async (company_id: Identifier): Promise<any> => {
     refreshTokenIfInvalid();
 
     try{
@@ -198,7 +198,24 @@ const fetchCompany = async (company_id: Identifier): Promise<any> => {
             headers: { Authorization: `Bearer ${token}` },
             params: {id: company_id },
         };
-        const response = await axios.get<GetOneResult<any>>(`/linkedin/fetch-company`, config)
+        const response = await axios.get<any>(`/linkedin/company/fetch`, config)
+        return Promise.resolve(response.data);
+    } catch (error: any) {
+        const response = error.response;
+        return Promise.reject({message: response.data, status: response.status});
+    }
+};
+
+const loginLinkedin = async (): Promise<any> => {
+    refreshTokenIfInvalid();
+
+    try{
+        const credentials = getCredentials();
+        const token = credentials?.access_token;
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+        };
+        const response = await axios.get<any>(`/linkedin/login`, config)
         return Promise.resolve(response.data);
     } catch (error: any) {
         const response = error.response;
@@ -216,5 +233,7 @@ export const dataProvider = {
     updateMany: updateMany,
     delete:     deleteOne,
     deleteMany: deleteMany,
-    fetchCompany: fetchCompany,
+    // Linkedin
+    fetchLinkedinCompany: fetchLinkedinCompany,
+    loginLinkedin: loginLinkedin,
 }
