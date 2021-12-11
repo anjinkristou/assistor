@@ -15,6 +15,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { Identifier, useDataProvider, useGetIdentity, useGetOne, useNotify, useUpdate } from 'react-admin';
 import Frame from 'react-frame-component';
 import SendIcon from '@material-ui/icons/Send';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { ControlCameraOutlined } from '@material-ui/icons';
@@ -159,7 +160,7 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
                 <Button
                     variant="contained"
                     color="primary"
-                    endIcon={<SendIcon />}
+                    endIcon={<LockOpenIcon />}
                     onClick={handleLogin}
                     disabled={loading}
                 >
