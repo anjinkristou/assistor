@@ -73,9 +73,9 @@ def linkedin_login():
         return jsonify({'html': driver.pageSource()}), HTTPStatus.UNPROCESSABLE_ENTITY
 
 
-@blueprint.route('/login/check', methods = ['POST'])
+@blueprint.route('/login/verify', methods = ['POST'])
 @jwt_required()
-def linkedin_login_check():
+def linkedin_login_verify():
     driver = get_driver(current_user.id)
     if driver is None:
         return jsonify({'msg': "No possible to make driver for this user"}), HTTPStatus.BAD_REQUEST
