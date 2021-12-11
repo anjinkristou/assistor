@@ -120,6 +120,7 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
         try {
             await dataProvider.verifyLoginLinkedin(pin);
             notify('Linkedin login successfull', 'info');
+            setOpen(false);
         } catch (error: any) {
             const message = error.message;
             notify('Linkedin login failed', 'warning');

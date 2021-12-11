@@ -4,6 +4,7 @@ import {
     useCreate,
     useDataProvider,
     useUpdate,
+    useRefresh,
 } from 'react-admin';
 import {
     Dialog, 
@@ -58,6 +59,7 @@ export const UpdateLinkedinCompany = ({ record }: { record: Company}) => {
     const dataProvider = useDataProvider();
     const [checked, setChecked] = useState<string[]>([]);
     const [update, { loading: updating }] = useUpdate();
+    const refresh = useRefresh();
 
     if(!record) return null;
 
@@ -75,22 +77,22 @@ export const UpdateLinkedinCompany = ({ record }: { record: Company}) => {
         setLoading(false);
     };
 
-    const onSave = () => {
+    const onSave = async () => {
         const arrayData = checked.map(item => {
             if(item === 'name') return {field: item, value: data?.title};
             if(item === 'logo') return {field: item, value: data?.logo_url};
             if(item === 'website') return {field: item, value: data?.website_url};
         });
 
-        update(
+        await update(
             'companies',
             record.id,
             arrayData.reduce((a, x: any) => ({...a, [x.field]: x.value}), {}),
             record,
-            {
-                onSuccess: () => setOpen(false)
-            }
         );
+
+        setOpen(false);
+        refresh();
     }
 
     const onCancel = () => setOpen(false);
