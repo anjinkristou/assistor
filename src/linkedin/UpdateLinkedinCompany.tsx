@@ -118,7 +118,12 @@ export const UpdateLinkedinCompany = ({ record }: { record: Company}) => {
             >
                 <LinkedInIcon />
             </IconButton>
-            <Dialog open={open} onClose={onCancel}>
+            <Dialog 
+                open={open} 
+                onClose={onCancel}
+                fullWidth={true}
+                maxWidth="sm"
+            >
                 {loading && <LinearProgress /> }
                 <DialogTitle>Load properties from Linkedin Page</DialogTitle>
                     <DialogContent>

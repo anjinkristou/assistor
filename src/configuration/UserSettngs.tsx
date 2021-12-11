@@ -65,8 +65,6 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
     const notify = useNotify();
     const dataProvider = useDataProvider();
     const [open, setOpen] = React.useState(false);
-    const [htmlData, setHtmlData] = useState('');
-    const [pin, setPin] = useState('');
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -77,11 +75,8 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
     );
     const [update, { loading }] = useUpdate();
 
-    const handleClose = () => setOpen(false);
 
     if(!loaded) return <LinearProgress />
-
-    // setUsername(data?.linkedin_username);
 
     const handleUpdate = async () => {
         try {
@@ -111,19 +106,7 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
         } catch (error: any) {
             const message = error.message;
             notify('Linkedin login failed', 'warning');
-            console.log(error);
             setOpen(true);
-        }
-    }
-
-    const handleSubmitPin = async () => {
-        try {
-            await dataProvider.verifyLoginLinkedin(pin);
-            notify('Linkedin login successfull', 'info');
-            setOpen(false);
-        } catch (error: any) {
-            const message = error.message;
-            notify('Linkedin login failed', 'warning');
         }
     }
 
@@ -184,11 +167,40 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
                 </Button>
             </ListItem>
         </List>
-        <Dialog onClose={handleClose} open={open} className={classes.dialog}>
+        <PinDialog open={open} setOpen={setOpen} />
+        </>
+    );
+};
+
+
+const PinDialog = ({open, setOpen}: any) => {
+    const dataProvider = useDataProvider();
+    const notify = useNotify();
+    const handleClose = () => setOpen(false);
+    const [pin, setPin] = useState('');
+
+    const handleSubmitPin = async () => {
+        try {
+            await dataProvider.verifyLoginLinkedin(pin);
+            notify('Linkedin login successfull', 'info');
+            setOpen(false);
+        } catch (error: any) {
+            const message = error.message;
+            notify('Linkedin login failed', 'warning');
+        }
+    }
+
+    return (
+        <Dialog 
+            onClose={handleClose} 
+            open={open}
+            fullWidth={true}
+            maxWidth="sm"
+        >
             <DialogTitle>Pin verification</DialogTitle>
             <DialogContent>
             <DialogContentText>
-                Check your email and insert the pin
+                Check your email and insert the pin number in the field below.
             </DialogContentText>
             <TextField
                 autoFocus
@@ -203,15 +215,20 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
             </DialogContent>
             <DialogActions>
                 <Button 
-                    variant="contained"
                     onClick={handleSubmitPin} 
                     color="primary" 
-                    autoFocus>
+                    autoFocus
+                >
                     Submit
+                </Button>
+                <Button 
+                    onClick={handleClose} 
+                    color="secondary" 
+                >
+                    Cancel
                 </Button>
             </DialogActions>
         </Dialog>
-        </>
     );
 };
 
