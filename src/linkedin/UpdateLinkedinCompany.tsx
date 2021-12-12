@@ -52,11 +52,11 @@ interface ResponseData {
 
 export const UpdateLinkedinCompany = ({ record }: { record: Company}) => {
     const classes = useStyles();
+    const dataProvider = useDataProvider();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [available, setAvailable] = useState(false);
     const [data, setData] = useState<ResponseData>();
-    const dataProvider = useDataProvider();
     const [checked, setChecked] = useState<string[]>([]);
     const [update, { loading: updating }] = useUpdate();
     const refresh = useRefresh();

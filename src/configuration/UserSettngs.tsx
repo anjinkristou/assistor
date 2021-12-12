@@ -19,6 +19,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { ControlCameraOutlined } from '@material-ui/icons';
+import PinVerificationDialog from '../linkedin/PinVerificationDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -168,69 +169,10 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
                 </Button>
             </ListItem>
         </List>
-        <PinDialog open={open} setOpen={setOpen} />
+        <PinVerificationDialog open={open} onClose={() => setOpen(false)} />
         </>
     );
 };
 
-
-const PinDialog = ({open, setOpen}: any) => {
-    const dataProvider = useDataProvider();
-    const notify = useNotify();
-    const handleClose = () => setOpen(false);
-    const [pin, setPin] = useState('');
-
-    const handleSubmitPin = async () => {
-        try {
-            await dataProvider.verifyLoginLinkedin(pin);
-            notify('Linkedin login successfull', 'info');
-            setOpen(false);
-        } catch (error: any) {
-            const message = error.message;
-            notify('Linkedin login failed', 'warning');
-        }
-    }
-
-    return (
-        <Dialog 
-            onClose={handleClose} 
-            open={open}
-            fullWidth={true}
-            maxWidth="sm"
-        >
-            <DialogTitle>Pin verification</DialogTitle>
-            <DialogContent>
-            <DialogContentText>
-                Check your email and insert the pin number in the field below.
-            </DialogContentText>
-            <TextField
-                autoFocus
-                margin="dense"
-                id="pin"
-                label="Pin"
-                type="string"
-                fullWidth
-                value={pin}
-                onChange={e => setPin(e.target.value)}
-            />
-            </DialogContent>
-            <DialogActions>
-                <Button 
-                    onClick={handleSubmitPin} 
-                    color="primary" 
-                    autoFocus
-                >
-                    Submit
-                </Button>
-                <Button 
-                    onClick={handleClose} 
-                    color="secondary" 
-                >
-                    Cancel
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-};
 
 export default UserSettings;

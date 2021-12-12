@@ -9,6 +9,7 @@ import Logo from './Logo';
 import NotificationButton from '../notifications/NotificationButton';
 import GlobalSearch from './GlobalSearch';
 import SwitchLanguage from './SwitchLanguage';
+import LinkedinLogin from './LinkedinLogin';
 
 const useStyles = makeStyles({
     title: {
@@ -39,6 +40,7 @@ const ConfigurationMenu = forwardRef<any, any>((props, ref) => {
 const CustomUserMenu = (props: any) => (
     <UserMenu {...props}>
         <ConfigurationMenu />
+        <LinkedinLogin />
         <SwitchLanguage />
     </UserMenu>
 );
