@@ -24,7 +24,7 @@ import { Country } from '../types';
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const Map = memo(({setTooltipContent}: any) => {
+const Map = memo(({setTooltipContent, countrySelected}: any) => {
     const { data, ids, loaded } = useGetList<Country>(
         'countries',
         { perPage: 1000, page: 1 }
@@ -48,14 +48,13 @@ const Map = memo(({setTooltipContent}: any) => {
     return (
         <ComposableMap
             data-tip=""
-            projection="geoAzimuthalEqualArea"
             projectionConfig={{
-                rotate: [-25.0, -50.0, 0],
-                scale: 750
+                rotate: [-10, 0, 0],
+                scale: 850
             }}
         >
             <ZoomableGroup
-                center={[0, 0]}
+                center={[25, 50]}
                 zoom={1}
             >
                 <Geographies geography={geoUrl}>
@@ -79,6 +78,7 @@ const Map = memo(({setTooltipContent}: any) => {
                                             onMouseLeave={() => {
                                                 setTooltipContent("");
                                             }}
+                                            onClick={() => countrySelected(cur ? data[cur] : null)}
                                         />
                                 );
                             })}
