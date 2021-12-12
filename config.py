@@ -1,5 +1,8 @@
 # -*- encoding: utf-8 -*-
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Config(object):
 
@@ -14,6 +17,14 @@ class Config(object):
         uri = uri.replace("postgres://", "postgresql://", 1)
     SQLALCHEMY_DATABASE_URI = uri
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    
+    MSEARCH_INDEX_NAME = 'msearch'
+    # simple,whoosh,elaticsearch, default is simple
+    MSEARCH_BACKEND = 'whoosh'
+    # table's primary key if you don't like to use id, or set __msearch_primary_key__ for special model
+    MSEARCH_PRIMARY_KEY = 'id'
+    # auto create or update index
+    MSEARCH_ENABLE = True
 
 class ProductionConfig(Config):
     DEBUG = False
