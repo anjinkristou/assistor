@@ -55,4 +55,7 @@ def create_app(config):
             module = import_module(f'app.{module_name}.routes')
             app.register_blueprint(module.blueprint)
             
+    
+        search.create_index()
+            
     return app

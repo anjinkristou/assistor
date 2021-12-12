@@ -9,5 +9,7 @@ flask-migrate
 flask-msearch
 gunicorn
 python-dotenv
-psycopg2
+# psycopg2
 selenium
+whoosh
+blinker

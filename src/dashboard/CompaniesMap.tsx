@@ -36,20 +36,6 @@ const Map = memo(({setTooltipContent, countrySelected}: any) => {
         .domain([0, max(ids.map(id => data[id].nb_companies)) as number])
         .range(["#e1f5fe", "#0277bd"]);
 
-    // const colorScale = scaleQuantile<string>()
-    //     .domain([0, max(ids.map(id => data[id].nb_companies))])
-    //     .range([
-    //         "#e1f5fe",
-    //         "#b3e5fc",
-    //         "#81d4fa",
-    //         "#4fc3f7",
-    //         "#29b6f6",
-    //         "#03a9f4",
-    //         "#039be5",
-    //         "#0288d1",
-    //         "#0277bd"
-    //     ]);
-
     return (
         <ComposableMap
             data-tip=""
