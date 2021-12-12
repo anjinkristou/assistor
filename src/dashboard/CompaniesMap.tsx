@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { 
     ComposableMap, 
     Geographies, 
@@ -108,6 +108,10 @@ const Map = memo(({setTooltipContent, countrySelected}: any) => {
 
 export const CompaniesMap = () => {
     const [content, setContent] = useState("");
+
+    useEffect(() => {
+        ReactTooltip.rebuild();
+    }, [content])
 
     return (
         <div>
