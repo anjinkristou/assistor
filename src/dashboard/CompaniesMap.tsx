@@ -6,8 +6,9 @@ import {
     ZoomableGroup,
     Marker,
     Annotation,
+    Graticule,
 } from 'react-simple-maps';
-import { scaleQuantile } from 'd3-scale';
+import { scaleLinear, scaleQuantile } from 'd3-scale';
 import { max } from 'd3-array';
 import { geoCentroid } from "d3-geo";
 import {
@@ -31,19 +32,23 @@ const Map = memo(({setTooltipContent, countrySelected}: any) => {
     );
     if (!loaded) return null;
 
-    const colorScale = scaleQuantile<string>()
-        .domain([0, max(ids.map(id => data[id].nb_companies))])
-        .range([
-            "#e1f5fe",
-            "#b3e5fc",
-            "#81d4fa",
-            "#4fc3f7",
-            "#29b6f6",
-            "#03a9f4",
-            "#039be5",
-            "#0288d1",
-            "#0277bd"
-        ]);
+    const colorScale = scaleLinear<string>()
+        .domain([0, max(ids.map(id => data[id].nb_companies)) as number])
+        .range(["#e1f5fe", "#0277bd"]);
+
+    // const colorScale = scaleQuantile<string>()
+    //     .domain([0, max(ids.map(id => data[id].nb_companies))])
+    //     .range([
+    //         "#e1f5fe",
+    //         "#b3e5fc",
+    //         "#81d4fa",
+    //         "#4fc3f7",
+    //         "#29b6f6",
+    //         "#03a9f4",
+    //         "#039be5",
+    //         "#0288d1",
+    //         "#0277bd"
+    //     ]);
 
     return (
         <ComposableMap
@@ -57,6 +62,8 @@ const Map = memo(({setTooltipContent, countrySelected}: any) => {
                 center={[25, 50]}
                 zoom={1}
             >
+
+                <Graticule stroke="#EAEAEC" />
                 <Geographies geography={geoUrl}>
                     {({ geographies }) => (
                         <>
@@ -113,9 +120,13 @@ export const CompaniesMap = () => {
         ReactTooltip.rebuild();
     }, [content])
 
+    const handleCountrySelected = (country?: Country) => {
+
+    }
+
     return (
         <div>
-            <Map setTooltipContent={setContent} />
+            <Map setTooltipContent={setContent} countrySelected={handleCountrySelected}/>
             <ReactTooltip>{content}</ReactTooltip>
         </div>
     );
