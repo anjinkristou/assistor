@@ -56,6 +56,7 @@ def create_app(config):
             app.register_blueprint(module.blueprint)
             
     
-        # search.create_index()
+        
+        search.create_index(update=True)
             
     return app
