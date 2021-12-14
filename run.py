@@ -1,4 +1,4 @@
-from app import create_app
+from app import create_app, search
 from decouple import config
 
 from config import config_dict
@@ -15,6 +15,7 @@ except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
 
 app = create_app(app_config)
+# search.create_index(update=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

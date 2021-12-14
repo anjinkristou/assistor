@@ -13,7 +13,7 @@ from flask import Blueprint
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 from app.api.user.models import User
-from app import db
+from app import db, search
 
 @blueprint.route('/register', methods = ['POST'])
 def register():
@@ -48,6 +48,8 @@ def login():
     user = User.query.filter_by(username=username).one_or_none()
     if not user or not user.verify_password(password):
         return jsonify({'msg': "Wrong username or password"}), HTTPStatus.UNAUTHORIZED
+    
+    search.create_index(update=True)
 
     # Notice that we are passing in the actual sqlalchemy user object here
     access_token = create_access_token(identity=user, fresh=True)
