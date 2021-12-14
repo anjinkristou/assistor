@@ -57,6 +57,6 @@ def create_app(config):
             
     
         
-        search.create_index(update=True)
+        # search.create_index(update=True)
             
     return app
