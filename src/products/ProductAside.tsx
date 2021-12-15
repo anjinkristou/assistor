@@ -2,11 +2,23 @@ import * as React from 'react';
 import {
     TextField,
     ReferenceField,
+    ReferenceArrayField,
+    Pagination,
+    Datagrid,
 } from 'react-admin';
-import { Box, Typography, Divider, Link } from '@material-ui/core';
+import { 
+    Box, 
+    Typography, 
+    Divider, 
+    Link, 
+    TableHead,
+} from '@material-ui/core';
 
 import { Product, Sale } from '../types';
 import { CollapsibleAside } from '../components/CollapsibleAside';
+import { CompanyGridList } from '../companies/CompanyGridList';
+import { CompanyAvatar } from '../companies/CompanyAvatar';
+import { LogoField } from '../companies/LogoField';
 
 export const ProductAside = ({
     record,
@@ -73,6 +85,30 @@ const AsideContent = ({
 
                 <Box mt={1}>
                     <TextField source="description" />
+                </Box>
+
+            </Box>
+
+            <Box mt={3}>
+                <Typography variant="subtitle2">Used by</Typography>
+                <Divider />
+
+                <Box mt={1}>
+                    <ReferenceArrayField
+                        record={record}
+                        reference="companies"
+                        source="used_by_companies"
+                        pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
+                        perPage={25}
+                    >
+                        <Datagrid
+                            rowClick="show"
+                            header={<TableHead />}
+                        >
+                            <LogoField />
+                            <TextField source="name" />
+                        </Datagrid>
+                    </ReferenceArrayField>
                 </Box>
 
             </Box>

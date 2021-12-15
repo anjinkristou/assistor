@@ -10,10 +10,12 @@ import {
     Identifier,
     useResourceContext,
 } from 'react-admin';
-import { TextField as TextInput, Button, Paper } from '@material-ui/core';
+import { TextField as TextInput, Button, Paper, IconButton } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import { StatusSelector } from './StatusSelector';
 
@@ -111,11 +113,15 @@ export const NewNote = ({
         <div className={classes.root}>
             <form onSubmit={handleSubmit}>
                 <div className={classes.buttonSwitcher}>
-                    <Button 
-                        variant={preview ? "contained": "outlined"} 
+                    <IconButton
                         color="primary"
                         onClick={()=> setPreview(!preview)}
-                    >Markdown</Button>
+                    >
+                    {   preview
+                        ? <VisibilityOffIcon />
+                        : <VisibilityIcon />
+                    }
+                    </IconButton>
                 </div>
                 <div className={classes.previewConatiner}>
                     <div className={classes.previewRaw}>

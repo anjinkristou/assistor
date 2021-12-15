@@ -34,6 +34,8 @@ import {
     Tab,
     Chip,
     Divider,
+    Grid,
+    Paper,
 } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link as RouterLink } from 'react-router-dom';
@@ -82,80 +84,45 @@ const ProductShowContent = () => {
                                 </ReferenceField>
                             </Box>
                         </Box>
-                        <Tabs
-                            value={value}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            onChange={handleChange}
-                            variant="scrollable"
-                            scrollButtons="auto"
-                        >
-                            <Tab
-                                label={
-                                    record.nb_notes > 1
-                                        ? `${record.nb_notes} Notes`
-                                        : `${record.nb_notes} Note`
-                                }
-                            />
-                            <Tab
-                                label={
-                                    record.nb_properties > 1
-                                        ? `${record.nb_properties} Properties`
-                                        : `${record.nb_properties} Property`
-                                }
-                            />
-                            <Tab
-                                label={
-                                    record.nb_used_by > 1
-                                        ? `Used by ${record.nb_used_by} Companies`
-                                        : `Used by ${record.nb_used_by} Company`
-                                }
-                            />
-                        </Tabs>
-                        <Divider />
-                        <TabPanel value={value} index={0}>
-                            <ReferenceManyField
-                                reference="productNotes"
-                                target="product_id"
-                            >
-                                 <NotesIterator reference="products" />
-                            </ReferenceManyField>
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <ReferenceManyField reference="productProperties" target="product_id" addLabel={false}>
-                                <Datagrid>
-                                    <ReferenceField
-                                            source="type_id"
-                                            reference="propertyTypes"
-                                            link={false}
-                                        >
-                                        <TextField source="name" />
-                                    </ReferenceField>
-                                    <TextField source="property_value" />
-                                    <ReferenceField
-                                            source="type_id"
-                                            reference="propertyTypes"
-                                            link={false}
-                                        >
-                                        <TextField source="unit" />
-                                    </ReferenceField>
-                                    <TextField source="condition" />
-    
-                                </Datagrid>
-                            </ReferenceManyField>
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            <Box mt={1}>
-                            <ReferenceArrayField
-                                reference="companies"
-                                source="used_by_companies"
-                                pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
-                                perPage={25}
-                            >
-                                <CompanyGridList />
-                            </ReferenceArrayField>
-                            </Box>
-                        </TabPanel>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} lg={6}>
+                                <Paper style={{padding: '0px 10px'}}>
+                                    <ReferenceManyField reference="productProperties" target="product_id" addLabel={false}>
+                                        <Datagrid>
+                                            <ReferenceField
+                                                    source="type_id"
+                                                    reference="propertyTypes"
+                                                    link={false}
+                                                >
+                                                <TextField source="name" />
+                                            </ReferenceField>
+                                            <TextField source="property_value" />
+                                            <ReferenceField
+                                                    source="type_id"
+                                                    reference="propertyTypes"
+                                                    link={false}
+                                                >
+                                                <TextField source="unit" />
+                                            </ReferenceField>
+                                            <TextField source="condition" />
+            
+                                        </Datagrid>
+                                    </ReferenceManyField>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} lg={6}>
+                                <Paper style={{padding: '0px 10px'}}>
+                                    <ReferenceManyField
+                                        reference="productNotes"
+                                        target="product_id"
+                                        pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
+                                        perPage={25}
+                                    >
+                                        <NotesIterator reference="products" />
+                                    </ReferenceManyField>
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </CardContent>
                 </Card>
             </Box>
