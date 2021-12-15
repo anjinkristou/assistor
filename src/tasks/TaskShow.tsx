@@ -41,9 +41,6 @@ export const TaskShow = (props: ShowProps) => (
 
 const TaskShowContent = () => {
     const { record, loaded } = useShowContext<Task>();
-    const [update] = useUpdate();
-    const refresh = useRefresh();
-    const notify = useNotify();
 
     if (!loaded || !record) return null;
 

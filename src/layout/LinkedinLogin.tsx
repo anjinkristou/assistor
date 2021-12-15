@@ -25,10 +25,10 @@ const LinkedinLogin = forwardRef(({onClick, ...props}: MenuItemProps, ref: any) 
     const login = async () => {
         try {
             await dataProvider.loginLinkedin();
-            notify('Linkedin login successfull', 'info');
+            notify('Linkedin login successfull', { type: 'info' });
         } catch (error: any) {
             const message = error.message;
-            notify('Linkedin login failed', 'warning');
+            notify('Linkedin login failed', { type: 'warning' });
             setOpen(true);
         }
     }

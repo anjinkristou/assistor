@@ -92,10 +92,10 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
                 data,
             );
 
-            notify('Linkedin account updated', 'info');
+            notify('Linkedin account updated', { type: 'info' });
         } catch (error: any) {
             const message = error.message;
-            notify('Linkedin account failed', 'warning');
+            notify('Linkedin account failed', { type: 'warning' });
             console.log(error);
         }
         
@@ -104,10 +104,10 @@ const LinkedinSettings = ({userId}: {userId: Identifier}) => {
     const handleLogin = async () => {
         try {
             await dataProvider.loginLinkedin();
-            notify('Linkedin login successfull', 'info');
+            notify('Linkedin login successfull', { type: 'info' });
         } catch (error: any) {
             const message = error.message;
-            notify('Linkedin login failed', 'warning');
+            notify('Linkedin login failed', { type: 'warning' });
             setOpen(true);
         }
     }

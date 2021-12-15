@@ -103,7 +103,7 @@ export const NewNote = ({
         create(resource, data, {
             onSuccess: () => {
                 setText('');
-                notify('Note added successfully', 'info');
+                notify('Note added successfully', { type: 'info' });
                 refresh();
             },
         });

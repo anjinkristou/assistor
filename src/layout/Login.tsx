@@ -98,7 +98,7 @@ const Login = () => {
             const response = await login(auth, location.state ? location.state.nextPathname : '/');
         } catch (error: any) {
             setLoading(false);
-            notify(error.message, 'warning');
+            notify(error.message, { type: 'warning' });
         }
     };
 

@@ -129,7 +129,7 @@ const RegisterForm = ({ redirectTo }:
             login({ username, password }, redirectTo)
         } catch (error: any) {
             setLoading(false);
-            notify(error.message, 'warning');
+            notify(error.message, { type: 'warning' });
         }
     };
 

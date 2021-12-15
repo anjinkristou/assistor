@@ -23,11 +23,11 @@ const PinVerificationDialog = ({open, onClose}: any) => {
     const handleSubmitPin = async () => {
         try {
             await dataProvider.verifyLoginLinkedin(pin);
-            notify('Linkedin login successfull', 'info');
+            notify('Linkedin login successfull', { type: 'info' });
             onClose();
         } catch (error: any) {
             const message = error.message;
-            notify('Linkedin login failed', 'warning');
+            notify('Linkedin login failed', { type: 'warning' });
         }
     }
 

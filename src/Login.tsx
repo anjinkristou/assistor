@@ -92,7 +92,7 @@ const Login = () => {
         login(auth, location.state ? location.state.nextPathname : '/').catch(
             (error: Error) => {
                 setLoading(false);
-                notify(typeof error.message, 'warning');
+                notify(typeof error.message, { type: 'warning' } );
             }
         );
     };
