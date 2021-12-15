@@ -15,12 +15,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LinkedinLogin = forwardRef(({onClick, ...props}: MenuItemProps, ref: any) => {
-    const locale = useLocale();
-    const setLocale = useSetLocale();
     const notify = useNotify();
     const classes = useStyles();
     const dataProvider = useDataProvider();
-    const [open, setOpen] = React.useState(false);
 
     const login = async () => {
         try {
@@ -29,7 +26,6 @@ const LinkedinLogin = forwardRef(({onClick, ...props}: MenuItemProps, ref: any) 
         } catch (error: any) {
             const message = error.message;
             notify('Linkedin login failed', { type: 'warning' });
-            setOpen(true);
         }
     }
 
@@ -48,7 +44,6 @@ const LinkedinLogin = forwardRef(({onClick, ...props}: MenuItemProps, ref: any) 
             </ListItemIcon>
             LinkedIn Login
         </MenuItem>
-        <PinVerificationDialog open={open} onClose={() => setOpen(false)} />
         </>
     );
 });

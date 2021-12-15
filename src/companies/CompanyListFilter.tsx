@@ -8,7 +8,10 @@ import {
     useGetIdentity,
     useGetList,
 } from 'react-admin';
-import { Box, Chip, Drawer, IconButton, ListItem } from '@material-ui/core';
+import { 
+    InputAdornment,
+    TextField, 
+} from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -16,6 +19,7 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PublicIcon from '@material-ui/icons/Public';
 import { makeStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
 
 import { sectors } from './sectors';
 import { relations } from './relations';
@@ -45,6 +49,8 @@ export const CompanyListFilter = () => {
         { page: 1, perPage: 500 },
         { field: 'name', order: 'ASC' }
     );
+
+    const [countrySearch, setCountrySearch] = useState('');
 
     const { data: countries, ids: countryIds } = useGetList<Country>(
         'countries',
@@ -91,10 +97,26 @@ export const CompanyListFilter = () => {
             </FilterList>
 
             <FilterList label="Countries" icon={<PublicIcon />}>
+                <TextField 
+                    value={countrySearch} 
+                    onChange={e => setCountrySearch(e.target.value)} 
+                    label="Search"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    style={{width: '100%'}}
+                />
                 <div className={classes.countryList}>
                     {countryIds &&
                         countries &&
-                        countryIds.map(id => (
+                        countryIds.filter(id => countries[id]
+                            .nicename
+                            .toLowerCase()
+                            .includes(countrySearch.toLowerCase())).map(id => (
                             <FilterListItem
                             key={id}
                             label={countries[id].nicename}

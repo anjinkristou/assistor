@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
     FilterList,
     FilterLiveSearch,
@@ -7,7 +7,8 @@ import {
     useGetIdentity,
     useGetList,
 } from 'react-admin';
-import { Box, Chip } from '@material-ui/core';
+import { Box, Chip, InputAdornment, TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import CategoryIcon from '@material-ui/icons/Category';
 
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 export const ProductListFilter = () => {
     const classes = useStyles();
+    const [familySearch, setFamilySearch] = useState('');
     const { identity } = useGetIdentity();
     const { data: familyData, ids: familyIds } = useGetList<ProductFamily>(
         'productFamilies',
@@ -39,10 +41,26 @@ export const ProductListFilter = () => {
             <FilterLiveSearch />
 
             <FilterList label="Families" icon={<CategoryIcon />}>
+                <TextField 
+                    value={familySearch} 
+                    onChange={e => setFamilySearch(e.target.value)} 
+                    label="Search"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    style={{width: '100%'}}
+                />
                 <div className={classes.familyList}>
                     {familyIds &&
                         familyData &&
-                        familyIds.map(id => (
+                        familyIds.filter(id => familyData[id]
+                            .name
+                            .toLowerCase()
+                            .includes(familySearch.toLowerCase())).map(id => (
                             <FilterListItem
                                 key={id}
                                 label={<Chip label={familyData[id].name} size="small"/>}
