@@ -31,7 +31,7 @@ const ProductFamilyEditContent = () => {
                     record={record}
                     redirect="show"
                     save={save}
-                    render={formProps => (
+                    render={(formProps: any) => (
                         <Card>
                             <CardContent>
                                 <Box>
@@ -58,24 +58,7 @@ const ProductFamilyEditContent = () => {
                                     </Box>
                                 </Box>
                             </CardContent>
-                            <Toolbar
-                                {...omit(formProps, [
-                                    // FIXME Not super user friendly way to remove warnings
-                                    'dirtyFields',
-                                    'dirtyFieldsSinceLastSubmit',
-                                    'dirtySinceLastSubmit',
-                                    'hasSubmitErrors',
-                                    'hasValidationErrors',
-                                    'initialValues',
-                                    'modifiedSinceLastSubmit',
-                                    'submitError',
-                                    'submitErrors',
-                                    'submitFailed',
-                                    'submitSucceeded',
-                                    'submitting',
-                                    'valid',
-                                ])}
-                            />
+                            <Toolbar {...formProps} />
                         </Card>
                     )}
                 />

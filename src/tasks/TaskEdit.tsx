@@ -12,6 +12,8 @@ import {
     useEditContext,
     DateInput,
     SelectInput,
+    FormWithRedirectProps,
+    FormWithRedirectRenderProps,
 } from 'react-admin';
 import { Card, CardContent, Divider, Box, Avatar } from '@material-ui/core';
 import omit from 'lodash/omit';
@@ -45,7 +47,7 @@ const TaskEditContent = () => {
                     record={record}
                     redirect="show"
                     save={save}
-                    render={formProps => (
+                    render={(formProps: any) => (
                         <Card>
                             <CardContent>
                                 <Box>
@@ -88,24 +90,7 @@ const TaskEditContent = () => {
                                     </Box>
                                 </Box>
                             </CardContent>
-                            <Toolbar
-                                {...omit(formProps, [
-                                    // FIXME Not super user friendly way to remove warnings
-                                    'dirtyFields',
-                                    'dirtyFieldsSinceLastSubmit',
-                                    'dirtySinceLastSubmit',
-                                    'hasSubmitErrors',
-                                    'hasValidationErrors',
-                                    'initialValues',
-                                    'modifiedSinceLastSubmit',
-                                    'submitError',
-                                    'submitErrors',
-                                    'submitFailed',
-                                    'submitSucceeded',
-                                    'submitting',
-                                    'valid',
-                                ])}
-                            />
+                            <Toolbar {...formProps}/>
                         </Card>
                     )}
                 />
