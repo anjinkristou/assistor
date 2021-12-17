@@ -26,9 +26,9 @@ class ResourceList(Resource):
         
         query = self.model_cls.query
         
-        query = query.filter_by(**filter)
-        
         query = self.post_query(query)
+        
+        query = query.filter_by(**filter)
         
         order =  getattr(self.model_cls, sort['field']).asc() if sort['order'] == 'ASC' else getattr(self.model_cls, sort['field']).desc()
         query = query.order_by(order)
