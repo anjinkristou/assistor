@@ -98,6 +98,9 @@ export interface Country extends Record {
     phonecode: number;
     url: string;
     nb_companies: number;
+    capital_name: string;
+    capital_longitude: string;
+    capital_latitude: string;
 }
 
 export interface Product extends Record {
