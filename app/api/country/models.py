@@ -13,6 +13,9 @@ class Country(db.Model, CRUDMixin):
     iso3 = db.Column(db.String(3))
     numcode = db.Column(db.Integer)
     phonecode = db.Column(db.Integer)
+    capital_name = db.Column(db.String(80))
+    capital_longitude = db.Column(db.String(80))
+    capital_latitude = db.Column(db.String(80))
     
     # Foreign keys
     
@@ -30,6 +33,9 @@ class Countrieschema(ma.SQLAlchemySchema):
     iso3 = ma.auto_field()
     numcode = ma.auto_field()
     phonecode = ma.auto_field()
+    capital_name = ma.auto_field()
+    capital_longitude = ma.auto_field()
+    capital_latitude = ma.auto_field()
     
     url = ma.Function(lambda obj: f"https://flagcdn.com/48x36/{obj.iso.lower()}.png")
     nb_companies = ma.Function(lambda obj: len(obj.companies))
