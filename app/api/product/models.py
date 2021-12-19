@@ -30,7 +30,7 @@ class Product(db.Model, CRUDMixin):
     # Relationships
     company = db.relationship('Company', backref='products')
     family = db.relationship('ProductFamily', backref='products')
-    catgeory = db.relationship('ProductCategory', backref='products')
+    category = db.relationship('ProductCategory', backref='products')
     used_by_companies = db.relationship('Company', secondary=company_products_table, backref='use_products')
 
 
