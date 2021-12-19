@@ -21,6 +21,8 @@ import { ProductAside } from './ProductAside';
 import { ProductImageField } from './ProductImageField';
 import { CreatePropertyType } from './CreatePropertyType';
 import { PropertyFormIterator } from './PropertyFormIterator';
+import { CreateProductCategory } from '../productCategories/CreateProductCategory';
+import { CreateProductFamily } from '../productFamilies/CreateProductFamily';
 
 const useStyles = makeStyles({
     inline: {
@@ -54,7 +56,10 @@ export const ProductEdit = (props: EditProps) => {
                         reference="companies"
                         fullWidth
                     >
-                        <AutocompleteInput optionText="name" />
+                        <AutocompleteInput 
+                            optionText="name"
+                            create={<CreateProductCategory />}
+                        />
                     </ReferenceInput>
                     <ReferenceInput 
                         label="Product Category" 
@@ -62,7 +67,10 @@ export const ProductEdit = (props: EditProps) => {
                         reference="productCategories"
                         fullWidth
                     >
-                        <AutocompleteInput optionText="name" />
+                        <AutocompleteInput 
+                            optionText="name"
+                            create={<CreateProductFamily />}
+                        />
                     </ReferenceInput>
                     <ReferenceInput 
                         label="Product Family" 
