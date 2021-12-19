@@ -13,13 +13,13 @@ import contacts from './contacts';
 import companies from './companies';
 import products from './products';
 import tasks from './tasks';
-import productfamiliess from './productFamilies';
 import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
 import themeReducer from './themeReducer';
 // import Login from './Login'
 import productFamilies from './productFamilies';
+import productCategories from './productCategories';
 import englishMessages from './i18n/en';
 
 // FIXME MUI bug https://github.com/mui-org/material-ui/issues/13394
@@ -64,6 +64,7 @@ const App = () => (
         <Resource name="productNotes" />
         <Resource name="dealNotes" />
         <Resource name="productFamilies" {...productFamilies} />
+        <Resource name="productCategories" {...productCategories} />
         <Resource name="tasks" {...tasks} />
         <Resource name="sales" list={ListGuesser} />
         <Resource name="tags" list={ListGuesser} />

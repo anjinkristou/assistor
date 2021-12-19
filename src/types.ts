@@ -125,13 +125,15 @@ export interface ProductFamily extends Record {
     nb_products: number;
 }
 
-export interface FamilyCategory extends Record {
+export interface ProductCategory extends Record {
     name: string;
     website: string;
     image: string;
+    category: string;
     description: string;
-    nb_families: number;
+    nb_products: number;
 }
+
 
 export interface ProductPrperty extends Record {
     product_id: Identifier;

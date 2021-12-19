@@ -22,6 +22,7 @@ import clsx from 'clsx';
 import { CreatePropertyType } from './CreatePropertyType';
 import { PropertyFormIterator } from './PropertyFormIterator';
 import { CreateProductFamily } from '../productFamilies/CreateProductFamily';
+import { CreateProductCategory } from '../productCategories/CreateProductCategory';
 
 
 const useStyles = makeStyles(theme => ({
@@ -57,6 +58,17 @@ export const ProductCreate = (props: CreateProps) => {
                         fullWidth
                     >
                         <AutocompleteInput optionText="name" />
+                    </ReferenceInput>
+                    <ReferenceInput 
+                        label="Product Category" 
+                        source="category_id" 
+                        reference="productCategories"
+                        fullWidth
+                    >
+                        <AutocompleteInput 
+                            optionText="name" 
+                            create={<CreateProductCategory />}
+                        />
                     </ReferenceInput>
                     <ReferenceInput 
                         label="Product Family" 

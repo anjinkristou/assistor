@@ -57,6 +57,14 @@ export const ProductEdit = (props: EditProps) => {
                         <AutocompleteInput optionText="name" />
                     </ReferenceInput>
                     <ReferenceInput 
+                        label="Product Category" 
+                        source="category_id" 
+                        reference="productCategories"
+                        fullWidth
+                    >
+                        <AutocompleteInput optionText="name" />
+                    </ReferenceInput>
+                    <ReferenceInput 
                         label="Product Family" 
                         source="family_id" 
                         reference="productFamilies"

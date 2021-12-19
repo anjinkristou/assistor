@@ -2,6 +2,7 @@ from app import db, ma
 from app.mixins import CRUDMixin
 from app.api.company.models import Company
 from app.api.product_family.models import ProductFamily
+from app.api.product_category.models import ProductCategory
 
 
 company_products_table = db.Table('company_products',
@@ -12,7 +13,7 @@ company_products_table = db.Table('company_products',
 
 class Product(db.Model, CRUDMixin):
     __tablename__ = 'products'
-    __searchable__ = ['model', 'code', 'description', 'company.name', 'family.name']
+    __searchable__ = ['model', 'code', 'description', 'company.name', 'family.name', 'family.category']
 
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String)
@@ -24,10 +25,12 @@ class Product(db.Model, CRUDMixin):
     # Foreign keys
     company_id = db.Column(db.Integer, db.ForeignKey(Company.id))
     family_id = db.Column(db.Integer, db.ForeignKey(ProductFamily.id))
+    category_id = db.Column(db.Integer, db.ForeignKey(ProductCategory.id))
 
     # Relationships
     company = db.relationship('Company', backref='products')
     family = db.relationship('ProductFamily', backref='products')
+    catgeory = db.relationship('ProductCategory', backref='products')
     used_by_companies = db.relationship('Company', secondary=company_products_table, backref='use_products')
 
 
