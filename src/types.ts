@@ -106,6 +106,7 @@ export interface Country extends Record {
 export interface Product extends Record {
     company_id: Identifier;
     family_id: Identifier;
+    category_id: Identifier;
     model: string;
     code: string;
     website: string;

@@ -12,7 +12,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import CategoryIcon from '@material-ui/icons/Category';
 
-import { ProductFamily } from '../types';
+import { ProductCategory, ProductFamily } from '../types';
 import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
 import { productFamilyCategories } from '../productFamilies/productFamilyCategories';
 
@@ -33,6 +33,11 @@ export const ProductListFilter = () => {
     const { identity } = useGetIdentity();
     const { data: familyData, ids: familyIds } = useGetList<ProductFamily>(
         'productFamilies',
+        { page: 1, perPage: 1000 },
+        { field: 'name', order: 'ASC' }
+    );
+    const { data: categoryData, ids: categoryIds } = useGetList<ProductCategory>(
+        'productCategories',
         { page: 1, perPage: 1000 },
         { field: 'name', order: 'ASC' }
     );
@@ -57,10 +62,12 @@ export const ProductListFilter = () => {
                 <div className={classes.familyList}>
                     {familyIds &&
                         familyData &&
-                        familyIds.filter(id => familyData[id]
+                        familyIds
+                        .filter(id => familyData[id]
                             .name
                             .toLowerCase()
-                            .includes(familySearch.toLowerCase())).map(id => (
+                            .includes(familySearch.toLowerCase()))
+                        .map(id => (
                             <FilterListItem
                                 key={id}
                                 label={<Chip label={familyData[id].name} size="small"/>}
@@ -72,11 +79,13 @@ export const ProductListFilter = () => {
 
             <FilterList label="Categories" icon={<CategoryIcon />}>
                 <div className={classes.categoryList}>
-                    {productFamilyCategories.map(category => (
+                    {categoryIds &&
+                        categoryData &&
+                        categoryIds.map(id => (
                             <FilterListItem
-                                key={category.id}
-                                label={category.name}
-                                value={{ 'family.category': category.id }}
+                                key={id}
+                                label={<Chip label={categoryData[id].name} size="small"/>}
+                                value={{ category_id: id }}
                             />
                     ))}
                 </div>

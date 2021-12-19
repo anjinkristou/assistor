@@ -48,6 +48,7 @@ class ProductSchema(ma.SQLAlchemySchema):
     
     company_id = ma.auto_field()
     family_id = ma.auto_field()
+    category_id = ma.auto_field()
     
     # properties = ma.List(ma.Nested(ProductPropertySchema))
     # properties = ma.Function(lambda obj: [property.id for property in obj.properties])
