@@ -7,7 +7,7 @@ import {
     useGetIdentity,
     useGetList,
 } from 'react-admin';
-import { Box, Chip, InputAdornment, TextField } from '@material-ui/core';
+import { Box, Chip, InputAdornment, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import CategoryIcon from '@material-ui/icons/Category';
@@ -15,6 +15,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 import { ProductCategory, ProductFamily } from '../types';
 import { CollapsibleListFilter } from '../components/CollapsibleListFilter';
 import { productFamilyCategories } from '../productFamilies/productFamilyCategories';
+import ProductCategoryPie from '../productCategories/ProductCategoryPie';
 
 const useStyles = makeStyles(theme => ({
     familyList: {
@@ -90,6 +91,10 @@ export const ProductListFilter = () => {
                     ))}
                 </div>
             </FilterList>
+            <Box marginTop={1}>
+                <Typography>Category ratio</Typography>
+                <ProductCategoryPie width='100%' height={200}/>
+            </Box>
         </CollapsibleListFilter>
     );
 };
