@@ -7,6 +7,7 @@ import {
     FilterListItem,
     useGetIdentity,
     useGetList,
+    LinearProgress,
 } from 'react-admin';
 import { 
     InputAdornment,
@@ -44,15 +45,16 @@ const useStyles = makeStyles(theme => ({
 export const CompanyListFilter = () => {
     const classes = useStyles();
     const { identity } = useGetIdentity();
-    const { data: tags, ids: tagIds } = useGetList<Tag>(
+    const [countrySearch, setCountrySearch] = useState('');
+
+    const { data: tags, ids: tagIds, loading: tags_loading } = useGetList<Tag>(
         'tags',
         { page: 1, perPage: 500 },
         { field: 'name', order: 'ASC' }
     );
 
-    const [countrySearch, setCountrySearch] = useState('');
 
-    const { data: countries, ids: countryIds } = useGetList<Country>(
+    const { data: countries, ids: countryIds, loading: country_loading } = useGetList<Country>(
         'countries',
         { page: 1, perPage: 500 },
         { field: 'name', order: 'ASC' }
@@ -74,15 +76,16 @@ export const CompanyListFilter = () => {
 
             <FilterList label="Tags" icon={<LocalOfferIcon />}>
                 <div className={classes.tagList}>
-                    {tagIds &&
-                        tags &&
-                        tagIds.map(id => (
+                    {tags_loading
+                        ? <LinearProgress />
+                        : tagIds.map(id => (
                             <FilterListItem
                                 key={id}
                                 label={<TagChip record={tags[id]}/>}
                                 value={{ tags: [id] }}
                             />
-                    ))}
+                        ))
+                    }
                 </div>
             </FilterList>
 
@@ -111,9 +114,9 @@ export const CompanyListFilter = () => {
                     style={{width: '100%'}}
                 />
                 <div className={classes.countryList}>
-                    {countryIds &&
-                        countries &&
-                        countryIds.filter(id => countries[id]
+                    {country_loading
+                        ? <LinearProgress />
+                        : countryIds.filter(id => countries[id]
                             .nicename
                             .toLowerCase()
                             .includes(countrySearch.toLowerCase())).map(id => (
@@ -122,7 +125,8 @@ export const CompanyListFilter = () => {
                             label={countries[id].nicename}
                             value={{ country_id: id }}
                             />
-                    ))}
+                        ))
+                    }
                 </div>
             </FilterList>
 

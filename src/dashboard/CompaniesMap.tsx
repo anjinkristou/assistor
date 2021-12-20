@@ -17,6 +17,7 @@ import {
     FilterListItem,
     useGetIdentity,
     useGetList,
+    Loading,
 } from 'react-admin';
 import ReactTooltip from "react-tooltip";
 
@@ -26,17 +27,17 @@ const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
 const Map = memo(({setTooltipContent, countrySelected}: any) => {
-    const { data: country_data, ids: country_ids, loaded: country_loaded } = useGetList<Country>(
+    const { data: country_data, ids: country_ids, loading: country_loading } = useGetList<Country>(
         'countries',
         { perPage: 1000, page: 1 }
     );
-    const { data: company_data, ids: company_ids, loaded: company_loaded } = useGetList<Company>(
+    const { data: company_data, ids: company_ids, loading: company_loading } = useGetList<Company>(
         'companies',
         { perPage: 1000, page: 1 },
         undefined,
         { relation: 'Distributor' }
     );
-    if (!country_loaded || !company_loaded) return null;
+    if (country_loading || company_loading)  { return <Loading />; }
 
     const colorScale = scaleLinear<string>()
         .domain([0, max(country_ids.map(id => country_data[id].nb_companies)) as number])
