@@ -123,11 +123,7 @@ const getIdentity = async () => {
 
  const checkError = async ({ status }: any) => {
     if (status === 401 || status === 403 || status === 422) {
-        try{
-            refreshToken();
-        } catch (error: any) {
-            return Promise.reject();
-        }
+        return Promise.reject();
     }
     return Promise.resolve();
 };
