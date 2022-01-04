@@ -40,8 +40,13 @@ def create_app(config):
     app.config.from_object(config)
     
     @app.route("/", defaults={'path':''})
-    def serve(path):
+    def serve_root(path):
         return send_from_directory(app.static_folder,'index.html')
+    
+    @app.route("/offline", defaults={'path':''})
+    def serve_offline(path):
+        return send_from_directory(app.static_folder,'offline.html')
+    
 
     # Initialize Plugins
     init_plugins(app)
