@@ -17,6 +17,7 @@ import deals from './deals';
 import { Dashboard } from './dashboard/Dashboard';
 import { customRoutes } from './customRoutes';
 import themeReducer from './themeReducer';
+import pushReducer from './pushReducer';
 // import Login from './Login'
 import productFamilies from './productFamilies';
 import productCategories from './productCategories';
@@ -41,35 +42,50 @@ const i18nProvider = polyglotI18nProvider(locale => {
     return englishMessages;
 }, 'en');
 
-const App = () => (
-    <Admin
-        customRoutes={customRoutes}
-        dataProvider={dataProvider}
-        authProvider={authProvider}
-        loginPage={Login}
-        layout={Layout}
-        dashboard={Dashboard}
-        customReducers={{ theme: themeReducer }}
-        i18nProvider={i18nProvider}
-        disableTelemetry
-    >
-        <Resource name="deals" {...deals} />
-        <Resource name="contacts" {...contacts} />
-        <Resource name="companies" {...companies} />
-        <Resource name="products" {...products} />
-        <Resource name="productProperties" />
-        <Resource name="propertyTypes" />
-        <Resource name="contactNotes" />
-        <Resource name="companyNotes" />
-        <Resource name="productNotes" />
-        <Resource name="dealNotes" />
-        <Resource name="productFamilies" {...productFamilies} />
-        <Resource name="productCategories" {...productCategories} />
-        <Resource name="tasks" {...tasks} />
-        <Resource name="sales" list={ListGuesser} />
-        <Resource name="tags" list={ListGuesser} />
-        <Resource name="countries" list={ListGuesser} />
-    </Admin>
-);
+const App = () => {
+
+    // if ("serviceWorker" in navigator && navigator.serviceWorker) {
+    //     const serviceWorker = navigator.serviceWorker.controller;
+
+    //     if (serviceWorker && serviceWorker.state === "activated") {
+    //       yield call(serviceWorker.postMessage.bind(serviceWorker), {
+    //         payload: action.payload.params,
+    //         type: "changeRoute"
+    //       });
+    //     }
+    //   }
+
+    return (
+        <Admin
+            customRoutes={customRoutes}
+            dataProvider={dataProvider}
+            authProvider={authProvider}
+            loginPage={Login}
+            layout={Layout}
+            dashboard={Dashboard}
+            customReducers={{ theme: themeReducer,
+                              push: pushReducer }}
+            i18nProvider={i18nProvider}
+            disableTelemetry
+        >
+            <Resource name="deals" {...deals} />
+            <Resource name="contacts" {...contacts} />
+            <Resource name="companies" {...companies} />
+            <Resource name="products" {...products} />
+            <Resource name="productProperties" />
+            <Resource name="propertyTypes" />
+            <Resource name="contactNotes" />
+            <Resource name="companyNotes" />
+            <Resource name="productNotes" />
+            <Resource name="dealNotes" />
+            <Resource name="productFamilies" {...productFamilies} />
+            <Resource name="productCategories" {...productCategories} />
+            <Resource name="tasks" {...tasks} />
+            <Resource name="sales" list={ListGuesser} />
+            <Resource name="tags" list={ListGuesser} />
+            <Resource name="countries" list={ListGuesser} />
+        </Admin>
+    )
+    };
 
 export default App;

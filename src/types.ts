@@ -2,8 +2,13 @@ import { ReduxState, Record, Identifier } from 'react-admin';
 
 export type ThemeName = 'light' | 'dark';
 
+export type PushNotification = {
+    registration: object | null;
+}
+
 export interface AppState extends ReduxState {
     theme: ThemeName;
+    push: PushNotification;
 }
 
 export interface Sale extends Record {
