@@ -39,12 +39,12 @@ def create_app(config):
     app = Flask(__name__, instance_relative_config=False, static_url_path='', static_folder='../build')
     app.config.from_object(config)
     
-    @app.route("/", defaults={'path':''})
-    def serve_root(path):
+    @app.route("/")
+    def serve_root():
         return send_from_directory(app.static_folder,'index.html')
     
-    @app.route("/offline", defaults={'path':''})
-    def serve_offline(path):
+    @app.route("/offline")
+    def serve_offline():
         return send_from_directory(app.static_folder,'offline.html')
     
 

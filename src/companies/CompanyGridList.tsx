@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
         width:  '100%',
         gap: '5px',
+        [theme.breakpoints.down('xs')]:{
+            justifyContent: 'space-around',
+        }
     },
     paper: {
         height: 200,

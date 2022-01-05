@@ -33,9 +33,8 @@ export default function register(): Promise<ServiceWorkerRegistration> {
         if (isLocalhost) {
           // This is running on localhost. Lets check if a service worker still exists or not.
           checkValidServiceWorker(swUrl)
-          .then((registration: any) => {
-            resolve(registration);
-          });
+          .then((registration: any) => resolve(registration))
+          .catch((error: any) => reject(error));
 
           // Add some additional logging to localhost, pointing developers to the
           // service worker/PWA documentation.
@@ -48,9 +47,8 @@ export default function register(): Promise<ServiceWorkerRegistration> {
         } else {
           // Is not local host. Just register service worker
           registerValidSW(swUrl)
-          .then((registration: any) => {
-            resolve(registration);
-          });
+          .then((registration: any) => resolve(registration))
+          .catch((error: any) => reject(error));
         }
       });
     }
@@ -80,7 +78,7 @@ function registerValidSW(swUrl: string) {
           };
         }
       };
-      return registration;
+      return Promise.resolve(registration);
     })
     .catch(error => {
       console.error("Error during service worker registration:", error);
