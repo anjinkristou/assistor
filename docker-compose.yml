@@ -1,0 +1,27 @@
+version: "3"
+services:
+  web:
+    build: .
+    # command: flask db upgrade
+    environment:
+      DATABASE_URL: postgresql://kristou:kristou@db:5432/assistor
+      SECRET_KEY: S#perS3crBt_107
+    ports:
+      - 8080:5000
+    # restart: always
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: kristou
+      POSTGRES_PASSWORD: kristou
+      POSTGRES_DB: assistor
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+volumes:
+  database-data: {}
+
+
+# docker-compose up --build -d
