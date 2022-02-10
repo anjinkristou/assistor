@@ -11,9 +11,11 @@ from http import HTTPStatus
 
 from flask import Blueprint
 
-blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 from app.api.user.models import User
 from app import db, search
+
+endpoint = "auth"
+blueprint = Blueprint(f'{endpoint}', __name__, url_prefix=f'/{endpoint}')
 
 @blueprint.route('/register', methods = ['POST'])
 def register():

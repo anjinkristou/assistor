@@ -6,9 +6,11 @@ from flask_jwt_extended import jwt_required
 from http import HTTPStatus
 from .connector.linkedin import Linkedin
 
-blueprint = Blueprint('linkedin', __name__, url_prefix='/linkedin')
 from app.api.company.models import Company
 from app.api.user.models import User
+
+endpoint = "linkedin"
+blueprint = Blueprint(f'{endpoint}', __name__, url_prefix=f'/{endpoint}')
 
 linkedin_connectors = []
 
