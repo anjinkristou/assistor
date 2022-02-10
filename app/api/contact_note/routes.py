@@ -38,9 +38,3 @@ api.add_resource(ContactNoteList, '/list')
 api.add_resource(ContactNoteItem, '/item')
 api.add_resource(ContactNoteItems, '/items')
 api.add_resource(ContactNoteRefs, '/refs')
-
-def register_api(api, prefix="/"):
-    api.add_resource(ContactNoteList, f'{prefix}contactNotes/list', endpoint = 'contactNotes')
-    api.add_resource(ContactNoteItem, f'{prefix}contactNotes/item', endpoint = 'contactNote')
-    api.add_resource(ContactNoteItems, f'{prefix}contactNotes/items')
-    api.add_resource(ContactNoteRefs, f'{prefix}contactNotes/refs')

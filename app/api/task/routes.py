@@ -38,10 +38,3 @@ api.add_resource(TaskList, '/list')
 api.add_resource(TaskItem, '/item')
 api.add_resource(TaskItems, '/items')
 api.add_resource(TaskRefs, '/refs')
-    
-
-def register_api(api, prefix="/"):
-    api.add_resource(TaskList, f'{prefix}tasks/list', endpoint = 'tasks')
-    api.add_resource(TaskItem, f'{prefix}tasks/item', endpoint = 'task')
-    api.add_resource(TaskItems, f'{prefix}tasks/items')
-    api.add_resource(TaskRefs, f'{prefix}tasks/refs')

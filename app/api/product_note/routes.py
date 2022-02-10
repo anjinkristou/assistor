@@ -38,10 +38,3 @@ api.add_resource(ProductNoteList, '/list')
 api.add_resource(ProductNoteItem, '/item')
 api.add_resource(ProductNoteItems, '/items')
 api.add_resource(ProductNoteRefs, '/refs')
-    
-
-def register_api(api, prefix="/"):
-    api.add_resource(ProductNoteList, f'{prefix}productNotes/list', endpoint = 'productNotes')
-    api.add_resource(ProductNoteItem, f'{prefix}productNotes/item', endpoint = 'productNote')
-    api.add_resource(ProductNoteItems, f'{prefix}productNotes/items')
-    api.add_resource(ProductNoteRefs, f'{prefix}productNotes/refs')

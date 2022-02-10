@@ -90,9 +90,3 @@ api.add_resource(CompanyList, '/list')
 api.add_resource(CompanyItem, '/item')
 api.add_resource(CompanyItems, '/items')
 api.add_resource(CompanyRefs, '/refs')
-
-def register_api(api, prefix="/"):
-    api.add_resource(CompanyList, f'{prefix}companies/list', endpoint = 'companies')
-    api.add_resource(CompanyItem, f'{prefix}companies/item', endpoint = 'company')
-    api.add_resource(CompanyItems, f'{prefix}companies/items')
-    api.add_resource(CompanyRefs, f'{prefix}companies/refs')

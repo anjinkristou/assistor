@@ -38,10 +38,3 @@ api.add_resource(PropertyTypeList, '/list')
 api.add_resource(PropertyTypeItem, '/item')
 api.add_resource(PropertyTypeItems, '/items')
 api.add_resource(PropertyTypeRefs, '/refs')
-    
-
-def register_api(api, prefix="/"):
-    api.add_resource(PropertyTypeList, f'{prefix}propertyTypes/list', endpoint = 'propertyTypes')
-    api.add_resource(PropertyTypeItem, f'{prefix}propertyTypes/item', endpoint = 'propertyType')
-    api.add_resource(PropertyTypeItems, f'{prefix}propertyTypes/items')
-    api.add_resource(PropertyTypeRefs, f'{prefix}propertyTypes/refs')

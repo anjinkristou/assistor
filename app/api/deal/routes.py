@@ -38,9 +38,3 @@ api.add_resource(DealList, '/list')
 api.add_resource(DealItem, '/item')
 api.add_resource(DealItems, '/items')
 api.add_resource(DealRefs, '/refs')
-
-def register_api(api, prefix="/"):
-    api.add_resource(DealList, f'{prefix}deals/list', endpoint = 'deals')
-    api.add_resource(DealItem, f'{prefix}deals/item', endpoint = 'deal')
-    api.add_resource(DealItems, f'{prefix}deals/items')
-    api.add_resource(DealRefs, f'{prefix}deals/refs')

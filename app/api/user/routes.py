@@ -38,9 +38,3 @@ api.add_resource(UserList, '/list')
 api.add_resource(UserItem, '/item')
 api.add_resource(UserItems, '/items')
 api.add_resource(UserRefs, '/refs')
-
-def register_api(api, prefix="/"):
-    api.add_resource(UserList, f'{prefix}sales/list', endpoint = 'users')
-    api.add_resource(UserItem, f'{prefix}sales/item', endpoint = 'user')
-    api.add_resource(UserItems, f'{prefix}sales/items')
-    api.add_resource(UserRefs, f'{prefix}sales/refs')

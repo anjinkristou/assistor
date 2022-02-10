@@ -38,10 +38,3 @@ api.add_resource(TagList, '/list')
 api.add_resource(TagItem, '/item')
 api.add_resource(TagItems, '/items')
 api.add_resource(TagRefs, '/refs')
-    
-
-def register_api(api, prefix="/"):
-    api.add_resource(TagList, f'{prefix}tags/list', endpoint = 'tags')
-    api.add_resource(TagItem, f'{prefix}tags/item', endpoint = 'tag')
-    api.add_resource(TagItems, f'{prefix}tags/items')
-    api.add_resource(TagRefs, f'{prefix}tags/refs')

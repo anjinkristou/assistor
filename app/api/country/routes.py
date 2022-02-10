@@ -38,10 +38,3 @@ api.add_resource(CountryList, '/list')
 api.add_resource(CountryItem, '/item')
 api.add_resource(CountryItems, '/items')
 api.add_resource(CountryRefs, '/refs')
-    
-
-def register_api(api, prefix="/"):
-    api.add_resource(CountryList, f'{prefix}countries/list', endpoint = 'countries')
-    api.add_resource(CountryItem, f'{prefix}countries/item', endpoint = 'country')
-    api.add_resource(CountryItems, f'{prefix}countries/items')
-    api.add_resource(CountryRefs, f'{prefix}countries/refs')

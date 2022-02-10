@@ -73,9 +73,3 @@ api.add_resource(ContactList, '/list')
 api.add_resource(ContactItem, '/item')
 api.add_resource(ContactItems, '/items')
 api.add_resource(ContactRefs, '/refs')
-
-def register_api(api, prefix="/"):
-    api.add_resource(ContactList, f'{prefix}contacts/list', endpoint = 'contacts')
-    api.add_resource(ContactItem, f'{prefix}contacts/item', endpoint = 'contact')
-    api.add_resource(ContactItems, f'{prefix}contacts/items')
-    api.add_resource(ContactRefs, f'{prefix}contacts/refs')

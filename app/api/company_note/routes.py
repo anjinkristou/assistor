@@ -39,9 +39,3 @@ api.add_resource(CompanyNoteList, '/list')
 api.add_resource(CompanyNoteItem, '/item')
 api.add_resource(CompanyNoteItems, '/items')
 api.add_resource(CompanyNoteRefs, '/refs')
-
-def register_api(api, prefix="/"):
-    api.add_resource(CompanyNoteList, f'{prefix}companyNotes/list', endpoint = 'companyNotes')
-    api.add_resource(CompanyNoteItem, f'{prefix}companyNotes/item', endpoint = 'companyNote')
-    api.add_resource(CompanyNoteItems, f'{prefix}companyNotes/items')
-    api.add_resource(CompanyNoteRefs, f'{prefix}companyNotes/refs')
