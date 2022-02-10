@@ -23,15 +23,17 @@ def init_plugins(app):
     migrate.init_app(app, db)
     jwt.init_app(app)
     search.init_app(app)
+    search.create_index(update=True)
     
-    api_folder = './app/api'
-    directory_contents = [ name for name in os.listdir(api_folder) if not name.startswith('__') and os.path.isdir(os.path.join(api_folder, name)) ]
-    for module_name in directory_contents:
-        module = import_module(f'app.api.{module_name}.routes')
-        module.register_api(resutful_api)
+    with app.app_context():
+        api_folder = './app/api'
+        directory_contents = [ name for name in os.listdir(api_folder) if not name.startswith('__') and os.path.isdir(os.path.join(api_folder, name)) ]
+        for module_name in directory_contents:
+            module = import_module(f'app.api.{module_name}.routes')
+            app.register_blueprint(module.blueprint)
     
     
-    resutful_api.init_app(app)
+    # resutful_api.init_app(app)
     
 
 def create_app(config):

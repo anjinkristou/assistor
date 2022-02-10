@@ -49,7 +49,7 @@ def login():
     if not user or not user.verify_password(password):
         return jsonify({'msg': "Wrong username or password"}), HTTPStatus.UNAUTHORIZED
     
-    search.create_index(update=True)
+    # search.create_index(update=True)
 
     # Notice that we are passing in the actual sqlalchemy user object here
     access_token = create_access_token(identity=user, fresh=True)

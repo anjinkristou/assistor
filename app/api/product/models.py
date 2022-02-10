@@ -13,7 +13,7 @@ company_products_table = db.Table('company_products',
 
 class Product(db.Model, CRUDMixin):
     __tablename__ = 'products'
-    __searchable__ = ['model', 'code', 'description', 'company.name', 'family.name', 'family.category']
+    __searchable__ = ['model', 'code', 'description']
 
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String)

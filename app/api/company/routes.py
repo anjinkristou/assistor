@@ -1,10 +1,16 @@
 from flask import request, jsonify
+from flask import Blueprint
+from flask_restful import Api
 from flask_jwt_extended import jwt_required
 import json
 
 from .models import Company, company_schema, companies_schema, Tag
 from app.api.product.models import Product
 from app.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
+
+endpoint = "companies"
+blueprint = Blueprint(f'{endpoint}', __name__, url_prefix=f'/{endpoint}')
+api = Api(blueprint)
 
 class CompanyList(ResourceList):
     model_cls = Company
@@ -80,6 +86,10 @@ class CompanyRefs(ResourceRefs):
     model_schema = company_schema
     models_schema = companies_schema
     
+api.add_resource(CompanyList, '/list')
+api.add_resource(CompanyItem, '/item')
+api.add_resource(CompanyItems, '/items')
+api.add_resource(CompanyRefs, '/refs')
 
 def register_api(api, prefix="/"):
     api.add_resource(CompanyList, f'{prefix}companies/list', endpoint = 'companies')

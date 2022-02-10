@@ -1,6 +1,7 @@
 {
   "short_name": "Assistor",
-  "name": "Assist Hokuyo employees to manage customers and projects",
+  "name": "Kris2Assistor",
+  "description": "Assist Hokuyo employees to manage customers and projects",
   "icons": [
     {
       "src": "img/icons/favicon.ico",

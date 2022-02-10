@@ -91,6 +91,7 @@ export const CompanyCreate = (props: CreateProps) => {
                 <ReferenceInput
                     source="country_id"
                     reference="countries"
+                    sort={{field: 'name', order: 'ASC'}}
                 >
                     <AutocompleteInput optionText="nicename" />
                 </ReferenceInput>

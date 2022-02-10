@@ -1,9 +1,15 @@
 from flask import request, jsonify
+from flask import Blueprint
+from flask_restful import Api
 from flask_jwt_extended import jwt_required
 import json
 
 from .models import Contact, contact_schema, contacts_schema, Tag
 from app.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
+
+endpoint = "contacts"
+blueprint = Blueprint(f'{endpoint}', __name__, url_prefix=f'/{endpoint}')
+api = Api(blueprint)
 
 class ContactList(ResourceList):
     model_cls = Contact
@@ -63,6 +69,10 @@ class ContactRefs(ResourceRefs):
     model_schema = contact_schema
     models_schema = contacts_schema
     
+api.add_resource(ContactList, '/list')
+api.add_resource(ContactItem, '/item')
+api.add_resource(ContactItems, '/items')
+api.add_resource(ContactRefs, '/refs')
 
 def register_api(api, prefix="/"):
     api.add_resource(ContactList, f'{prefix}contacts/list', endpoint = 'contacts')

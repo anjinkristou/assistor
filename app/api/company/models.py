@@ -41,8 +41,7 @@ class Company(db.Model, CRUDMixin):
     country = db.relationship('Country', backref="companies")
     distributor = db.relationship('Company', backref="customers", remote_side=[id])
     tags = db.relationship('Tag', secondary=company_tags_table, backref='companies')
-    
-
+        
 class CompanySchema(ma.SQLAlchemySchema):
     class Meta:
         model = Company

@@ -1,9 +1,15 @@
 from flask import request, jsonify
+from flask import Blueprint
+from flask_restful import Api
 from flask_jwt_extended import jwt_required
 import json
 
 from .models import Deal, deal_schema, deals_schema
 from app.masters import ResourceList, ResourceItem, ResourceItems, ResourceRefs
+
+endpoint = "deals"
+blueprint = Blueprint(f'{endpoint}', __name__, url_prefix=f'/{endpoint}')
+api = Api(blueprint)
 
 class DealList(ResourceList):
     model_cls = Deal
@@ -28,6 +34,10 @@ class DealRefs(ResourceRefs):
     model_schema = deal_schema
     models_schema = deals_schema
     
+api.add_resource(DealList, '/list')
+api.add_resource(DealItem, '/item')
+api.add_resource(DealItems, '/items')
+api.add_resource(DealRefs, '/refs')
 
 def register_api(api, prefix="/"):
     api.add_resource(DealList, f'{prefix}deals/list', endpoint = 'deals')

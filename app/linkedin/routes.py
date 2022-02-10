@@ -1,11 +1,10 @@
 import json
 from flask import request, jsonify
+from flask import Blueprint
 from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
 from http import HTTPStatus
 from .connector.linkedin import Linkedin
-
-from flask import Blueprint
 
 blueprint = Blueprint('linkedin', __name__, url_prefix='/linkedin')
 from app.api.company.models import Company

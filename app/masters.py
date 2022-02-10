@@ -65,7 +65,7 @@ class ResourceList(Resource):
     
     def post_query(self, query):
         if self.keyword:
-            query = query.msearch(f'*{self.keyword}*')
+            query = query.msearch(f'{self.keyword}')
             
         for field in self.spcial_fields:
             if field['operation'] == 'gte':
