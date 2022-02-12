@@ -13,12 +13,10 @@ import { Product } from '../types';
 
 
 export const ProductStatsPage = () => {
-    const { data, ids, loading } = useGetList<Product>(
-        'products',
-        { perPage: 1000, page: 1 }
-    );
+    
+    
 
-    if (loading) { return <Loading />; }
+
     return (
         <>
         <ResponsiveContainer width="100%" height="100%">

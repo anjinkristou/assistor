@@ -43,7 +43,7 @@ export const TagsListEdit = ({
 
     const { data: allTags, ids } = useGetList<Tag>(
         'tags',
-        { page: 1, perPage: 10 },
+        { page: 1, perPage: 200 },
         { field: 'name', order: 'ASC' },
         {},
         { version } as any // FIXME UseDataProviderOptions don't allow [key: string]: any

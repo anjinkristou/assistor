@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from flask import Blueprint
 from flask_restful import Api
+from http import HTTPStatus
 from flask_jwt_extended import jwt_required
 import json
 
@@ -56,3 +57,11 @@ api.add_resource(ProductList, '/list')
 api.add_resource(ProductItem, '/item')
 api.add_resource(ProductItems, '/items')
 api.add_resource(ProductRefs, '/refs')
+
+
+@blueprint.route(f'/{endpoint}/range', methods = ['GET'])
+@jwt_required()
+def products_range():
+    products = Product.query.join(ProductProperty).all()
+    print(products)
+    return jsonify({'data': "Login successful"}), HTTPStatus.OK

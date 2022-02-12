@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-import os
+import os, datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,6 +17,9 @@ class Config(object):
         uri = uri.replace("postgres://", "postgresql://", 1)
     SQLALCHEMY_DATABASE_URI = uri
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    
+    JWT_SECRET_KEY = os.environ.get('SECRET')
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(days=1)
     
     MSEARCH_INDEX_NAME = 'msearch'
     # # simple,whoosh,elaticsearch, default is simple
