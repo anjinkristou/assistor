@@ -20,10 +20,9 @@ import ChoiceSelector from '../components/ChoiceSelector';
 export const CreateProductCategory = () => {
     const { filter, onCancel, onCreate } = useCreateSuggestionContext();
     const [name, setName] = useState(filter || '');
-    const [category, setCategory] = useState('');
     const [website, setWebsite] = useState('');
     const [image, setImage] = useState('');
-    const [create] = useCreate('productFamilies');
+    const [create] = useCreate('productCategories');
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -34,7 +33,6 @@ export const CreateProductCategory = () => {
                         name: name,
                         image: image,
                         website: website,
-                        category: category,
                     },
                 },
             },
@@ -43,7 +41,6 @@ export const CreateProductCategory = () => {
                     setName('');
                     setImage('');
                     setWebsite('');
-                    setCategory('');
                     onCreate(data);
                 },
             }
