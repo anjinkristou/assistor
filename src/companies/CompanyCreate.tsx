@@ -12,6 +12,7 @@ import {
     FormDataConsumer,
     ReferenceArrayInput,
     AutocompleteArrayInput,
+    ReferenceField,
 } from 'react-admin';
 import { Box, CardContent, Divider, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,6 +23,7 @@ import { sectors } from './sectors';
 import { sizes } from './sizes';
 import { relations } from './relations';
 import DistributorInput from './DistributorInput';
+import { CountryField } from './CountryField';
 
 const useStyles = makeStyles({
     inline: {
@@ -88,13 +90,27 @@ export const CompanyCreate = (props: CreateProps) => {
                 />
                 <TextInput source="zipcode" formClassName={classes.inline} />
                 <TextInput source="stateAbbr" formClassName={classes.inline} />
-                <ReferenceInput
-                    source="country_id"
-                    reference="countries"
-                    sort={{field: 'name', order: 'ASC'}}
-                >
-                    <AutocompleteInput optionText="nicename" />
-                </ReferenceInput>
+                <Box display="flex" gridGap="1rem">
+                    <ReferenceInput
+                        source="country_id"
+                        reference="countries"
+                        sort={{field: 'name', order: 'ASC'}}
+                    >
+                        <AutocompleteInput optionText="nicename" />
+                    </ReferenceInput>
+                    <FormDataConsumer>
+                        {({ formData, ...rest }) =>
+                            <ReferenceField
+                                record={formData}
+                                source="country_id"
+                                reference="countries"
+                                link={false}
+                            >
+                                <CountryField/>
+                            </ReferenceField>
+                        }
+                    </FormDataConsumer>
+                </Box>
                 <CustomDivider />
                 <TextInput source="website" fullWidth helperText={false} />
                 <TextInput source="linkedIn" fullWidth helperText={false} />
