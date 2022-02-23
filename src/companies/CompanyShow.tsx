@@ -36,7 +36,7 @@ import { formatDistance } from 'date-fns';
 import BusinessIcon from '@material-ui/icons/Business';
 import AddIcon from '@material-ui/icons/Add';
 
-import { Avatar } from '../contacts/Avatar';
+import { ContactAvatar } from '../contacts/ContactAvatar';
 import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
 import { sizes } from './sizes';
@@ -235,7 +235,7 @@ const ContactsIterator = () => {
                             to={`/contacts/${id}/show`}
                         >
                             <ListItemAvatar>
-                                <Avatar record={contact} />
+                                <ContactAvatar record={contact} />
                             </ListItemAvatar>
                             <ListItemText
                                 primary={`${contact.first_name} ${contact.last_name}`}

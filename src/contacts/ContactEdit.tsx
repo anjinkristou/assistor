@@ -13,7 +13,7 @@ import {
 import { Card, CardContent, Divider, Box } from '@material-ui/core';
 import omit from 'lodash/omit';
 
-import { Avatar } from './Avatar';
+import { ContactAvatar } from './ContactAvatar';
 import { ContactAside } from './ContactAside';
 import { Contact } from '../types';
 
@@ -35,7 +35,7 @@ const ContactEditContent = () => {
                                 <Box>
                                     <Box display="flex">
                                         <Box mr={2}>
-                                            <Avatar record={record} />
+                                            <ContactAvatar record={record} />
                                         </Box>
                                         <Box flex="1" mt={-1}>
                                             <Box display="flex">

@@ -5,7 +5,7 @@ import ContactsIcon from '@material-ui/icons/Contacts';
 import { useGetList, SimpleList, useGetIdentity } from 'react-admin';
 import { formatDistance } from 'date-fns';
 
-import { Avatar } from '../contacts/Avatar';
+import { ContactAvatar } from '../contacts/ContactAvatar';
 import { Contact } from '../types';
 
 export const HotContacts = () => {
@@ -58,7 +58,7 @@ export const HotContacts = () => {
                             }
                         )
                     }
-                    leftAvatar={contact => <Avatar record={contact} />}
+                    leftAvatar={contact => <ContactAvatar record={contact} />}
                 />
             </Card>
         </>

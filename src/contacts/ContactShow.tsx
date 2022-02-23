@@ -9,7 +9,7 @@ import {
 } from 'react-admin';
 import { Box, Card, CardContent, Typography } from '@material-ui/core';
 
-import { Avatar } from './Avatar';
+import { ContactAvatar } from './ContactAvatar';
 import { ContactAside } from './ContactAside';
 import { LogoField } from '../companies/LogoField';
 import { NotesIterator } from '../notes';
@@ -30,7 +30,7 @@ const ContactShowContent = () => {
                 <Card>
                     <CardContent>
                         <Box display="flex">
-                            <Avatar record={record} />
+                            <ContactAvatar record={record} />
                             <Box ml={2} flex="1">
                                 <Typography variant="h5">
                                     {record.first_name} {record.last_name}

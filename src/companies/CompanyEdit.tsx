@@ -89,6 +89,7 @@ export const CompanyEdit = (props: EditProps) => {
                     <ReferenceInput
                         source="country_id"
                         reference="countries"
+                        sort={{field: 'name', order: 'ASC'}}
                     >
                         <AutocompleteInput optionText="nicename" />
                     </ReferenceInput>

@@ -30,7 +30,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 
-import { Avatar } from './Avatar';
+import { ContactAvatar } from './ContactAvatar';
 import { Status } from '../misc/Status';
 import { TagsList } from '../tags/TagsList';
 import { ContactListFilter } from './ContactListFilter';
@@ -70,7 +70,7 @@ const ContactListContent = () => {
                             />
                         </ListItemIcon>
                         <ListItemAvatar>
-                            <Avatar record={contact} />
+                            <ContactAvatar record={contact} />
                         </ListItemAvatar>
                         <ListItemText
                             primary={`${contact.first_name} ${contact.last_name}`}
