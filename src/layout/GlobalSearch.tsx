@@ -84,6 +84,10 @@ const GlobalSearch = () => {
       setSearchTerm("");
     };
 
+    const handleClickAway = () => {
+      setSearchTerm("");
+    };
+
     const showSearchResults = (searchTerm.length > 0) && (ids.length > 0) && !loading;
 
     return (
@@ -108,19 +112,21 @@ const GlobalSearch = () => {
           onChange={handleChange}
         />
         {showSearchResults &&
-            <Paper 
-              className={classes.searchList} >
-              <List component="nav">
-                {ids.map((id) => (
-                  <ListItem key={id} button onClick={() => {redirectTo(id)}}>
-                      <ListItemAvatar>
-                        <LogoField record={data[id] as Company} />
-                      </ListItemAvatar>
-                      <ListItemText primary={data[id].name} />
-                    </ListItem>
-                  ))}
-              </List>
-            </Paper>
+          <ClickAwayListener onClickAway={handleClickAway}>
+              <Paper 
+                className={classes.searchList} >
+                <List component="nav">
+                  {ids.map((id) => (
+                    <ListItem key={id} button onClick={() => {redirectTo(id)}}>
+                        <ListItemAvatar>
+                          <LogoField record={data[id] as Company} />
+                        </ListItemAvatar>
+                        <ListItemText primary={data[id].name} />
+                      </ListItem>
+                    ))}
+                </List>
+              </Paper>
+          </ClickAwayListener>
         }
       </div>
     );
