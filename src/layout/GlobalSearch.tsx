@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import { createStyles, alpha, Theme, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { LinearProgress, Loading, useGetList, useRedirect } from 'react-admin';
-import { Avatar, CircularProgress, List, ListItem, ListItemAvatar, ListItemText, Menu, MenuItem, Popover, Popper } from '@material-ui/core';
+import { LinearProgress, Loading, useGetList, useRedirect, Identifier } from 'react-admin';
+import { Avatar, CircularProgress, ClickAwayListener, List, ListItem, ListItemAvatar, ListItemProps, ListItemText, Menu, MenuItem, Paper, Popover, Popper } from '@material-ui/core';
 import { GlobalHotKeys } from 'react-hotkeys';
+import { CompanyAvatar } from '../companies/CompanyAvatar';
+import { Company } from '../types';
+import { LogoField } from '../companies/LogoField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     search: {
       position: 'relative',
+      display: 'inlineBlock',
       borderRadius: theme.shape.borderRadius,
       backgroundColor: alpha(theme.palette.common.white, 0.15),
       '&:hover': {
@@ -47,17 +51,20 @@ const useStyles = makeStyles((theme: Theme) =>
         },
       },
     },
+    searchList: {
+      position: 'absolute',
+      minWidth: theme.spacing(48),
+      zIndex: 1,
+      right: 0,
+    }
   }),
 );
 
 const GlobalSearch = () => {
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = useState("");
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const redirect = useRedirect();
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        setAnchorEl(event.currentTarget);
         setSearchTerm(event.target.value);
     };
     
@@ -71,66 +78,51 @@ const GlobalSearch = () => {
     
     // if (loading) { return <Loading />; }
     if (error) { return <p>ERROR</p>; }
-    
-    const handleSearchClick = (id: any) => {
-        setAnchorEl(null);
 
-        redirect(`/companies/${id}/show`);
-    }
-
-    const handleClose = () => {
-        setAnchorEl(null);
+    const redirectTo = (id: Identifier) => {
+      redirect("show", "/companies", id);
+      setSearchTerm("");
     };
 
-    const keyMap = { SEARCH_HOTKEYS: "command+f" };
-    const handlers = { SEARCH_HOTKEYS: () => console.log("test") };
+    const showSearchResults = (searchTerm.length > 0) && (ids.length > 0) && !loading;
 
     return (
-      <>
-        <GlobalHotKeys keyMap={keyMap} handlers={handlers} />;
-        <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              {loading 
-                ? <CircularProgress size={24}/>
-                : <SearchIcon />
-              }
-              
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              autoFocus
-              onChange={handleChange}
-            />
-          </div>
-          <Menu
-            open={!loading && Boolean(anchorEl) && (ids.length > 0) && (searchTerm.length > 0)}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-              {ids.map((id) => (
-                <MenuItem key={id} onClick={() => handleSearchClick(id)}>
-                  <ListItemAvatar>
-                    <Avatar>
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary={data[id].name} />
-                </MenuItem>
-              ))}
-          </Menu>
-      </>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          {loading 
+            ? <CircularProgress size={24} color="secondary" />
+            : <SearchIcon />
+          }
+          
+        </div>
+        <InputBase
+          placeholder="Search…"
+          type="search"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ 'aria-label': 'search' }}
+          autoFocus
+          value={searchTerm}
+          onChange={handleChange}
+        />
+        {showSearchResults &&
+            <Paper 
+              className={classes.searchList} >
+              <List component="nav">
+                {ids.map((id) => (
+                  <ListItem key={id} button onClick={() => {redirectTo(id)}}>
+                      <ListItemAvatar>
+                        <LogoField record={data[id] as Company} />
+                      </ListItemAvatar>
+                      <ListItemText primary={data[id].name} />
+                    </ListItem>
+                  ))}
+              </List>
+            </Paper>
+        }
+      </div>
     );
 };
 
