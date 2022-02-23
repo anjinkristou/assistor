@@ -54,9 +54,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     searchList: {
       position: 'absolute',
-      minWidth: theme.spacing(48),
+      minWidth: theme.spacing(32),
       zIndex: 1,
       right: 0,
+      [theme.breakpoints.down('md')]: {
+        left: 0,
+        right: 'auto',
+      },
     }
   }),
 );
