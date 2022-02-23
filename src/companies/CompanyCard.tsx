@@ -60,6 +60,7 @@ export const CompanyCard = ({ record }: { record: Company }) => {
     const classes = useStyles();
     const [elevation, setElevation] = useState(1);
     const { data, ids, loaded, onToggleItem, selectedIds } = useListContext<Company>();
+    if (!record) return null;
     return (
         <MuiLink
             component={Link}
