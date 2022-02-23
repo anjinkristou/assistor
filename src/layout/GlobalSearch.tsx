@@ -3,7 +3,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { createStyles, alpha, Theme, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { LinearProgress, Loading, useGetList, useRedirect, Identifier } from 'react-admin';
-import { Avatar, CircularProgress, ClickAwayListener, List, ListItem, ListItemAvatar, ListItemProps, ListItemText, Menu, MenuItem, Paper, Popover, Popper } from '@material-ui/core';
+import { Avatar, CircularProgress, ClickAwayListener, List, ListItem, ListItemAvatar, ListItemProps, ListItemText, ListSubheader, Menu, MenuItem, Paper, Popover, Popper } from '@material-ui/core';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { CompanyAvatar } from '../companies/CompanyAvatar';
 import { Company } from '../types';
@@ -70,7 +70,7 @@ const GlobalSearch = () => {
     
     const { data, ids, loading, error } = useGetList(
         'companies',
-        { page: 1, perPage: 10 },
+        { page: 1, perPage: 5 },
         { field: 'name', order: 'ASC' },
         { q: searchTerm },
         { enabled: searchTerm.length > 0 }
@@ -114,8 +114,14 @@ const GlobalSearch = () => {
         {showSearchResults &&
           <ClickAwayListener onClickAway={handleClickAway}>
               <Paper 
-                className={classes.searchList} >
-                <List component="nav">
+                className={classes.searchList}
+                square
+              >
+                <List 
+                  component="nav"
+                  dense
+                >
+                  <ListSubheader>Companies</ListSubheader>
                   {ids.map((id) => (
                     <ListItem key={id} button onClick={() => {redirectTo(id)}}>
                         <ListItemAvatar>
@@ -123,7 +129,8 @@ const GlobalSearch = () => {
                         </ListItemAvatar>
                         <ListItemText primary={data[id].name} />
                       </ListItem>
-                    ))}
+                  ))}
+                  <ListSubheader>Contacts</ListSubheader>
                 </List>
               </Paper>
           </ClickAwayListener>
