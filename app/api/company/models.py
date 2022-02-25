@@ -73,6 +73,7 @@ class CompanySchema(ma.SQLAlchemySchema):
     country_iso = ma.Function(lambda obj: obj.country.iso if obj.country else None)
     tags = ma.Function(lambda obj: [tag.id for tag in obj.tags])
     use_products = ma.Function(lambda obj: [product.id for product in obj.use_products])
+    customers = ma.Function(lambda obj: [company.id for company in obj.customers])
 
 
 company_schema = CompanySchema()

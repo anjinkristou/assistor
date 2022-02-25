@@ -70,7 +70,11 @@ class CompanyItem(ResourceItem):
         if 'use_products' in data:
             tags = data['use_products']
             data['use_products'] = Product.query.filter(Product.id.in_(tags)).all()
-            
+        
+        if 'customers' in data:
+            tags = data['customers']
+            data['customers'] = Company.query.filter(Company.id.in_(tags)).all()
+        
         return data
 
 

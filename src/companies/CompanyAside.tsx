@@ -8,12 +8,16 @@ import {
     SingleFieldList,
     ChipField,
     ShowButton,
+    Pagination,
+    Datagrid,
+    Record,
 } from 'react-admin';
 import { 
     Box, 
     Typography, 
     Divider, 
     Link,
+    TableHead,
 } from '@material-ui/core';
 import { Company, Sale } from '../types';
 import { TagsListEdit } from '../tags/TagsListEdit';
@@ -21,6 +25,7 @@ import { CollapsibleAside } from '../components/CollapsibleAside';
 import { ProductsListEdit } from '../products/ProductsListEdit';
 import { any } from 'prop-types';
 import { UpdateLinkedinCompany } from '../linkedin/UpdateLinkedinCompany';
+import { LogoField } from './LogoField';
 
 export const CompanyAside = ({
     record,
@@ -70,6 +75,7 @@ const AsideContent = ({
                             record={record}
                             source="distributor_id"
                             reference="companies"
+                            link="show"
                         >
                             <TextField source="name" record={record} />
                         </ReferenceField>
@@ -142,5 +148,34 @@ const AsideContent = ({
 
                 <ProductsListEdit record={record} reference="companies" />
             </Box>
+
+            <Box mt={3}>
+                <Typography variant="subtitle2">Customers</Typography>
+                <Divider />
+
+                <Box mt={1}>
+                    <ReferenceArrayField
+                        record={record}
+                        reference="companies"
+                        source="customers"
+                        pagination={<Pagination rowsPerPageOptions={[15, 25, 50, 100]} />}
+                        perPage={25}
+                    >
+                        <Datagrid
+                            rowClick="show"
+                            header={<TableHead />}
+                            rowStyle={CompanyRowStyle}
+                        >
+                            <LogoField />
+                            <TextField source="name" />
+                        </Datagrid>
+                    </ReferenceArrayField>
+                </Box>
+
+            </Box>
         </>
     ) : null;
+
+    const CompanyRowStyle = (record: Record, index: number) => ({
+
+    });

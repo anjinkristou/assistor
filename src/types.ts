@@ -39,6 +39,7 @@ export interface Company extends Record {
     country_iso: string;
     tags: Identifier[];
     use_products: Identifier[];
+    customers: Identifier[];
 }
 
 export interface CompanyNote extends Record {

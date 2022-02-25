@@ -73,7 +73,7 @@ export const ProductsListEdit = ({
     };
 
 
-    if (!record) return null;
+    if (!record || !loaded) return null;
 
      return (
         <>
