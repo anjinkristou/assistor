@@ -29,6 +29,7 @@
         "page": "background.html"
     },
     "permissions": [
+        "*://kris2assistor.herokuapp.com/*",
         "messagesRead",
         "accountsRead",
         "storage",
