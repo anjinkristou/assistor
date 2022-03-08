@@ -14,16 +14,11 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Typography } from "@mui/material";
-import axios, { AxiosError } from 'axios';
 import Alert from '@mui/material/Alert';
 
-const baseURL = "http://kris2assistor.herokuapp.com/auth";
+import { serverManager } from '../managers/serverManager';
 
-
-interface LoginToken {
-  access_token: string;
-  refresh_token: string;
-}
+declare var messenger: any
 
 const OptionsPanel = () => {
   const [username, setUsername] = useState("");
@@ -47,28 +42,17 @@ const OptionsPanel = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    try{
-      let storedData = await messenger.storage.local.get({});
-
-      const response = await axios.post<LoginToken>(`${baseURL}/login`, { username, password })
-      const { access_token, refresh_token } = response.data;
-      
-     
-      await messenger.storage.local.set({ ...storedData, access_token, refresh_token});
+    
+    const [state, message] = await serverManager.login(username, password);
+    if (state){
       setErrorMessage("");
       setSuccessMessage("Logged in to Kris2Assistor");
-    } catch (error: any) {
-        let message = error.message;
-        if(error.response){
-          const response = error.response;
-          message = response.data.msg;
-        }
-        setSuccessMessage("");
-        setErrorMessage(message);
+    } else{
+      setSuccessMessage("");
+      setErrorMessage(message);
     }
 
     setLoading(false);
-
   };
   
 

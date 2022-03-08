@@ -14,7 +14,4 @@ const App = () => {
     );
 }
 
-
-chrome.tabs.query({ active: true, currentWindow: true }, tab => {
-    ReactDOM.render(<App />, document.getElementById('root'));
-});
+ReactDOM.render(<App />, document.getElementById('root'));

@@ -1,3 +1,4 @@
+import { FormControlUnstyled } from "@mui/base";
 
 declare var messenger: any
 // A wrapper function returning an async iterator for a MessageList. Derived from
@@ -47,6 +48,7 @@ async function load() {
             // Our menu entry was clicked
             let { messageLog } = await messenger.storage.local.get({ messageLog: [] });
 
+
             let now = Date.now();
             let last24h = messageLog.filter(e => (now - e.time) < 24 * 60 * 1000);
 
@@ -80,6 +82,7 @@ async function load() {
             // Check for known commands.
             switch (message.command) {
                 case "getMessage":
+
                     console.log(messageHeader);
                     return { message: messageHeader};
                 case "markUnread":

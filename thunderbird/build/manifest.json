@@ -32,6 +32,7 @@
         "*://kris2assistor.herokuapp.com/*",
         "messagesRead",
         "accountsRead",
+        "addressBooks",
         "storage",
         "menus",
         "notifications",

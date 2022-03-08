@@ -32,6 +32,11 @@ const Content = () => {
 
   if(!message) return null;
 
+  const authorEmail = message.author.substring(
+      message.author.indexOf("<") + 1, 
+      message.author.lastIndexOf(">")
+  );
+
   return(
     <Paper 
       sx={{
@@ -44,7 +49,7 @@ const Content = () => {
           display: "flex",
         }}
       >
-        <Typography sx={{flexGrow: 1}}>Subject:{message.subject}</Typography>
+        <Typography sx={{flexGrow: 1}}>Authot: {authorEmail}</Typography>
         <Button variant="contained" onClick={markUnread}>Mark unread</Button>
       </Box>
     </Paper>
