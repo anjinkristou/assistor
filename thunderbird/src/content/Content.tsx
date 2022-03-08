@@ -31,7 +31,6 @@ const Content = () => {
   };
 
   if(!message) return null;
-  
 
   return(
     <Paper 

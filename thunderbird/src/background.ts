@@ -80,7 +80,7 @@ async function load() {
             // Check for known commands.
             switch (message.command) {
                 case "getMessage":
-                    // Create the information we want to return to our message display script.
+                    console.log(messageHeader);
                     return { message: messageHeader};
                 case "markUnread":
                     // mark the message as unread
