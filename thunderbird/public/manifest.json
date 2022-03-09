@@ -18,7 +18,7 @@
     "message_display_action": {
         "default_popup": "message.html",
         "default_title": "Kris2Assist",
-        "default_icon": "images/logo-32px.png"
+        "default_icon": "images/logo-white-32px.png"
     },
     "options_ui": {
         "page": "options.html",

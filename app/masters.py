@@ -30,9 +30,10 @@ class ResourceList(Resource):
         
         query = self.post_query(query)
         
-        order =  getattr(self.model_cls, sort['field']).asc() if sort['order'] == 'ASC' else getattr(self.model_cls, sort['field']).desc()
-        query = query.order_by(order)
-    
+        if sort :
+            order =  getattr(self.model_cls, sort['field']).asc() if sort['order'] == 'ASC' else getattr(self.model_cls, sort['field']).desc()
+            query = query.order_by(order)
+            
         records = query.paginate(page=pagination['page'], per_page=pagination['perPage'])
         data = self.models_schema.dump(records.items)
         

@@ -27,6 +27,7 @@ const Content = () => {
   const markUnread = async() => {
     browser.runtime.sendMessage({
       command: "markUnread",
+      messageId: message.id
     });
   };
 
@@ -49,7 +50,7 @@ const Content = () => {
           display: "flex",
         }}
       >
-        <Typography sx={{flexGrow: 1}}>Authot: {authorEmail}</Typography>
+        <Typography sx={{flexGrow: 1}}>Author: {authorEmail}</Typography>
         <Button variant="contained" onClick={markUnread}>Mark unread</Button>
       </Box>
     </Paper>

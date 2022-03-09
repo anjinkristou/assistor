@@ -1,10 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+
+import theme from '../theme'
 
 import OptionsPanel from './OptionsPanel';
 
-const theme = createTheme();
 
 const App = () => {
     return (

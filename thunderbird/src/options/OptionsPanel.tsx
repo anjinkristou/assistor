@@ -43,13 +43,13 @@ const OptionsPanel = () => {
   const handleLogin = async () => {
     setLoading(true);
     
-    const [state, message] = await serverManager.login(username, password);
+    const [state, status] = await serverManager.login(username, password);
     if (state){
       setErrorMessage("");
       setSuccessMessage("Logged in to Kris2Assistor");
     } else{
       setSuccessMessage("");
-      setErrorMessage(message);
+      setErrorMessage(status);
     }
 
     setLoading(false);

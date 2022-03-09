@@ -82,12 +82,10 @@ async function load() {
             // Check for known commands.
             switch (message.command) {
                 case "getMessage":
-
-                    console.log(messageHeader);
                     return { message: messageHeader};
                 case "markUnread":
                     // mark the message as unread
-                    messenger.messages.update(messageHeader.id, {
+                    messenger.messages.update(message.messageId, {
                         read: false,
                     });
                     break;
