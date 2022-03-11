@@ -42,6 +42,8 @@ const Message = () => {
         message.author.lastIndexOf(">")
       );
 
+      setMessage(message);
+
       let [state, status] = await serverManager.getList("contacts", {email: authorEmail});
       if (!state){
         setErrorMessage(status);
@@ -53,8 +55,7 @@ const Message = () => {
       if(contact_cnt){
         setContact(contacts[0]);
       }
-
-      setMessage(message);
+      
       setIsLoading(false);
     })();
   }, []);

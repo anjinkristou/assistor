@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
-// const baseURL = "http://kris2assistor.herokuapp.com";
-const baseURL = "http://localhost:3000";
+const baseURL = "http://kris2assistor.herokuapp.com";
+// const baseURL = "http://localhost:3000";
 
 declare var messenger: any
 
